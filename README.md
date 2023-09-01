@@ -2,8 +2,6 @@
 
 Latest version: https://git.chalmers.se/courses/dit342/group-00-web
 
-This template refers to itself as `group-00-web`. In your project, use your group number in place of `00`.
-
 ## Project Structure
 
 | File        | Purpose           | What you do?  |
@@ -39,10 +37,10 @@ You can also use alternative tools if you know how to configure them (e.g., Fire
 
 ```bash
 # Clone repository
-git clone git@git.chalmers.se:courses/dit342/group-00-web.git
+git clone git@git.chalmers.se:courses/dit342/group-05-web.git
 
 # Change into the directory
-cd group-00-web
+cd group-05-web
 
 # Setup backend
 cd server && npm install
@@ -63,17 +61,31 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+Description
 
+The **purpose** of this system is to provide a service of job searching in IT that joins companies and candidates together, by allowing companies to post job offerings and candidates to apply for them digitally. It includes a **searching mechanism** that makes it easier to find specific job offers. The system provides job offerings to all unemployed people **(target audience)** within the IT industry. The system is also regulated by the administrators.
+The **stakeholders** of the job searching system are unemployed people, developers, Hiring Managers of companies, administrators of the system, companies(employers), Skatteverket, Government.
 ### Pages
 
-* Home: 1-3 sentences describing what the page displays and what a user can do
-* Shopping cart: ...
+#### (Unlogged-in flow)
+* **Login page**: this page displays fields for entering a username and a password, allowing users to authenticate themselves and access their accounts.
+* **Account creating**: this page displays fields for entering a username, and email, and password, as well as the specific attributes of either an applicant or a company (logo, locations or CV). Enables account creation for new users.
+* **Password retrieval**: this page displays fields for users to enter their registered email. This allows them to retrieve their password, by receiving a link for resetting their forgotten password.
+
+#### (Logged-in flow)
+* **Landing page**: this page displays a landing image and message, shows featured job listings, and a search bar. It allows applicants to start job hunting fairly quickly after logging in.
+* **Account page**: this page displays the applicant's or company's personal information. Depending on which, it will also show the uploaded resume and application history, or the uploaded job offerings, allowing the users to change these.
+* **Job listing page**: this page features job vacancies as according to the searching criteria specified by the applicant. It allows applicants to find the jobs they are looking for and to launch the application process.
+* **Job description page**: this page displays all the information regarding a specific job offering, such as the title and description, the requirements and the deadline. It also displays the fields to be filled-in by the candidates, allowing them to apply directly for the job opening from the page.
 
 ### Entity-Relationship (ER) Diagram
 
-![ER Diagram](./images/er_diagram.png)
+<img src="./images/er_diagram.png" alt="ER Diagram" width=700>
+
+### System wireframe
+This is the mockup of the UI of the job searching website containing the necessary pages required. In further development the UI will be improved and functionality implemented. 
+
+<img src="./images/mockup1.png" alt="mockup1" width=700>
+<img src="./images/mockup2.png" alt="mockup2" width=700>
 
 ## Teaser (MS3)
-
-![Teaser](./images/teaser.png)
