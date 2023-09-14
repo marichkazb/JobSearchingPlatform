@@ -30,9 +30,18 @@ app.use(morgan('dev'));
 app.options('*', cors());
 app.use(cors());
 
+app.get('/api', function(req, res) {
+    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
+});
 //App routes
 app.get('/applications', applicationController.getAllApplications);
 app.post('/applications', applicationController.createApplication);
+app.delete('/applications', applicationController.deleteAllApplications);
+
+app.get('/applications/:id', applicationController.getApplication);
+app.put('/applications/:id', applicationController.updateApplication);
+app.patch('/applications/:id', applicationController.updatePartOfApplication);
+app.delete('/applications/:id', applicationController.deleteOneApplication);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
