@@ -1,9 +1,9 @@
-const Jobs = require('../models/jobs');
+const Job = require('../models/job');
 
 //Create a job offering (Create)
 const createJob = async (req,res) => {
     try{
-        const job = await Jobs.create(req.body);
+        const job = await Job.create(req.body);
         res.status(201).json(job);
     }catch(error){
         console.error(error);
@@ -14,7 +14,7 @@ const createJob = async (req,res) => {
 //Get all job offerings (Read)
 const getAllJobs = async (req,res) => {
     try{
-        const jobs = await Jobs.find();
+        const jobs = await Job.find();
         res.status(200).json(jobs);
     }
     catch(error){
@@ -27,7 +27,7 @@ const getAllJobs = async (req,res) => {
 const getJobByID = async (req,res) => {
     try{
         const jobID = req.params.id;
-        const job = await Jobs.findById(jobID);
+        const job = await Job.findById(jobID);
         if(!job){
             return res.status(404).json(error.message);
         }
@@ -44,7 +44,7 @@ const updateJobByID = async (req,res) => {
     try{
         const jobID = req.params.id;
         const updateData = req.body;
-        const updatedJob = await Jobs.findByIdAndUpdate(jobID, updateData, { new: true });
+        const updatedJob = await Job.findByIdAndUpdate(jobID, updateData, { new: true });
         if(!updatedJob){
             return res.status(404).json(error.message);
         }
@@ -60,7 +60,7 @@ const updateJobByID = async (req,res) => {
 const deleteJobByID = async (req, res) => {
     try{
         const jobID = req.params.id;
-        const deletedJob = await Jobs.findByIdAndRemove(jobID);
+        const deletedJob = await Job.findByIdAndRemove(jobID);
         if(!deletedJob){
             return res.status(404).json(error.message);
         }
@@ -74,7 +74,7 @@ const deleteJobByID = async (req, res) => {
 //Delete all jobs (Delete)
 const deleteAllJobs = async(req, res) => {
     try{
-        const deleteAllJobs = await Jobs.deleteMany({});
+        const deleteAllJobs = await Job.deleteMany({});
         if(deleteAllJobs.deletedCount == 0){
             return res.status(404).json(error.message);
         }

@@ -5,10 +5,13 @@ const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const applicationController = require('./controllers/application');
-const jobofferingsController = require('./controllers/jobs');
+const jobController = require('./controllers/job');
 
-var mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
-var port = 3000;
+const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
+const port = 3000;
+const companyRoutes = require("./routes/companyRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+
 
 // Connect to MongoDB
 main().catch((err) => console.log(err));
@@ -35,6 +38,9 @@ app.get('/api', function (req, res) {
     res.json({ 'message': 'Welcome to your DIT342 backend ExpressJS project!' });
 });
 //App routes
+app.use("/api/companies", companyRoutes);
+app.use("/api/admins", adminRoutes);
+
 app.get('/applications', applicationController.getAllApplications);
 app.post('/applications', applicationController.createApplication);
 app.delete('/applications', applicationController.deleteAllApplications);
