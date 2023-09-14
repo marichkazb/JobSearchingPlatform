@@ -1,6 +1,4 @@
-const application = require('../models/application');
 const Application = require('../models/application');
-const Jobs = require('../models/jobs');
 
 // Get all applications
 const getAllApplications = async (req, res) => {
@@ -60,22 +58,8 @@ const getApplication = async (req, res) => {
   }
 };
 
-// Update a specific application
+// Update application 
 const updateApplication = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const application = await Application.findById(id);
-    application.application_num = req.body.application_num;
-    application.questions = req.body.questions;
-    application.save();
-    res.json(application);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
-// Update a part of application 
-const updatePartOfApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const updateFields = req.body;
@@ -100,86 +84,11 @@ const deleteOneApplication = async (req, res) => {
   }
 };
 
-// Post a specific application for a job
-const postApplicationsForJobs = async (req, res) => {
-  try {
-    const jobId = req.params.job_id;
-    const applicationData = req.body;
-    const job = await Jobs.findById(jobId);
-    if (!job) {
-      return res.status(404).json('Job is not found.');
-    }
-    const application = new Application({ ...applicationData, jobId });
-    job.applications.push(application);
-    await job.save();
-    res.status(201).json(application);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
-// Get all applications associated with a job
-const getApplicationsForJobs = async (req, res) => {
-  try {
-    const jobId = req.params.job_id;
-    const job = await Jobs.findById(jobId);
-    if (!job) {
-      return res.status(404).json('Job is not found.');
-    }
-    res.status(200).json(job.applications);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
-// Retrieve the details of one job application
-const getOneApplicationForJob = async (req, res) => {
-  try {
-    const jobId = req.params.job_id;
-    const applicationId = req.params.application_id;
-    const job = await Jobs.findById(jobId);
-    if (!job) {
-      return res.status(404).json('Job is not found.');
-    }
-    const application = job.applications.find(item => item._id == applicationId);;
-    if (!application) {
-      return res.status(404).json('Application not found');
-    }
-    res.status(200).json(application);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
-// Delete an application for a job
-const deleteOneApplicationForJob = async (req, res) => {
-  try {
-    const jobId = req.params.job_id;
-    const aplicationId = req.params.application_id;
-    const job = await Jobs.findById(jobId);
-    if (!job) {
-      return res.status(404).json('Job is not found.');
-    }
-    await Jobs.updateOne(
-      { _id: jobId, },
-      { $pull: { applications: { _id: aplicationId } } }
-    );
-    res.status(200).json(job.applications);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
 module.exports = {
   getAllApplications,
   createApplication,
   deleteAllApplications,
   getApplication,
   updateApplication,
-  updatePartOfApplication,
-  deleteOneApplication,
-  postApplicationsForJobs,
-  getApplicationsForJobs,
-  getOneApplicationForJob,
-  deleteOneApplicationForJob
+  deleteOneApplication
 };
