@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
 const applicationController = require('./controllers/application');
+const jobofferingsController = require('./controllers/jobs');
 
 var mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
 var port = 3000;
@@ -42,6 +43,13 @@ app.get('/applications/:id', applicationController.getApplication);
 app.put('/applications/:id', applicationController.updateApplication);
 app.patch('/applications/:id', applicationController.updatePartOfApplication);
 app.delete('/applications/:id', applicationController.deleteOneApplication);
+app.post('/jobs', jobofferingsController.createJob);
+app.get('/jobs', jobofferingsController.getAllJobs);
+app.get('/jobs/:id', jobofferingsController.getJobByID);
+app.put('/jobs/:id', jobofferingsController.updateJobByID);
+app.patch('/jobs/:id', jobofferingsController.updateJobByID);
+app.delete('/jobs/:id', jobofferingsController.deleteJobByID);
+app.delete('/jobs', jobofferingsController.deleteAllJobs);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
