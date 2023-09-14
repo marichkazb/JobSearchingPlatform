@@ -13,10 +13,10 @@ var port = 3000;
 // Connect to MongoDB
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+    await mongoose.connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
     console.log("Connected to MongoDB!");
 }
 
@@ -31,8 +31,8 @@ app.use(morgan('dev'));
 app.options('*', cors());
 app.use(cors());
 
-app.get('/api', function(req, res) {
-    res.json({'message': 'Welcome to your DIT342 backend ExpressJS project!'});
+app.get('/api', function (req, res) {
+    res.json({ 'message': 'Welcome to your DIT342 backend ExpressJS project!' });
 });
 //App routes
 app.get('/applications', applicationController.getAllApplications);
@@ -43,6 +43,12 @@ app.get('/applications/:id', applicationController.getApplication);
 app.put('/applications/:id', applicationController.updateApplication);
 app.patch('/applications/:id', applicationController.updatePartOfApplication);
 app.delete('/applications/:id', applicationController.deleteOneApplication);
+
+app.post('/jobs/:job_id/applications', applicationController.postApplicationsForJobs);
+app.get('/jobs/:job_id/applications', applicationController.getApplicationsForJobs);
+app.get('/jobs/:job_id/applications/:application_id', applicationController.getOneApplicationForJob);
+app.delete('/jobs/:job_id/applications/:application_id', applicationController.deleteOneApplicationForJob);
+
 app.post('/jobs', jobofferingsController.createJob);
 app.get('/jobs', jobofferingsController.getAllJobs);
 app.get('/jobs/:id', jobofferingsController.getJobByID);
@@ -67,7 +73,7 @@ app.use(express.static(client));
 // Error handler (i.e., when exception is thrown) must be registered last
 var env = app.get('env');
 // eslint-disable-next-line no-unused-vars
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     console.error(err.stack);
     var err_res = {
         'message': err.message,
@@ -81,7 +87,7 @@ app.use(function(err, req, res, next) {
     res.json(err_res);
 });
 
-app.listen(port, function(err) {
+app.listen(port, function (err) {
     if (err) throw err;
     console.log(`Express server listening on port ${port}, in ${env} mode`);
     console.log(`Backend: http://localhost:${port}/api/`);

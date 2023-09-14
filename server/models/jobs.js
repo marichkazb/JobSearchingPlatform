@@ -21,6 +21,10 @@ const jobsSchema = new Schema({
     deadline: {
         type: Date,
         required: true,
+    },
+    applications: {
+        type: Array,
+        required: false
     }
 });
 
