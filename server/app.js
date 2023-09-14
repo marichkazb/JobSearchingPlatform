@@ -4,14 +4,13 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const history = require('connect-history-api-fallback');
-const applicationController = require('./controllers/application');
-const jobController = require('./controllers/job');
+const companyRoutes = require("./routes/companyRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+const jobRoutes = require("./routes/jobRoutes");
 
 const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
 const port = 3000;
-const companyRoutes = require("./routes/companyRoutes");
-const adminRoutes = require("./routes/adminRoutes");
-
 
 // Connect to MongoDB
 main().catch((err) => console.log(err));
@@ -37,31 +36,12 @@ app.use(cors());
 app.get('/api', function (req, res) {
     res.json({ 'message': 'Welcome to your DIT342 backend ExpressJS project!' });
 });
+
 //App routes
 app.use("/api/companies", companyRoutes);
 app.use("/api/admins", adminRoutes);
-
-app.get('/applications', applicationController.getAllApplications);
-app.post('/applications', applicationController.createApplication);
-app.delete('/applications', applicationController.deleteAllApplications);
-
-app.get('/applications/:id', applicationController.getApplication);
-app.put('/applications/:id', applicationController.updateApplication);
-app.patch('/applications/:id', applicationController.updatePartOfApplication);
-app.delete('/applications/:id', applicationController.deleteOneApplication);
-
-app.post('/jobs/:job_id/applications', applicationController.postApplicationsForJobs);
-app.get('/jobs/:job_id/applications', applicationController.getApplicationsForJobs);
-app.get('/jobs/:job_id/applications/:application_id', applicationController.getOneApplicationForJob);
-app.delete('/jobs/:job_id/applications/:application_id', applicationController.deleteOneApplicationForJob);
-
-app.post('/jobs', jobofferingsController.createJob);
-app.get('/jobs', jobofferingsController.getAllJobs);
-app.get('/jobs/:id', jobofferingsController.getJobByID);
-app.put('/jobs/:id', jobofferingsController.updateJobByID);
-app.patch('/jobs/:id', jobofferingsController.updateJobByID);
-app.delete('/jobs/:id', jobofferingsController.deleteJobByID);
-app.delete('/jobs', jobofferingsController.deleteAllJobs);
+app.use("/api/applications", applicationRoutes);
+app.use("/api/jobs", jobRoutes);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
