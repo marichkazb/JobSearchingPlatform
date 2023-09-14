@@ -3,12 +3,12 @@ const Application = require('../models/application');
 // Get all applications
 const getAllApplications = async (req, res) => {
   try {
-    const { sort, order, application_num } = req.query;
+    const { sort, order, status } = req.query;
     let applications = await Application.find();
 
     //filtering
-    if (application_num) {
-      applications = await Application.find({ application_num });
+    if (status) {
+      applications = await Application.find({ status });
     }
 
     //sorting 
@@ -17,6 +17,16 @@ const getAllApplications = async (req, res) => {
     }
 
     res.json(applications);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
+const createApplicationCollection = async (req, res) => {
+  try {
+    const applicationsData = req.body;
+    const insertedApplications = await Application.insertMany(applicationsData);
+    res.status(201).json(insertedApplications);
   } catch (error) {
     res.status(500).json(error.message);
   }
@@ -90,5 +100,6 @@ module.exports = {
   deleteAllApplications,
   getApplication,
   updateApplication,
-  deleteOneApplication
+  deleteOneApplication,
+  createApplicationCollection
 };

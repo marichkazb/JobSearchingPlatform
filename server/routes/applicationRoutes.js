@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true }); // Accessing params from p
 const applicationController = require("../controllers/application");
 
 router.get("/", applicationController.getAllApplications);
+router.post("/", applicationController.createApplicationCollection);
 router.post("/", applicationController.createApplication);
 router.delete("/", applicationController.deleteAllApplications);
 
