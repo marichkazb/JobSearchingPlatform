@@ -1,44 +1,919 @@
 {
 	"info": {
-		"_postman_id": "f7ee95b5-9cb9-442f-a6a9-42de46138872",
+		"_postman_id": "72633d31-bf01-4a63-ab9a-b85013f9bc04",
 		"name": "server",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29427216",
+		"_collection_link": "https://group5-web-dev.postman.co/workspace/group5-Workspace~b2851e0c-585d-4d33-8ac1-1dfbdc095fe8/collection/29427216-72633d31-bf01-4a63-ab9a-b85013f9bc04?action=share&source=collection_link&creator=29427216"
 	},
 	"item": [
 		{
-			"name": "GET /api",
-			"event": [
+			"name": "admins",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "b58d92ec-5214-450c-adb0-28e068aa71b9",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
+					"name": "GET /admins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/admins",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /admins",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Admin Bee\", \"email\": \"bee.admin@gmail.com\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admins",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /admins/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Admin Bee II\", \"email\": \"bee.admin@gmail.com\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins",
+								"650226163b0e16219ae88bb2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /admins/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"the.first.admin@gmail.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins",
+								"650226163b0e16219ae88bb2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /admins/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins",
+								"650226163b0e16219ae88bb2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /admins/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/admins/650225dd3b0e16219ae88bad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admins",
+								"650225dd3b0e16219ae88bad"
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{host}}/api",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api"
-					]
+			]
+		},
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "POST /applications collection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    { \"skills\": [\"JavaScript\", \"Node.js\"] },\n    {\n    \"skills\": [\"Python\", \"Django\"],\n    \"questions\": [\n      {\n        \"questionText\": \"What is your preferred web framework?\",\n        \"answer\": \"Django\"\n      }\n    ]},\n    {\n        \"skills\": [\"Java\", \"Spring\"],\n        \"status\": \"Rejected\"\n    },\n    {\n        \"questions\": [\n      {\n        \"questionText\": \"What is your favorite IDE for Java development?\",\n        \"answer\": \"IntelliJ IDEA\"\n      }\n    ]\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST/applications",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"skills\": [\"JavaScript\", \"Node.js\"],\n    \"questions\": [{\n        \"questionText\": \"What is the level of your code?\",\n        \"answer\": \"It's DRY and SOLID\"\n        }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /application/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/applications/65031b2d2a2d0f76bf885e8a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications",
+								"65031b2d2a2d0f76bf885e8a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /applications/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"skills\": [\"JavaScript\", \"Express\", \"Mongoose\" ],\n    \"dateOfApplication\": \"2023-08-14T15:50:34.706Z\",\n    \"questions\": []\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/applications/65033a253d3e0a61f7e9cc29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications",
+								"65033a253d3e0a61f7e9cc29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /applications/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"questions\": [] }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/applications/65033a253d3e0a61f7e9cc29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications",
+								"65033a253d3e0a61f7e9cc29"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/applications?sort=dateOfApplication&order=desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "dateOfApplication"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/applications?status=Rejected",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Rejected"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /applications/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/applications/65021d35f3c4f0d36f71c4f2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications",
+								"65021d35f3c4f0d36f71c4f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /applications",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"applications"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "companies",
+			"item": [
+				{
+					"name": "GET /companies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/companies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /companies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/companies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /companies/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"logo\":\"dddNOTNULL\", \"locations\": [] }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/companies/650222634049b311cb5efc4a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"650222634049b311cb5efc4a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /companies/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"jobs\": [\"6502d74d2350b93179c0c34a\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"650185f8ba7f7681f86eeee8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/companies/6502c9a3a6649df17450493a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"6502c9a3a6649df17450493a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /companies/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/companies/6502ca6aa6649df17450493f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"6502ca6aa6649df17450493f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "companyJobs",
+			"item": [
+				{
+					"name": "GET /companies/:id/jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8/jobs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"650185f8ba7f7681f86eeee8",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies/:id/jobs/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8/jobs/6502d74d2350b93179c0c34a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"companies",
+								"650185f8ba7f7681f86eeee8",
+								"jobs",
+								"6502d74d2350b93179c0c34a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "jobs",
+			"item": [
+				{
+					"name": "POST/jobs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Senior Program Manager\",\n    \"requirements\": \"Masters in Software Engineering and Management\",\n    \"validation\": true,\n    \"application_questions\": \"Do you have experience?\",\n    \"deadline\": \"2023-10-10\",\n    \"companyId\": \"650185f8ba7f7681f86eeee8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET/jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET/jobs/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502cfb49aee073a49f3ba7a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH/jobs/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"companyId\": \"650185f8ba7f7681f86eeee8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502cfb49aee073a49f3ba7a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT/jobs/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Professor of Software Architecture\",\n    \"requirements\": \"PhD in Software Engineering\",\n    \"validation\": true,\n    \"application_questions\": \"Do you like teaching?\",\n    \"deadline\": \"2023-10-10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502cfb49aee073a49f3ba7a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE/jobs/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502d57f2350b93179c0c342",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502d57f2350b93179c0c342"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE/jobs",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "jobApplications",
+			"item": [
+				{
+					"name": "POST job application",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"skills\": [\"JavaScript\", \"Node.js\"],\n    \"questions\": [{\n        \"questionText\": \"What is the level of your code?\",\n        \"answer\": \"It's DRY and SOLID\"\n        }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/65033af73d3e0a61f7e9cc38/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"65033af73d3e0a61f7e9cc38",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all job applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502ba34b273c42593457b5e",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one job application",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications/65031c292a2d0f76bf885ebb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502ba34b273c42593457b5e",
+								"applications",
+								"65031c292a2d0f76bf885ebb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE job application",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications/650305b0f74ca1c1dc5f4a7d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"jobs",
+								"6502ba34b273c42593457b5e",
+								"applications",
+								"650305b0f74ca1c1dc5f4a7d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
