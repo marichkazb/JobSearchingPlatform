@@ -3,7 +3,25 @@ const Company = require("../models/company");
 const getAllCompanies = async (req, res) => {
   try {
     const companies = await Company.find();
-    res.json(companies);
+
+    const companiesWithLinks = companies.map((company) => {
+      const id = company._id;
+      return {
+        ...company._doc,
+        links: [
+          {
+            rel: "self",
+            href: `${req.baseUrl}/${id}`,
+          },
+          {
+            rel: "company-jobs",
+            href: `${req.baseUrl}/${id}/jobs`,
+          },
+        ],
+      };
+    });
+
+    res.json(companiesWithLinks);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -86,6 +104,23 @@ const getCompany = async (req, res) => {
   try {
     const id = req.params.id;
     const company = await Company.findById(id);
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found." });
+    }
+
+    //HATEOAS
+    company._doc.links = [
+      {
+        rel: "self",
+        href: `${req.baseUrl}/${id}`,
+      },
+      {
+        rel: "company-jobs",
+        href: `${req.baseUrl}/${id}/jobs`,
+      },
+    ];
+
     res.json(company);
   } catch (error) {
     console.error(error);
