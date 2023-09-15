@@ -12,6 +12,8 @@ const jobRoutes = require("./routes/jobRoutes");
 const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
 const port = 3000;
 
+const apiVersion = 'v1';
+
 // Connect to MongoDB
 main().catch((err) => console.log(err));
 async function main() {
@@ -33,15 +35,21 @@ app.use(morgan('dev'));
 app.options('*', cors());
 app.use(cors());
 
-app.get('/api', function (req, res) {
-    res.json({ 'message': 'Welcome to your DIT342 backend ExpressJS project!' });
-});
+
+const welcomeMessage = function (req, res) {
+  res.json({
+    message: `Welcome to the API of JobSearch. Current recommended api version is ${apiVersion}.`,
+  });
+};
+
 
 //App routes
-app.use("/api/companies", companyRoutes);
-app.use("/api/admins", adminRoutes);
-app.use("/api/applications", applicationRoutes);
-app.use("/api/jobs", jobRoutes);
+app.use(`/api/${apiVersion}/companies`, companyRoutes);
+app.use(`/api/${apiVersion}/admins`, adminRoutes);
+app.use(`/api/${apiVersion}/applications`, applicationRoutes);
+app.use(`/api/${apiVersion}/jobs`, jobRoutes);
+
+app.get("/api", welcomeMessage);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
