@@ -9,7 +9,10 @@ const adminRoutes = require("./routes/adminRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 
-const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
+//const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI =
+  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/serverTestDB";
+
 const port = 3000;
 
 const apiVersion = 'v1';
