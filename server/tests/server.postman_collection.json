@@ -3,8 +3,8 @@
 		"_postman_id": "72633d31-bf01-4a63-ab9a-b85013f9bc04",
 		"name": "server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29427216",
-		"_collection_link": "https://group5-web-dev.postman.co/workspace/group5-Workspace~b2851e0c-585d-4d33-8ac1-1dfbdc095fe8/collection/29427216-72633d31-bf01-4a63-ab9a-b85013f9bc04?action=share&source=collection_link&creator=29427216"
+		"_exporter_id": "29414206",
+		"_collection_link": "https://group5-web-dev.postman.co/workspace/group5-Workspace~b2851e0c-585d-4d33-8ac1-1dfbdc095fe8/collection/29427216-72633d31-bf01-4a63-ab9a-b85013f9bc04?action=share&source=collection_link&creator=29414206"
 	},
 	"item": [
 		{
@@ -16,14 +16,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/admins",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins"
 							]
 						}
@@ -45,14 +44,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/admins",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins"
 							]
 						}
@@ -74,14 +72,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins",
 								"650226163b0e16219ae88bb2"
 							]
@@ -104,14 +101,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins",
 								"650226163b0e16219ae88bb2"
 							]
@@ -125,14 +121,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/admins/650226163b0e16219ae88bb2",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins",
 								"650226163b0e16219ae88bb2"
 							]
@@ -146,14 +141,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/admins/650225dd3b0e16219ae88bad",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/admins/650225dd3b0e16219ae88bad",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"admins",
 								"650225dd3b0e16219ae88bad"
 							]
@@ -181,14 +175,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							]
 						}
@@ -210,14 +203,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							]
 						}
@@ -230,14 +222,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							]
 						}
@@ -250,14 +241,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/applications/65031b2d2a2d0f76bf885e8a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications/65031b2d2a2d0f76bf885e8a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications",
 								"65031b2d2a2d0f76bf885e8a"
 							]
@@ -280,14 +270,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/65033a253d3e0a61f7e9cc29",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications/65033a253d3e0a61f7e9cc29",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications",
 								"65033a253d3e0a61f7e9cc29"
 							]
@@ -310,14 +299,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications/65033a253d3e0a61f7e9cc29",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications/65033a253d3e0a61f7e9cc29",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications",
 								"65033a253d3e0a61f7e9cc29"
 							]
@@ -331,14 +319,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/applications?sort=dateOfApplication&order=desc",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications?sort=dateOfApplication&order=desc",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							],
 							"query": [
@@ -361,14 +348,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/applications?status=Rejected",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications?status=Rejected",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							],
 							"query": [
@@ -387,14 +373,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/applications/65021d35f3c4f0d36f71c4f2",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications/65021d35f3c4f0d36f71c4f2",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications",
 								"65021d35f3c4f0d36f71c4f2"
 							]
@@ -412,14 +397,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"applications"
 							]
 						}
@@ -437,14 +421,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/companies",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies"
 							]
 						}
@@ -458,7 +441,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\"}",
+							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"jobs\":[\"6504913b930071ede5087a01\"]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -466,14 +449,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/companies",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies"
 							]
 						}
@@ -495,14 +477,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/companies/650222634049b311cb5efc4a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/650222634049b311cb5efc4a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
 								"650222634049b311cb5efc4a"
 							]
@@ -525,14 +506,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/650185f8ba7f7681f86eeee8",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
 								"650185f8ba7f7681f86eeee8"
 							]
@@ -546,16 +526,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/companies/6502c9a3a6649df17450493a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/650491bd3e8deb7ec64b821b",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
-								"6502c9a3a6649df17450493a"
+								"650491bd3e8deb7ec64b821b"
 							]
 						}
 					},
@@ -567,14 +546,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/companies/6502ca6aa6649df17450493f",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/6502ca6aa6649df17450493f",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
 								"6502ca6aa6649df17450493f"
 							]
@@ -593,16 +571,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8/jobs/",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/650491bd3e8deb7ec64b821b/jobs/",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
-								"650185f8ba7f7681f86eeee8",
+								"650491bd3e8deb7ec64b821b",
 								"jobs",
 								""
 							]
@@ -616,14 +593,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/companies/650185f8ba7f7681f86eeee8/jobs/6502d74d2350b93179c0c34a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/companies/650185f8ba7f7681f86eeee8/jobs/6502d74d2350b93179c0c34a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"companies",
 								"650185f8ba7f7681f86eeee8",
 								"jobs",
@@ -653,14 +629,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -673,14 +648,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -693,14 +667,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502cfb49aee073a49f3ba7a"
 							]
@@ -723,14 +696,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502cfb49aee073a49f3ba7a"
 							]
@@ -753,14 +725,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502cfb49aee073a49f3ba7a",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502cfb49aee073a49f3ba7a"
 							]
@@ -774,14 +745,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502d57f2350b93179c0c342",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502d57f2350b93179c0c342",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502d57f2350b93179c0c342"
 							]
@@ -795,14 +765,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -829,14 +798,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/65033af73d3e0a61f7e9cc38/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/65033af73d3e0a61f7e9cc38/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"65033af73d3e0a61f7e9cc38",
 								"applications"
@@ -851,16 +819,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6504913b930071ede5087a01/applications",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
-								"6502ba34b273c42593457b5e",
+								"6504913b930071ede5087a01",
 								"applications"
 							]
 						}
@@ -873,14 +840,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications/65031c292a2d0f76bf885ebb",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502ba34b273c42593457b5e/applications/65031c292a2d0f76bf885ebb",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502ba34b273c42593457b5e",
 								"applications",
@@ -896,14 +862,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/jobs/6502ba34b273c42593457b5e/applications/650305b0f74ca1c1dc5f4a7d",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/6502ba34b273c42593457b5e/applications/650305b0f74ca1c1dc5f4a7d",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
+								"v1",
 								"jobs",
 								"6502ba34b273c42593457b5e",
 								"applications",
@@ -915,36 +880,5 @@
 				}
 			]
 		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "05864cff-5cba-4070-bac3-a59328954ebf",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "e9c319be-3306-4fc5-ba34-fcf64391213a",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"id": "cd185905-a834-4211-8030-583d17702534",
-			"key": "host",
-			"value": "http://localhost:3000",
-			"type": "string"
-		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
