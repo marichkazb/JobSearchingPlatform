@@ -29,7 +29,7 @@ const getJobByID = async (req, res) => {
         const jobID = req.params.id;
         const job = await Job.findById(jobID);
         if (!job) {
-            return res.status(404).json(error.message);
+          return res.status(404).send("Job not found.");
         }
         res.status(200).json(job);
     }
@@ -46,7 +46,7 @@ const updateJobByID = async (req, res) => {
         const updateData = req.body;
         const updatedJob = await Job.findByIdAndUpdate(jobID, updateData, { new: true });
         if (!updatedJob) {
-            return res.status(404).json(error.message);
+          return res.status(404).send("Job not found.");
         }
         res.status(200).json(updatedJob);
     }
@@ -62,7 +62,7 @@ const deleteJobByID = async (req, res) => {
         const jobID = req.params.id;
         const deletedJob = await Job.findByIdAndRemove(jobID);
         if (!deletedJob) {
-            return res.status(404).json(error.message);
+          return res.status(404).send("Job not found.");
         }
         res.status(204).send();
     } catch (error) {
@@ -76,7 +76,7 @@ const deleteAllJobs = async (req, res) => {
     try {
         const deleteAllJobs = await Job.deleteMany({});
         if (deleteAllJobs.deletedCount == 0) {
-            return res.status(404).json(error.message);
+          return res.status(404).send("No jobs found to delete.");
         }
         res.status(204).send();
     } catch (error) {

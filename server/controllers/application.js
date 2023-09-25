@@ -62,6 +62,11 @@ const getApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const application = await Application.findById(id);
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
     res.json(application);
   } catch (error) {
     res.status(500).json(error.message);
@@ -88,6 +93,11 @@ const deleteOneApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const application = await Application.findOneAndRemove(id);
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
     res.status(200).json(`Deleted ${application}`);
   } catch (error) {
     res.status(500).json(error.message);

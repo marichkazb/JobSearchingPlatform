@@ -12,6 +12,23 @@
 			"item": [
 				{
 					"name": "GET /admins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -31,6 +48,22 @@
 				},
 				{
 					"name": "POST /admins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"const responseJson = pm.response.json();\r",
+									"const adminId = responseJson._id;\r",
+									"pm.environment.set(\"adminId\", adminId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -59,6 +92,23 @@
 				},
 				{
 					"name": "PUT /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(\"bee.admin@gmail.com\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -72,7 +122,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -80,7 +130,7 @@
 								"api",
 								"v1",
 								"admins",
-								"650226163b0e16219ae88bb2"
+								"{{adminId}}"
 							]
 						}
 					},
@@ -88,6 +138,23 @@
 				},
 				{
 					"name": "PATCH /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(\"the.first.admin@gmail.com\");",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -101,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -109,7 +176,7 @@
 								"api",
 								"v1",
 								"admins",
-								"650226163b0e16219ae88bb2"
+								"{{adminId}}"
 							]
 						}
 					},
@@ -117,11 +184,33 @@
 				},
 				{
 					"name": "GET /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Check for a specific key in the response JSON\", function () {",
+									"    pm.response.to.have.jsonBody(\"email\");",
+									"});",
+									"pm.test(\"Check for a specific key in the response JSON\", function () {",
+									"    pm.response.to.have.jsonBody(\"name\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/admins/650226163b0e16219ae88bb2",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -129,7 +218,7 @@
 								"api",
 								"v1",
 								"admins",
-								"650226163b0e16219ae88bb2"
+								"{{adminId}}"
 							]
 						}
 					},
@@ -137,11 +226,24 @@
 				},
 				{
 					"name": "DELETE /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/admins/650225dd3b0e16219ae88bad",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -149,7 +251,65 @@
 								"api",
 								"v1",
 								"admins",
-								"650225dd3b0e16219ae88bad"
+								"{{adminId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override DELETE /admins/:id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\": \"DELETE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admins",
+								"{{adminId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override PUT /admins/:id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"_method\": \"PUT\",\"name\": \"Overriding Bee\", \"email\": \"overrider.admin.bee@gmail.com\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admins",
+								"{{adminId}}"
 							]
 						}
 					},
@@ -162,6 +322,23 @@
 			"item": [
 				{
 					"name": "POST /applications collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -190,6 +367,27 @@
 				},
 				{
 					"name": "POST/applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify the response contains the resource ID\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    pm.expect(responseBody[0]).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody.id);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const applicationId = responseJson[0]._id;",
+									"pm.environment.set(\"applicationId\", applicationId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -218,6 +416,26 @@
 				},
 				{
 					"name": "GET /applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -237,11 +455,31 @@
 				},
 				{
 					"name": "GET /application/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/applications/65031b2d2a2d0f76bf885e8a",
+							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -249,7 +487,7 @@
 								"api",
 								"v1",
 								"applications",
-								"65031b2d2a2d0f76bf885e8a"
+								"{{applicationId}}"
 							]
 						}
 					},
@@ -257,6 +495,27 @@
 				},
 				{
 					"name": "PUT /applications/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.questions).to.eql([]);",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.skills).to.eql( [\"JavaScript\", \"Express\", \"Mongoose\"]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -270,7 +529,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/applications/65033a253d3e0a61f7e9cc29",
+							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -278,7 +537,7 @@
 								"api",
 								"v1",
 								"applications",
-								"65033a253d3e0a61f7e9cc29"
+								"{{applicationId}}"
 							]
 						}
 					},
@@ -286,6 +545,23 @@
 				},
 				{
 					"name": "PATCH /applications/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.questions).to.eql([]);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -299,7 +575,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/applications/65033a253d3e0a61f7e9cc29",
+							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -307,7 +583,7 @@
 								"api",
 								"v1",
 								"applications",
-								"65033a253d3e0a61f7e9cc29"
+								"{{applicationId}}"
 							]
 						}
 					},
@@ -315,6 +591,31 @@
 				},
 				{
 					"name": "sort applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const sortingOrder = pm.request.url.query.get('order');",
+									"const sortParameter = pm.request.url.query.get('sort');",
+									"",
+									"pm.test(\"Sorting test\", function () {",
+									"    const responseJson = pm.response.json();",
+									"    for (let i = 0; i < responseJson.length - 1; i++) {",
+									"      const currentValue = responseJson[i][sortParameter];",
+									"      const nextValue = responseJson[i + 1][sortParameter];",
+									"        if (sortingOrder === \"asc\") {",
+									"            pm.expect(new Date(currentValue)).to.be.at.most(new Date(nextValue));",
+									"        } else {",
+									"            pm.expect(new Date(currentValue)).to.be.at.least(new Date(nextValue));",
+									"        }",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -344,6 +645,23 @@
 				},
 				{
 					"name": "filter applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const desiredCategory = pm.request.url.query.get('status');",
+									"pm.test(\"Filtering by category\", function () {",
+									"    const responseJson = pm.response.json();",
+									"    responseJson.forEach(function (item) {",
+									"        pm.expect(item.status).to.eql(desiredCategory);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -369,11 +687,27 @@
 				},
 				{
 					"name": "DELETE /applications/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/applications/65021d35f3c4f0d36f71c4f2",
+							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -381,7 +715,7 @@
 								"api",
 								"v1",
 								"applications",
-								"65021d35f3c4f0d36f71c4f2"
+								"{{applicationId}}"
 							]
 						}
 					},
@@ -389,6 +723,19 @@
 				},
 				{
 					"name": "DELETE /applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -417,6 +764,26 @@
 			"item": [
 				{
 					"name": "GET /companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -436,6 +803,27 @@
 				},
 				{
 					"name": "POST /companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify the response contains the resource ID\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody.id);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson._id;",
+									"pm.environment.set(\"companyId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -464,6 +852,27 @@
 				},
 				{
 					"name": "PUT /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"Cute Bees\");",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(\"bumble.bees@gmail.com\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -477,7 +886,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/companies/650222634049b311cb5efc4a",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -485,7 +894,7 @@
 								"api",
 								"v1",
 								"companies",
-								"650222634049b311cb5efc4a"
+								"{{companyId}}"
 							]
 						}
 					},
@@ -493,6 +902,23 @@
 				},
 				{
 					"name": "PATCH /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.jobs).to.eql([\"6502d74d2350b93179c0c34a\"]);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -506,7 +932,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/companies/650185f8ba7f7681f86eeee8",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -514,7 +940,7 @@
 								"api",
 								"v1",
 								"companies",
-								"650185f8ba7f7681f86eeee8"
+								"{{companyId}}"
 							]
 						}
 					},
@@ -522,11 +948,31 @@
 				},
 				{
 					"name": "GET /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/650491bd3e8deb7ec64b821b",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -534,7 +980,7 @@
 								"api",
 								"v1",
 								"companies",
-								"650491bd3e8deb7ec64b821b"
+								"{{companyId}}"
 							]
 						}
 					},
@@ -542,11 +988,27 @@
 				},
 				{
 					"name": "DELETE /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/6502ca6aa6649df17450493f",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -554,7 +1016,65 @@
 								"api",
 								"v1",
 								"companies",
-								"6502ca6aa6649df17450493f"
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override DELETE /companies/:id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\": \"DELETE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override PUT /companies/:id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\": \"PUT\",\r\n    \"name\": \"Cute Bees\",\r\n    \"email\": \"bumble.bees@gmail.com\",\r\n    \"logo\": \"overriden_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": [\r\n        \"6504913b930071ede5087a01\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
 							]
 						}
 					},
@@ -616,6 +1136,27 @@
 			"item": [
 				{
 					"name": "POST/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Set the new job id as an environment variable\", function(){",
+									"    const responseBody = pm.response.json();",
+									"    const jobID = responseBody._id;",
+									"    pm.environment.set(\"newJobId\", jobID);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -629,13 +1170,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs",
+							"raw": "http://localhost:3000/jobs",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs"
 							]
 						}
@@ -644,17 +1185,37 @@
 				},
 				{
 					"name": "GET/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs",
+							"raw": "http://localhost:3000/jobs",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs"
 							]
 						}
@@ -683,6 +1244,23 @@
 				},
 				{
 					"name": "PATCH/jobs/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.companyId).to.eql(\"650185f8ba7f7681f86eeee8\");",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -696,15 +1274,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
+							"raw": "http://localhost:3000/jobs/650c4071aa15264474bc79da",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs",
-								"6502cfb49aee073a49f3ba7a"
+								"650c4071aa15264474bc79da"
 							]
 						}
 					},
@@ -712,6 +1290,30 @@
 				},
 				{
 					"name": "PUT/jobs/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.description).to.eql(\"Professor of Software Architecture\");",
+									"    pm.expect(jsonData.requirements).to.eql(\"PhD in Software Engineering\");",
+									"    pm.expect(jsonData.validation).to.eql(true);",
+									"    pm.expect(jsonData.application_questions).to.eql(\"Do you like teaching?\");",
+									"    pm.expect(jsonData.deadline).to.eql(\"2023-10-10\");",
+									"});",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -725,15 +1327,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
+							"raw": "http://localhost:3000/jobs/650d8dfed565b1ba2b78dd03",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs",
-								"6502cfb49aee073a49f3ba7a"
+								"650d8dfed565b1ba2b78dd03"
 							]
 						}
 					},
@@ -741,19 +1343,35 @@
 				},
 				{
 					"name": "DELETE/jobs/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502d57f2350b93179c0c342",
+							"raw": "http://localhost:3000/jobs/650d8dfed565b1ba2b78dd03",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs",
-								"6502d57f2350b93179c0c342"
+								"650d8dfed565b1ba2b78dd03"
 							]
 						}
 					},
@@ -761,17 +1379,33 @@
 				},
 				{
 					"name": "DELETE/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs",
+							"raw": "http://localhost:3000/jobs",
+							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"jobs"
 							]
 						}

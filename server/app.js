@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
+const methodOverride = require("method-override");
 const history = require('connect-history-api-fallback');
 const companyRoutes = require("./routes/companyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -39,10 +40,13 @@ app.use(morgan('dev'));
 app.options('*', cors());
 app.use(cors());
 
+// Enable HTTP method overriding (currently used for the /admins/ API endpoint)
+//app.use(methodOverride('_method')); // for using with 'x-www-form-urlencoded' or 'form-data' request body formats. currently not in use. 
+app.use(methodOverride((req) => req.body._method)); // for using with 'json' request body format.
 
 const welcomeMessage = function (req, res) {
   res.json({
-    message: `Welcome to the API of JobSearch. Current recommended api version is ${apiVersion}.`,
+    message: `Welcome to the API of JobSearch. Current recommended version is ${apiVersion}.`,
   });
 };
 
