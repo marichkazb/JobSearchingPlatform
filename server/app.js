@@ -5,6 +5,10 @@ const path = require('path');
 const cors = require('cors');
 const methodOverride = require("method-override");
 const history = require('connect-history-api-fallback');
+
+const admin = require("firebase-admin");
+const serviceAccount = require("./firebaseServiceAccount.json");
+
 const companyRoutes = require("./routes/companyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
@@ -40,15 +44,26 @@ app.use(morgan('dev'));
 app.options('*', cors());
 app.use(cors());
 
+
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://jobsearch-e64b5.firebaseio.com",
+});
+
+
 // Enable HTTP method overriding (currently used for the /admins/ API endpoint)
 //app.use(methodOverride('_method')); // for using with 'x-www-form-urlencoded' or 'form-data' request body formats. currently not in use. 
 app.use(methodOverride((req) => req.body._method)); // for using with 'json' request body format.
+
 
 const welcomeMessage = function (req, res) {
   res.json({
     message: `Welcome to the API of JobSearch. Current recommended version is ${apiVersion}.`,
   });
 };
+
+
 
 
 //App routes
