@@ -12,6 +12,7 @@ const postApplicationsForJobs = async (req, res) => {
         }
         const application = new Application({ ...applicationData, jobId });
         job.applications.push(application);
+        application.save();
         await job.save();
         res.status(201).json(application);
     } catch (error) {

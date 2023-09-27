@@ -1,12 +1,21 @@
 <template>
   <div id="app">
+    <Navbar />
     <div id="nav">
-      <router-link to="/">Home</router-link>
     </div>
     <!-- Render the content of the current page view -->
     <router-view/>
   </div>
 </template>
+
+<script>
+import Navbar from './views/Navbar.vue'
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
 
 <style>
 #app {
@@ -15,5 +24,22 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  overflow: hidden;
+}
+#nav {
+  margin: 32px;
+}
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    align-self: flex-start;
+    margin-left: 18px;
+}
+.pageWrapper {
+    margin: 56px;
+    margin-left: 78px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 </style>
