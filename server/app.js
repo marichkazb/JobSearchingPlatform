@@ -10,7 +10,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./firebaseServiceAccount.json");
 
 //Temporary solution to attribute roles to users. Will be deleted soon.
-const authRoutes = require("./routes/authRoutes");
+const authRoles = require("./authRoles");
 
 const companyRoutes = require("./routes/companyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -67,8 +67,8 @@ const welcomeMessage = function (req, res) {
 };
 
 
-//Temporary solution to attribute roles to users. Will be deleted soon.
-app.use(`/api/${apiVersion}/auth`, authRoutes);
+//Temporary solution to hand roles to admins, companies and users. Will be deleted soon.
+app.use(`/api/${apiVersion}/auth`, authRoles);
 
 //App routes
 app.use(`/api/${apiVersion}/companies`, companyRoutes);
