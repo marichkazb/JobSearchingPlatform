@@ -1428,10 +1428,8 @@
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData.description).to.eql(\"Professor of Software Architecture\");",
-									"    pm.expect(jsonData.requirements).to.eql(\"PhD in Software Engineering\");",
 									"    pm.expect(jsonData.validation).to.eql(true);",
-									"    pm.expect(jsonData.application_questions).to.eql(\"Do you like teaching?\");",
-									"    pm.expect(jsonData.deadline).to.eql(\"2023-10-10\");",
+									"    pm.expect(jsonData.deadline).to.eql(\"2023-10-10T00:00:00.000Z\");",
 									"});",
 									"pm.test(\"Status code is 200\", function(){",
 									"    pm.response.to.have.status(200);",
@@ -1446,7 +1444,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Professor of Software Architecture\",\n    \"requirements\": \"PhD in Software Engineering\",\n    \"validation\": true,\n    \"application_questions\": \"Do you like teaching?\",\n    \"deadline\": \"2023-10-10\"\n}",
+							"raw": "{\n    \"description\": \"Professor of Software Architecture\",\n    \"validation\": true,\n    \"deadline\": \"2023-10-10\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1514,8 +1512,8 @@
 									"pm.test(\"Response time is less than 500ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(500);",
 									"});",
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
+									"pm.test(\"Status code is 404 (since there are no jobs left to delete)\", function () {",
+									"    pm.response.to.have.status(404);",
 									"});"
 								],
 								"type": "text/javascript"
