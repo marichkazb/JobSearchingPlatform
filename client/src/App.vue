@@ -24,6 +24,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  overflow: hidden;
 }
 #nav {
   margin: 32px;
@@ -33,5 +34,12 @@ export default {
     font-weight: 800;
     align-self: flex-start;
     margin-left: 18px;
+}
+.pageWrapper {
+    margin: 56px;
+    margin-left: 78px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 </style>
