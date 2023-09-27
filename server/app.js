@@ -9,6 +9,9 @@ const history = require('connect-history-api-fallback');
 const admin = require("firebase-admin");
 const serviceAccount = require("./firebaseServiceAccount.json");
 
+//Temporary solution to attribute roles to users. Will be deleted soon.
+const authRoutes = require("./routes/authRoutes");
+
 const companyRoutes = require("./routes/companyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
@@ -64,7 +67,8 @@ const welcomeMessage = function (req, res) {
 };
 
 
-
+//Temporary solution to attribute roles to users. Will be deleted soon.
+app.use(`/api/${apiVersion}/auth`, authRoutes);
 
 //App routes
 app.use(`/api/${apiVersion}/companies`, companyRoutes);
