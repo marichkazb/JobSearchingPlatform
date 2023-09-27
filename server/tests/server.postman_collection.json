@@ -11,6 +11,54 @@
 			"name": "admins",
 			"item": [
 				{
+					"name": "submit credentials (auth)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"pm.environment.set(\"idToken\", responseData.idToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin.bee@gmail.com\",\r\n  \"password\": \"adminbee\",\r\n  \"returnSecureToken\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3MhuxmWra3kYJBRQ0ZJiwsaw-LJbU29s\n",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "AIzaSyD3MhuxmWra3kYJBRQ0ZJiwsaw-LJbU29s\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET /admins",
 					"event": [
 						{
@@ -31,7 +79,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/admins",
 							"host": [
@@ -66,7 +120,13 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \"name\": \"Admin Bee\", \"email\": \"bee.admin@gmail.com\" }",
@@ -111,7 +171,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \"name\": \"Admin Bee II\", \"email\": \"bee.admin@gmail.com\" }",
@@ -157,7 +223,13 @@
 					],
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \"email\": \"the.first.admin@gmail.com\"}",
@@ -168,7 +240,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}?=",
 							"host": [
 								"{{host}}"
 							],
@@ -177,6 +249,12 @@
 								"v1",
 								"admins",
 								"{{adminId}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -208,7 +286,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/admins/{{adminId}}",
 							"host": [
@@ -241,9 +325,15 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"raw": "{{host}}/api/v1/admins/{{adminId}}?",
 							"host": [
 								"{{host}}"
 							],
@@ -252,6 +342,12 @@
 								"v1",
 								"admins",
 								"{{adminId}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
 							]
 						}
 					},
@@ -261,7 +357,13 @@
 					"name": "override DELETE /admins/:id",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"_method\": \"DELETE\"\r\n}",
@@ -290,7 +392,13 @@
 					"name": "override PUT /admins/:id",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{idToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \"_method\": \"PUT\",\"name\": \"Overriding Bee\", \"email\": \"overrider.admin.bee@gmail.com\" }",
@@ -344,7 +452,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    { \"skills\": [\"JavaScript\", \"Node.js\"] },\n    {\n    \"skills\": [\"Python\", \"Django\"],\n    \"questions\": [\n      {\n        \"questionText\": \"What is your preferred web framework?\",\n        \"answer\": \"Django\"\n      }\n    ]},\n    {\n        \"skills\": [\"Java\", \"Spring\"],\n        \"status\": \"Rejected\"\n    },\n    {\n        \"questions\": [\n      {\n        \"questionText\": \"What is your favorite IDE for Java development?\",\n        \"answer\": \"IntelliJ IDEA\"\n      }\n    ]\n    }\n]",
+							"raw": "[\n    {\n        \"firstName\": \"Ann\",\n        \"lastName\": \"Smith\",\n        \"email\": \"ann.smith@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/annsmith\",\n        \"motivation\": \"I am dedicated to delivering high-quality results and thrive in a collaborative work environment.\"\n    },\n    {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"email\": \"john.doe@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/johndoe\",\n        \"motivation\": \"I am passionate about making a positive impact through innovative technologies and would love the opportunity to contribute to your team.\"\n    },\n    {\n        \"firstName\": \"Alice\",\n        \"lastName\": \"Johnson\",\n        \"email\": \"alice.johnson@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/alicejohnson\",\n        \"motivation\": \"I have a strong background in software development and am excited about the challenges your company is tackling.\"\n    }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -393,7 +501,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n    \"skills\": [\"JavaScript\", \"Node.js\"],\n    \"questions\": [{\n        \"questionText\": \"What is the level of your code?\",\n        \"answer\": \"It's DRY and SOLID\"\n        }]\n}",
+							"raw": "{\n    \"firstName\": \"Bob\",\n    \"lastName\": \"Williams\",\n    \"email\": \"bob.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/bobwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis and eager to apply my skills to drive data-driven decisions within your organization.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -505,11 +613,11 @@
 									"});",
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.questions).to.eql([]);",
+									"    pm.expect(jsonData.firstName).to.eql(\"Jack\");",
 									"});",
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.skills).to.eql( [\"JavaScript\", \"Express\", \"Mongoose\"]);",
+									"    pm.expect(jsonData.email).to.eql(\"jack.williams@gmail.com\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -521,7 +629,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\n    \"skills\": [\"JavaScript\", \"Express\", \"Mongoose\" ],\n    \"dateOfApplication\": \"2023-08-14T15:50:34.706Z\",\n    \"questions\": []\n  }",
+							"raw": "{\n    \"firstName\": \"Jack\",\n    \"lastName\": \"Williams\",\n    \"email\": \"jack.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/jackwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,7 +660,7 @@
 								"exec": [
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.questions).to.eql([]);",
+									"    pm.expect(jsonData.linkedIn).to.eql(\"linkChanged\");",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -567,7 +675,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"questions\": [] }",
+							"raw": "{ \"linkedIn\": \"linkChanged\" }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1091,7 +1199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/650491bd3e8deb7ec64b821b/jobs/",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/",
 							"host": [
 								"{{host}}"
 							],
@@ -1099,7 +1207,7 @@
 								"api",
 								"v1",
 								"companies",
-								"650491bd3e8deb7ec64b821b",
+								"{{companyId}}",
 								"jobs",
 								""
 							]
@@ -1113,7 +1221,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/650185f8ba7f7681f86eeee8/jobs/6502d74d2350b93179c0c34a",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/{{newJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1121,9 +1229,9 @@
 								"api",
 								"v1",
 								"companies",
-								"650185f8ba7f7681f86eeee8",
+								"{{companyId}}",
 								"jobs",
-								"6502d74d2350b93179c0c34a"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -1162,7 +1270,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Senior Program Manager\",\n    \"requirements\": \"Masters in Software Engineering and Management\",\n    \"validation\": true,\n    \"application_questions\": \"Do you have experience?\",\n    \"deadline\": \"2023-10-10\",\n    \"companyId\": \"650185f8ba7f7681f86eeee8\"\n}",
+							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1170,13 +1278,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -1209,13 +1317,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -1224,11 +1332,30 @@
 				},
 				{
 					"name": "GET/jobs/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502cfb49aee073a49f3ba7a",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1236,7 +1363,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"6502cfb49aee073a49f3ba7a"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -1274,15 +1401,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/jobs/650c4071aa15264474bc79da",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs",
-								"650c4071aa15264474bc79da"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -1327,15 +1454,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/jobs/650d8dfed565b1ba2b78dd03",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs",
-								"650d8dfed565b1ba2b78dd03"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -1363,15 +1490,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/jobs/650d8dfed565b1ba2b78dd03",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs",
-								"650d8dfed565b1ba2b78dd03"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -1399,13 +1526,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/jobs",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/jobs",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"jobs"
 							]
 						}
@@ -1419,6 +1546,18 @@
 			"item": [
 				{
 					"name": "POST job application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jobApplicationId = pm.response.json()._id;",
+									"pm.environment.set(\"jobApplicationId\", jobApplicationId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1432,7 +1571,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/65033af73d3e0a61f7e9cc38/applications",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications",
 							"host": [
 								"{{host}}"
 							],
@@ -1440,7 +1579,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"65033af73d3e0a61f7e9cc38",
+								"{{newJobId}}",
 								"applications"
 							]
 						}
@@ -1453,7 +1592,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6504913b930071ede5087a01/applications",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications",
 							"host": [
 								"{{host}}"
 							],
@@ -1461,7 +1600,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"6504913b930071ede5087a01",
+								"{{newJobId}}",
 								"applications"
 							]
 						}
@@ -1474,7 +1613,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502ba34b273c42593457b5e/applications/65031c292a2d0f76bf885ebb",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1482,9 +1621,9 @@
 								"api",
 								"v1",
 								"jobs",
-								"6502ba34b273c42593457b5e",
+								"{{newJobId}}",
 								"applications",
-								"65031c292a2d0f76bf885ebb"
+								"{{jobApplicationId}}"
 							]
 						}
 					},
@@ -1496,7 +1635,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/6502ba34b273c42593457b5e/applications/650305b0f74ca1c1dc5f4a7d",
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1504,9 +1643,9 @@
 								"api",
 								"v1",
 								"jobs",
-								"6502ba34b273c42593457b5e",
+								"{{newJobId}}",
 								"applications",
-								"650305b0f74ca1c1dc5f4a7d"
+								"{{jobApplicationId}}"
 							]
 						}
 					},
