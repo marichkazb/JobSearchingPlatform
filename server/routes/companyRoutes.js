@@ -7,14 +7,20 @@ const { authenticate, checkIfCompany, verifyCompanyEmail } = require("../authMid
 
 router.use("/:companyId/jobs", companyJobRoutes);
 
-router.use(authenticate);
+//router.use(authenticate);
 
+//router.get("/", companyController.getAllCompanies);
+//router.post("/", checkIfCompany, verifyCompanyEmail, companyController.createCompany);
+//router.get("/:id", companyController.getCompany);
+//router.delete("/:id", checkIfCompany, verifyCompanyEmail, companyController.deleteOneCompany);
+//router.put("/:id", checkIfCompany, verifyCompanyEmail, companyController.updateCompany);
+//router.patch("/:id", checkIfCompany, verifyCompanyEmail, companyController.updatePartOfCompany);
 
 router.get("/", companyController.getAllCompanies);
-router.post("/", checkIfCompany, verifyCompanyEmail, companyController.createCompany);
+router.post("/", companyController.createCompany);
 router.get("/:id", companyController.getCompany);
-router.delete("/:id", checkIfCompany, verifyCompanyEmail, companyController.deleteOneCompany);
-router.put("/:id", checkIfCompany, verifyCompanyEmail, companyController.updateCompany);
-router.patch("/:id", checkIfCompany, verifyCompanyEmail, companyController.updatePartOfCompany);
+router.delete("/:id", companyController.deleteOneCompany);
+router.put("/:id", companyController.updateCompany);
+router.patch("/:id", companyController.updatePartOfCompany);
 
 module.exports = router;
