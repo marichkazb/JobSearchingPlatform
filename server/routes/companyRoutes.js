@@ -3,13 +3,18 @@ const router = express.Router({ mergeParams: true }); // Accessing params from p
 const companyController = require("../controllers/company");
 const companyJobRoutes = require("./companyJobRoutes");
 
+const { authenticate, checkIfCompany, verifyCompanyEmail } = require("../authMiddleware");
+
 router.use("/:companyId/jobs", companyJobRoutes);
 
+router.use(authenticate);
+
+
 router.get("/", companyController.getAllCompanies);
-router.post("/", companyController.createCompany);
+router.post("/", checkIfCompany, verifyCompanyEmail, companyController.createCompany);
 router.get("/:id", companyController.getCompany);
-router.delete("/:id", companyController.deleteOneCompany);
-router.put("/:id", companyController.updateCompany);
-router.patch("/:id", companyController.updatePartOfCompany);
+router.delete("/:id", checkIfCompany, verifyCompanyEmail, companyController.deleteOneCompany);
+router.put("/:id", checkIfCompany, verifyCompanyEmail, companyController.updateCompany);
+router.patch("/:id", checkIfCompany, verifyCompanyEmail, companyController.updatePartOfCompany);
 
 module.exports = router;
