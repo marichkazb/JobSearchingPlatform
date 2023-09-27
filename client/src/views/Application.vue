@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapperApplication">
+    <div class="pageWrapper">
         <p class="title">Job Application</p>
         <div class="inputContainer">
             <b-form-input
@@ -20,7 +20,7 @@
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
                 ></b-form-file>
-             <b-button @click="postApplication()" class="applyBtn">Apply</b-button>
+             <b-button @click="postApplication()" class="applyBtn" variant="primary">Apply</b-button>
         </div>
         <div>
   </div>
@@ -79,7 +79,7 @@ export default {
       const requestData = {}
       // Perform validation for each field
       this.inputFields.forEach((field) => {
-        if (!field.value) {
+        if (field.id !== 'motivation' && !field.value) {
           this.errors[field.id] = `${field.placeholder} is required`
         } else {
           requestData[field.id] = field.value
@@ -105,15 +105,6 @@ export default {
 </script>
 
 <style scoped>
-.btn_message {
-  margin-bottom: 1em;
-}
-.wrapperApplication {
-    margin: 32px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-}
 .input {
     margin: 16px;
     height: 50px;
@@ -123,7 +114,7 @@ export default {
     height: 100px;
 }
 .inputContainer {
-    width: 70%
+    width: 50%
 }
 .applyBtn {
     background-color:rgba(7, 25, 82, 1);
