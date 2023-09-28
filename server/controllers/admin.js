@@ -22,7 +22,11 @@ const createAdmin = async (req, res) => {
 const deleteOneAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-    const admin = await Admin.findOneAndRemove({ _id: id });
+const admin = await Admin.findOneAndRemove({ _id: id });
+if (!admin) {
+  return res.status(404).json({ message: "Admin not found" });
+}
+    
     res.status(200).json(`Deleted ${admin}`);
   } catch (error) {
     console.error(error);
@@ -36,8 +40,10 @@ const deleteOneAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-    const admin = await Admin.findById(id);
-
+const admin = await Admin.findById(id);
+if (!admin) {
+  return res.status(404).json({ message: "Admin not found" });
+}
     admin.name = req.body.name;
     admin.email = req.body.email;
 
@@ -76,6 +82,9 @@ const getAdmin = async (req, res) => {
   try {
     const id = req.params.id;
     const admin = await Admin.findById(id);
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
     res.json(admin);
   } catch (error) {
     console.error(error);

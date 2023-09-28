@@ -3,7 +3,15 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
+const methodOverride = require("method-override");
 const history = require('connect-history-api-fallback');
+
+const admin = require("firebase-admin");
+const serviceAccount = require("./firebaseServiceAccount.json");
+
+//Temporary solution to attribute roles to users. Will be deleted soon.
+const authRoles = require("./authRoles");
+
 const companyRoutes = require("./routes/companyRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
@@ -40,12 +48,27 @@ app.options('*', cors());
 app.use(cors());
 
 
+// Initialize Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://jobsearch-e64b5.firebaseio.com",
+});
+
+
+// Enable HTTP method overriding (currently used for the /admins/ API endpoint)
+//app.use(methodOverride('_method')); // for using with 'x-www-form-urlencoded' or 'form-data' request body formats. currently not in use. 
+app.use(methodOverride((req) => req.body._method)); // for using with 'json' request body format.
+
+
 const welcomeMessage = function (req, res) {
   res.json({
-    message: `Welcome to the API of JobSearch. Current recommended api version is ${apiVersion}.`,
+    message: `Welcome to the API of JobSearch. Current recommended version is ${apiVersion}.`,
   });
 };
 
+
+//Temporary solution to hand roles to admins, companies and users. Will be deleted soon.
+app.use(`/api/${apiVersion}/auth`, authRoles);
 
 //App routes
 app.use(`/api/${apiVersion}/companies`, companyRoutes);

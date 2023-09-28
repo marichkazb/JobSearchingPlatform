@@ -49,6 +49,11 @@ const deleteOneCompany = async (req, res) => {
   try {
     const id = req.params.id;
     const company = await Company.findOneAndRemove({ _id: id });
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
     res.status(200).json(`Deleted ${company}`);
   } catch (error) {
     console.error(error);
@@ -63,6 +68,10 @@ const updateCompany = async (req, res) => {
   try {
     const id = req.params.id;
     const company = await Company.findById(id);
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
 
     company.name = req.body.name;
     company.email = req.body.email;
