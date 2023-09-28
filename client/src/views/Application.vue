@@ -1,7 +1,8 @@
 <template>
-    <div class="pageWrapper">
-        <p class="title">Job Application</p>
-        <div class="inputContainer">
+    <div class="pageWrapper center">
+        <Alert :alertMessage="alertMessage" :alertId="alertId" :getVariant="variant" />
+        <p class="title" id="jobApplicationTitle">Job Application</p>
+        <div v-if="!formSubmitted" class="inputContainer">
             <b-form-input
                 v-for="(field, index) in inputFields"
                 :key="index"
@@ -15,12 +16,17 @@
                 </div>
             </b-form-input>
             <b-form-file
-                v-model="file1"
                 class="input"
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
                 ></b-form-file>
              <b-button @click="postApplication()" class="applyBtn" variant="primary">Apply</b-button>
+        </div>
+        <div v-else>
+            <div class="thankYouText">
+              Thank you! Your application is recorded!
+            </div>
+            <b-button @click="goBack()" class="backBtn" variant="primary">Go Back</b-button>
         </div>
         <div>
   </div>
@@ -29,8 +35,13 @@
 
 <script>
 import { Api } from '@/Api'
+import Alert from './Alert.vue'
+
 export default {
   name: 'application',
+  components: {
+    Alert
+  },
   data() {
     return {
       firstName: '',
@@ -39,6 +50,10 @@ export default {
       linkedIn: '',
       motivation: '',
       errors: '',
+      alertMessage: undefined,
+      alertId: undefined,
+      variant: undefined,
+      formSubmitted: false,
       inputFields: [
         {
           id: 'firstName',
@@ -89,16 +104,25 @@ export default {
         Api
           .post(`/v1/jobs/${this.id()}/applications`, requestData)
           .then(response => {
-            console.log('Response from server:', response.data)
-            this.$router.go(-1)
+            this.alertMessage = 'Successfully posted an application'
+            this.variant = 'success'
+            this.alertId = Math.random()
+            this.formSubmitted = true
           })
           .catch(error => {
             this.message = error.response.data
           })
+      } else {
+        this.alertMessage = 'Something went wrong.. Please, fill all the required fields to proceed'
+        this.variant = 'danger'
+        this.alertId = Math.random()
       }
     },
     id() {
       return this.$route.params.id
+    },
+    goBack() {
+      this.$router.go(-1)
     }
   }
 }
@@ -120,5 +144,22 @@ export default {
     background-color:rgba(7, 25, 82, 1);
     width: 248px;
     height: 56px;
+}
+.backBtn {
+    background-color:rgba(7, 25, 82, 1);
+    width: 130px;
+    height: 40px;
+}
+.thankYouText {
+  font-size: 24px;
+  margin-top: 70px;
+  margin-bottom: 20px;
+}
+.center {
+  align-items: center;
+}
+#jobApplicationTitle {
+  margin-right: 300px;
+  align-self: auto;
 }
 </style>

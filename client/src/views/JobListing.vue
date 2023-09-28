@@ -1,5 +1,6 @@
 <template>
     <div class="pageWrapper">
+        <Alert :alertMessage="alertMessage" :alertId="alertId"/>
         <p class="title">Trending now🔥</p>
         <b-button @click="deleteAllJobs()" variant="danger" class="applyBtn redBtn">Delete all!!</b-button>
         <div class="content">
@@ -29,14 +30,21 @@
 <script>
 
 import { Api } from '@/Api'
+import Alert from './Alert.vue'
 const image = require('../assets/jobIcon.png')
 
 export default {
-  name: 'jobListing',
+  components: {
+    Alert
+  },
+  name: 'JobListing',
   data() {
     return {
       jobsData: this.getJobs,
-      image
+      image,
+      alertMessage: 'Test1',
+      showAlert: false,
+      alertId: undefined
     }
   },
   created() {
@@ -57,6 +65,8 @@ export default {
       this.$router.push(`/application/${job._id}`)
     },
     deleteJob(job) {
+      this.alertMessage = `Successfully deleted a job ${job.title}`
+      this.alertId = job._id
       Api.delete(`/v1/jobs/${job._id}`)
         .then(response => {
           this.jobsData = this.jobsData.filter(item => item._id !== job._id)
@@ -66,6 +76,9 @@ export default {
         })
     },
     deleteAllJobs() {
+      this.alertMessage = 'Successfully deleted all jobs'
+      this.alertId = Math.random()
+      console.log(this.alertId)
       Api.delete('v1/jobs')
         .then(response => {
           this.jobsData = []
@@ -130,8 +143,8 @@ export default {
   font-size: 24px;
 }
 .desc {
-  color: grey;
-  font-weight: 100;
+  color: rgb(0, 0, 0);
+  font-weight: 300;
   align-content: flex-end;
 }
 
@@ -140,17 +153,5 @@ export default {
   width: 200px;
   border: none;
   margin-left: 20px;
-}
-.alert-top {
-  position: fixed;
-  top: 85vh;
-  left: 24px;
-  right: 0;
-  z-index: 1000;
-  max-width: 400px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
 </style>
