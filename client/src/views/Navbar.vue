@@ -59,6 +59,7 @@ export default {
 
 <style>
     .wrapper {
+        font-family: 'Raleway', 'Avenir', Helvetica, Arial, sans-serif;
         background-color: rgba(7, 25, 82, 1);
         padding-left: 80px;
         position: sticky;
