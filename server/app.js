@@ -49,11 +49,12 @@ app.use(cors());
 
 
 // Initialize Firebase Admin SDK
+const projectId = serviceAccount.project_id;
+const databaseURL = `https://${projectId}.firebaseio.com`;
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://jobsearch-e64b5.firebaseio.com",
+  databaseURL: databaseURL,
 });
-
 
 // Enable HTTP method overriding (currently used for the /admins/ API endpoint)
 //app.use(methodOverride('_method')); // for using with 'x-www-form-urlencoded' or 'form-data' request body formats. currently not in use. 
