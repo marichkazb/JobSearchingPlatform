@@ -3,8 +3,8 @@
 		"_postman_id": "72633d31-bf01-4a63-ab9a-b85013f9bc04",
 		"name": "server",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29414206",
-		"_collection_link": "https://group5-web-dev.postman.co/workspace/group5-Workspace~b2851e0c-585d-4d33-8ac1-1dfbdc095fe8/collection/29427216-72633d31-bf01-4a63-ab9a-b85013f9bc04?action=share&source=collection_link&creator=29414206"
+		"_exporter_id": "29427216",
+		"_collection_link": "https://group5-web-dev.postman.co/workspace/group5-Workspace~b2851e0c-585d-4d33-8ac1-1dfbdc095fe8/collection/29427216-72633d31-bf01-4a63-ab9a-b85013f9bc04?action=share&source=collection_link&creator=29427216"
 	},
 	"item": [
 		{
@@ -18,7 +18,10 @@
 							"script": {
 								"exec": [
 									"const responseData = pm.response.json();\r",
-									"pm.environment.set(\"idToken\", responseData.idToken);"
+									"pm.environment.set(\"idToken\", responseData.idToken);\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -355,6 +358,19 @@
 				},
 				{
 					"name": "override DELETE /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -390,6 +406,19 @@
 				},
 				{
 					"name": "override PUT /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1132,6 +1161,19 @@
 				},
 				{
 					"name": "override DELETE /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1161,6 +1203,19 @@
 				},
 				{
 					"name": "override PUT /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1194,12 +1249,75 @@
 			"name": "companyJobs",
 			"item": [
 				{
+					"name": "POST/company with jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson._id;",
+									"pm.environment.set(\"companyWithJobsId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"jobs\":[\"6504913b930071ede5087a01\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET /companies/:id/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/",
+							"raw": "{{host}}/api/v1/companies/{{companyWithJobsId}}/jobs/",
 							"host": [
 								"{{host}}"
 							],
@@ -1207,7 +1325,7 @@
 								"api",
 								"v1",
 								"companies",
-								"{{companyId}}",
+								"{{companyWithJobsId}}",
 								"jobs",
 								""
 							]
@@ -1217,11 +1335,27 @@
 				},
 				{
 					"name": "GET /companies/:id/jobs/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/{{newJobId}}",
+							"raw": "{{host}}/api/v1/companies/{{companyWithJobsId}}/jobs/{{newJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1229,7 +1363,7 @@
 								"api",
 								"v1",
 								"companies",
-								"{{companyId}}",
+								"{{companyWithJobsId}}",
 								"jobs",
 								"{{newJobId}}"
 							]
@@ -1242,6 +1376,55 @@
 		{
 			"name": "jobs",
 			"item": [
+				{
+					"name": "POST/collection of jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Set the new job id as an environment variable\", function(){",
+									"    const responseBody = pm.response.json();",
+									"    const jobID = responseBody[0]._id;",
+									"    pm.environment.set(\"newJobId\", jobID);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n    \"title\": \"Trainee UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Junior NodeJS Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Middle Java Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, \n{\n    \"title\": \"Senior System Architect\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "POST/jobs",
 					"event": [
@@ -1511,9 +1694,6 @@
 								"exec": [
 									"pm.test(\"Response time is less than 500ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(500);",
-									"});",
-									"pm.test(\"Status code is 404 (since there are no jobs left to delete)\", function () {",
-									"    pm.response.to.have.status(404);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1549,6 +1729,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
 									"const jobApplicationId = pm.response.json()._id;",
 									"pm.environment.set(\"jobApplicationId\", jobApplicationId);"
 								],
@@ -1586,6 +1769,22 @@
 				},
 				{
 					"name": "GET all job applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1607,6 +1806,25 @@
 				},
 				{
 					"name": "GET one job application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1629,6 +1847,22 @@
 				},
 				{
 					"name": "DELETE job application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 404 (since there are no jobs left to delete)\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
