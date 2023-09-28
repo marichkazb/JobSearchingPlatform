@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      dismissSecs: 5000,
+      dismissSecs: 5,
       dismissCountDown: 0
     }
   },
