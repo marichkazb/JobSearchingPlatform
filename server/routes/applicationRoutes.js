@@ -1,15 +1,32 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const applicationController = require("../controllers/application");
+const {
+  getAllApplications,
+  createApplicationCollection,
+  createApplication,
+  deleteAllApplications,
+  getApplication,
+  updateApplication,
+  deleteOneApplication,
+} = require("../controllers/application");
+const {
+  authenticate,
+  checkIfAdmin,
+  checkIfCompany,
+  checkIfUser,
+  verifyCompanyEmail,
+  verifyUserEmail,
+} = require("../authMiddleware");
 
-router.get("/", applicationController.getAllApplications);
-router.post("/", applicationController.createApplicationCollection);
-router.post("/", applicationController.createApplication);
-router.delete("/", applicationController.deleteAllApplications);
+router.use(authenticate);
 
-router.get("/:id", applicationController.getApplication);
-router.put("/:id", applicationController.updateApplication);
-router.patch("/:id", applicationController.updateApplication);
-router.delete("/:id", applicationController.deleteOneApplication);
+router.get("/", checkIfAdmin, getAllApplications);
+router.post("/", checkIfCompany, createApplicationCollection);
+router.post("/", checkIfCompany, createApplication);
+router.delete("/", checkIfAdmin, deleteAllApplications);
+router.get("/:id", verifyCompanyEmail, verifyUserEmail, getApplication); // NEEDS REVISITING
+router.put("/:id", checkIfUser, verifyUserEmail, updateApplication); 
+router.patch("/:id", checkIfUser, verifyUserEmail, updateApplication);
+router.delete("/:id", checkIfUser, verifyUserEmail, deleteOneApplication);
 
 module.exports = router;

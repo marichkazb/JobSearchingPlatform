@@ -1,15 +1,24 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const adminController = require("../controllers/admin");
-const { authenticate, checkIfCompany, verifyCompanyEmail } = require("../authMiddleware");
+//const adminController  = require("../controllers/admin"); //refactored to the line below, will delete soon
+const {
+  getAllAdmins,
+  createAdmin,
+  getAdmin,
+  deleteOneAdmin,
+  updateAdmin,
+  updatePartOfAdmin,
+} = require("../controllers/admin");
+const { authenticate, checkIfAdmin } = require("../authMiddleware");
 
 router.use(authenticate);
+router.use(checkIfAdmin);
 
-router.get("/", adminController.getAllAdmins);
-router.post("/", adminController.createAdmin);
-router.get("/:id", adminController.getAdmin);
-router.delete("/:id", adminController.deleteOneAdmin);
-router.put("/:id", adminController.updateAdmin);
-router.patch("/:id", adminController.updatePartOfAdmin);
+router.get("/", getAllAdmins);
+router.post("/", createAdmin);
+router.get("/:id", getAdmin);
+router.delete("/:id", deleteOneAdmin);
+router.put("/:id", updateAdmin);
+router.patch("/:id", updatePartOfAdmin);
 
 module.exports = router;

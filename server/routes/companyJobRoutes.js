@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const companyJobController = require("../controllers/companyJob");
+const {
+  getAllCompanyJobs,
+  getCompanyJob,
+} = require("../controllers/companyJob");
 
-router.get("/", companyJobController.getAllCompanyJobs);
-router.get("/:jobId", companyJobController.getCompanyJob);
+router.get("/", getAllCompanyJobs);
+router.get("/:jobId", getCompanyJob);
 
 module.exports = router;
