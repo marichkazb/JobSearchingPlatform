@@ -1,26 +1,30 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const companyController = require("../controllers/company");
+const {
+  getAllCompanies,
+  createCompany,
+  getCompany,
+  deleteOneCompany,
+  updateCompany,
+  updatePartOfCompany,
+} = require("../controllers/company");
 const companyJobRoutes = require("./companyJobRoutes");
+const {
+  authenticate,
+  checkIfCompany,
+  verifyCompanyEmail,
+} = require("../authMiddleware");
 
-const { authenticate, checkIfCompany, verifyCompanyEmail } = require("../authMiddleware");
+router.use(authenticate);
 
 router.use("/:companyId/jobs", companyJobRoutes);
+router.get("/", getAllCompanies);
+router.get("/:id", getCompany);
 
-//router.use(authenticate);
-
-//router.get("/", companyController.getAllCompanies);
-//router.post("/", checkIfCompany, verifyCompanyEmail, companyController.createCompany);
-//router.get("/:id", companyController.getCompany);
-//router.delete("/:id", checkIfCompany, verifyCompanyEmail, companyController.deleteOneCompany);
-//router.put("/:id", checkIfCompany, verifyCompanyEmail, companyController.updateCompany);
-//router.patch("/:id", checkIfCompany, verifyCompanyEmail, companyController.updatePartOfCompany);
-
-router.get("/", companyController.getAllCompanies);
-router.post("/", companyController.createCompany);
-router.get("/:id", companyController.getCompany);
-router.delete("/:id", companyController.deleteOneCompany);
-router.put("/:id", companyController.updateCompany);
-router.patch("/:id", companyController.updatePartOfCompany);
+router.use(checkIfCompany);
+router.post("/", createCompany);
+router.delete("/:id", verifyCompanyEmail, deleteOneCompany);
+router.put("/:id", verifyCompanyEmail, updateCompany);
+router.patch("/:id", verifyCompanyEmail, updatePartOfCompany);
 
 module.exports = router;
