@@ -12,7 +12,7 @@ const companyJobRoutes = require("./companyJobRoutes");
 const {
   authenticate,
   checkIfCompany,
-  verifyCompanyEmail,
+  verifyCompanyId,
 } = require("../authMiddleware");
 
 router.use(authenticate);
@@ -21,10 +21,11 @@ router.use("/:companyId/jobs", companyJobRoutes);
 router.get("/", getAllCompanies);
 router.get("/:id", getCompany);
 
-router.use(checkIfCompany);
 router.post("/", createCompany);
-router.delete("/:id", verifyCompanyEmail, deleteOneCompany);
-router.put("/:id", verifyCompanyEmail, updateCompany);
-router.patch("/:id", verifyCompanyEmail, updatePartOfCompany);
+
+router.use(checkIfCompany);
+router.delete("/:id", verifyCompanyId, deleteOneCompany);
+router.put("/:id", verifyCompanyId, updateCompany);
+router.patch("/:id", verifyCompanyId, updatePartOfCompany);
 
 module.exports = router;

@@ -1,8 +1,8 @@
-const Admin = require("../models/admin");
+const admin = require("../models/admin");
 
 const getAllAdmins = async (req, res) => {
   try {
-    const admins = await Admin.find();
+    const admins = await admin.find();
     res.json(admins);
   } catch (error) {
     res.status(500).json(error);
@@ -11,8 +11,24 @@ const getAllAdmins = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
-    const newAdmin = new Admin(req.body);
+    const newAdmin = new admin(req.body);
     await newAdmin.save();
+
+    // set Firebase user claim to Role and MongoDB's ID
+    try {
+      const uid = req.user.uid;
+      await admin.auth().setCustomUserClaims(uid, {
+        role: "admin",
+        id: newAdmin._id.toString(),
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: error.message,
+        stack: error.stack,
+      });
+    }
+
     res.status(201).json(newAdmin);
   } catch (error) {
     res.status(500).json(error);
@@ -22,7 +38,7 @@ const createAdmin = async (req, res) => {
 const deleteOneAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-const admin = await Admin.findOneAndRemove({ _id: id });
+const admin = await admin.findOneAndRemove({ _id: id });
 if (!admin) {
   return res.status(404).json({ message: "Admin not found" });
 }
@@ -40,7 +56,7 @@ if (!admin) {
 const updateAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-const admin = await Admin.findById(id);
+const admin = await admin.findById(id);
 if (!admin) {
   return res.status(404).json({ message: "Admin not found" });
 }
@@ -62,7 +78,7 @@ const updatePartOfAdmin = async (req, res) => {
   try {
     const id = req.params.id;
     const updateFields = req.body;
-    const admin = await Admin.findByIdAndUpdate(id, updateFields, {
+    const admin = await admin.findByIdAndUpdate(id, updateFields, {
       new: true,
     });
     if (!admin) {
@@ -81,7 +97,7 @@ const updatePartOfAdmin = async (req, res) => {
 const getAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-    const admin = await Admin.findById(id);
+    const admin = await admin.findById(id);
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }

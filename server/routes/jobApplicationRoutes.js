@@ -10,18 +10,18 @@ const {
 
 const {
   checkIfUser,
-  verifyCompanyEmail,
+  verifyCompanyId,
   verifyUserEmail,
 } = require("../authMiddleware");
 
 router.post("/", checkIfUser, postApplicationsForJobs);
-router.get("/", verifyCompanyEmail, getApplicationsForJobs);
+router.get("/", verifyCompanyId, getApplicationsForJobs);
 router.get(
   "/:application_id",
-  verifyCompanyEmail,
+  verifyCompanyId,
   verifyUserEmail, 
   getOneApplicationForJob
 ); // NEEDS REVISITING
-router.delete("/:application_id", verifyCompanyEmail, deleteOneApplicationForJob);
+router.delete("/:application_id", verifyCompanyId, deleteOneApplicationForJob);
 
 module.exports = router;

@@ -43,7 +43,7 @@ function checkIfUser(req, res, next) {
     return next();
   }
 
-  if ((req.user && req.user.role === "user")) {
+  if (req.user && req.user.role === "user") {
     next();
   } else {
     res
@@ -52,7 +52,7 @@ function checkIfUser(req, res, next) {
   }
 }
 
-async function verifyCompanyEmail(req, res, next) {
+async function verifyCompanyId(req, res, next) {
   if (req.user.role === "admin") {
     return next();
   }
@@ -64,10 +64,10 @@ async function verifyCompanyEmail(req, res, next) {
       return res.status(404).send("Company not found");
     }
 
-    // Checking if the email in MongoDB matches the email from Firebase Authentication token
-    if (company.email !== req.user.email) {
+    // Checking if the _id in MongoDB matches the _id from Firebase Authentication claim
+    if (company._id !== req.user._id) {
       // The Firebase token was decoded and attached to the request object before this middleware
-      return res.status(403).send("Email does not match the company record");
+      return res.status(403).send("Company and content do not match.");
     }
 
     next();
@@ -115,7 +115,7 @@ module.exports = {
   checkIfAdmin,
   checkIfCompany,
   checkIfUser,
-  verifyCompanyEmail,
+  verifyCompanyId,
   verifyUserEmail,
   skipIfAdmin,
 };

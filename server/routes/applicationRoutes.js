@@ -14,7 +14,7 @@ const {
   checkIfAdmin,
   checkIfCompany,
   checkIfUser,
-  verifyCompanyEmail,
+  verifyCompanyId,
   verifyUserEmail,
 } = require("../authMiddleware");
 
@@ -24,7 +24,7 @@ router.get("/", checkIfAdmin, getAllApplications);
 router.post("/", checkIfCompany, createApplicationCollection);
 router.post("/", checkIfCompany, createApplication);
 router.delete("/", checkIfAdmin, deleteAllApplications);
-router.get("/:id", verifyCompanyEmail, verifyUserEmail, getApplication); // NEEDS REVISITING
+router.get("/:id", verifyCompanyId, verifyUserEmail, getApplication); // NEEDS REVISITING
 router.put("/:id", checkIfUser, verifyUserEmail, updateApplication); 
 router.patch("/:id", checkIfUser, verifyUserEmail, updateApplication);
 router.delete("/:id", checkIfUser, verifyUserEmail, deleteOneApplication);

@@ -35,6 +35,22 @@ const createCompany = async (req, res) => {
   try {
     const newCompany = new Company(req.body);
     await newCompany.save();
+
+    // set Firebase user claim to Role and MongoDB's ID
+    try {
+      const uid = req.user.uid;
+      await admin.auth().setCustomUserClaims(uid, {
+        role: "company",
+        id: newCompany._id.toString(),
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: error.message,
+        stack: error.stack,
+      });
+    }
+    
     res.status(201).json(newCompany);
   } catch (error) {
     console.error(error);
