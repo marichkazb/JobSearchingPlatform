@@ -14,7 +14,7 @@ const {
   authenticate,
   checkIfAdmin,
   checkIfCompany,
-  verifyCompanyEmail,
+  verifyCompanyId,
 } = require("../authMiddleware");
 
 router.use(authenticate);
@@ -24,8 +24,8 @@ router.get("/", getAllJobs);
 router.get("/:id", getJobByID);
 router.post("/", checkIfCompany, createJob);
 router.delete("/", checkIfAdmin, deleteAllJobs);
-router.put('/:id', verifyCompanyEmail, updateJobByID);
-router.patch("/:id", verifyCompanyEmail, updateJobByID);
-router.delete("/:id", verifyCompanyEmail, deleteJobByID);
+router.put('/:id', verifyCompanyId, updateJobByID);
+router.patch("/:id", verifyCompanyId, updateJobByID);
+router.delete("/:id", verifyCompanyId, deleteJobByID);
 
 module.exports = router;
