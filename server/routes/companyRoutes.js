@@ -7,25 +7,20 @@ const {
   deleteOneCompany,
   updateCompany,
   updatePartOfCompany,
+  getAllCompanyJobs,
+  getCompanyJob,
 } = require("../controllers/company");
-const companyJobRoutes = require("./companyJobRoutes");
-const {
-  authenticate,
-  checkIfCompany,
-  verifyCompanyId,
-} = require("../authMiddleware");
+const { verifyCompanyOwnership } = require("../authMiddleware");
 
-router.use(authenticate);
+router.get("/:id/jobs", getAllCompanyJobs);
+router.get("/:id/jobs/:jobId", getCompanyJob);
 
-router.use("/:companyId/jobs", companyJobRoutes);
 router.get("/", getAllCompanies);
 router.get("/:id", getCompany);
-
 router.post("/", createCompany);
 
-router.use(checkIfCompany);
-router.delete("/:id", verifyCompanyId, deleteOneCompany);
-router.put("/:id", verifyCompanyId, updateCompany);
-router.patch("/:id", verifyCompanyId, updatePartOfCompany);
+router.delete("/:id", verifyCompanyOwnership, deleteOneCompany);
+router.put("/:id", verifyCompanyOwnership, updateCompany);
+router.patch("/:id", verifyCompanyOwnership, updatePartOfCompany);
 
 module.exports = router;

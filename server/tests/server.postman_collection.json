@@ -8,17 +8,20 @@
 	},
 	"item": [
 		{
-			"name": "admins",
+			"name": "authentication",
 			"item": [
 				{
-					"name": "submit credentials (auth)",
+					"name": "admin credentials",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
 									"const responseData = pm.response.json();\r",
-									"pm.environment.set(\"idToken\", responseData.idToken);"
+									"pm.environment.set(\"adminToken\", responseData.idToken);\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -29,7 +32,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"admin.bee@gmail.com\",\r\n  \"password\": \"adminbee\",\r\n  \"returnSecureToken\": true\r\n}",
+							"raw": "{\r\n  \"email\": \"gussingag@student.gu.se\",\r\n  \"password\": \"gussingag\",\r\n  \"returnSecureToken\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -37,7 +40,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3MhuxmWra3kYJBRQ0ZJiwsaw-LJbU29s\n",
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
 							"protocol": "https",
 							"host": [
 								"identitytoolkit",
@@ -51,13 +54,120 @@
 							"query": [
 								{
 									"key": "key",
-									"value": "AIzaSyD3MhuxmWra3kYJBRQ0ZJiwsaw-LJbU29s\n"
+									"value": "AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n"
 								}
 							]
 						}
 					},
 					"response": []
 				},
+				{
+					"name": "company credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"pm.environment.set(\"companyToken\", responseData.idToken);\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"guszabma@student.gu.se\",\r\n  \"password\": \"guszabma\",\r\n  \"returnSecureToken\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "candidate credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"pm.environment.set(\"candidateToken\", responseData.idToken);\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"gusrochada@student.gu.se\",\r\n  \"password\": \"gusrochada\",\r\n  \"returnSecureToken\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admins",
+			"item": [
 				{
 					"name": "GET /admins",
 					"event": [
@@ -82,7 +192,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
@@ -123,13 +233,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"name\": \"Admin Bee\", \"email\": \"bee.admin@gmail.com\" }",
+							"raw": "{ \"name\": \"Another Admin\", \"email\": \"another.admin@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -162,7 +272,7 @@
 									"});",
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.email).to.eql(\"bee.admin@gmail.com\");",
+									"    pm.expect(jsonData.email).to.eql(\"another.admin@gmail.com\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -174,13 +284,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"name\": \"Admin Bee II\", \"email\": \"bee.admin@gmail.com\" }",
+							"raw": "{ \"name\": \"Another Admin\", \"email\": \"another.admin@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,7 +321,7 @@
 								"exec": [
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.email).to.eql(\"the.first.admin@gmail.com\");",
+									"    pm.expect(jsonData.email).to.eql(\"another.admin.2@gmail.com\");",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -226,13 +336,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"email\": \"the.first.admin@gmail.com\"}",
+							"raw": "{ \"email\": \"another.admin.2@gmail.com\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -289,7 +399,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
@@ -328,7 +438,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
@@ -354,13 +464,124 @@
 					"response": []
 				},
 				{
-					"name": "override DELETE /admins/:id",
+					"name": "POST /admins again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									"const responseJson = pm.response.json();\r",
+									"const adminId = responseJson._id;\r",
+									"pm.environment.set(\"adminId\", adminId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Another Admin\", \"email\": \"another.admin@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admins",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override PUT /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"_method\": \"PUT\",\"name\": \"Another Admin\", \"email\": \"another.admin@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admins",
+								"{{adminId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override DELETE /admins/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
 								"type": "text"
 							}
 						],
@@ -387,21 +608,47 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "companies",
+			"item": [
 				{
-					"name": "override PUT /admins/:id",
+					"name": "POST /companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify the response contains the resource ID\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody._id);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson._id;",
+									"pm.environment.set(\"companyId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{idToken}}",
+								"value": "{{companyToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"_method\": \"PUT\",\"name\": \"Overriding Bee\", \"email\": \"overrider.admin.bee@gmail.com\" }",
+							"raw": "{\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -409,15 +656,409 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"raw": "{{host}}/api/v1/companies",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"admins",
-								"{{adminId}}"
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson[0]._id;",
+									"pm.environment.set(\"companyId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"Cute Bees\");",
+									"});",
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.email).to.eql(\"bumble.bees@gmail.com\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"logo\":\"dddNOTNULL\", \"locations\": [] }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.jobs).to.eql([\"6502d74d2350b93179c0c34a\"]);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"jobs\": [\"6502d74d2350b93179c0c34a\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Check Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /companies (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify the response contains the resource ID\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody._id);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson._id;",
+									"pm.environment.set(\"companyId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override PUT /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\": \"PUT\",\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "override DELETE /companies/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\": \"DELETE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
 							]
 						}
 					},
@@ -428,6 +1069,116 @@
 		{
 			"name": "applications",
 			"item": [
+				{
+					"name": "POST /companies (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify the response contains the resource ID\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    pm.expect(responseBody).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody._id);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"const responseJson = pm.response.json();",
+									"const companyId = responseJson._id;",
+									"pm.environment.set(\"companyId\", companyId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /jobs (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Set the new job id as an environment variable\", function(){",
+									"    const responseBody = pm.response.json();",
+									"    const jobID = responseBody._id;",
+									"    pm.environment.set(\"jobForApplication\", jobID);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "POST /applications collection",
 					"event": [
@@ -449,10 +1200,16 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n        \"firstName\": \"Ann\",\n        \"lastName\": \"Smith\",\n        \"email\": \"ann.smith@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/annsmith\",\n        \"motivation\": \"I am dedicated to delivering high-quality results and thrive in a collaborative work environment.\"\n    },\n    {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"email\": \"john.doe@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/johndoe\",\n        \"motivation\": \"I am passionate about making a positive impact through innovative technologies and would love the opportunity to contribute to your team.\"\n    },\n    {\n        \"firstName\": \"Alice\",\n        \"lastName\": \"Johnson\",\n        \"email\": \"alice.johnson@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/alicejohnson\",\n        \"motivation\": \"I have a strong background in software development and am excited about the challenges your company is tackling.\"\n    }\n]",
+							"raw": "[\n    {\n        \"firstName\": \"Ann\",\n        \"lastName\": \"Smith\",\n        \"email\": \"ann.smith@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/annsmith\",\n        \"motivation\": \"I am dedicated to delivering high-quality results and thrive in a collaborative work environment.\",\n        \"jobId\": \"{{jobForApplication}}\"\n    },\n    {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"email\": \"john.doe@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/johndoe\",\n        \"motivation\": \"I am passionate about making a positive impact through innovative technologies and would love the opportunity to contribute to your team.\",\n        \"jobId\": \"{{jobForApplication}}\"\n    },\n    {\n        \"firstName\": \"Alice\",\n        \"lastName\": \"Johnson\",\n        \"email\": \"alice.johnson@gmail.com\",\n        \"linkedIn\": \"https://www.linkedin.com/in/alicejohnson\",\n        \"motivation\": \"I have a strong background in software development and am excited about the challenges your company is tackling.\",\n        \"jobId\": \"{{jobForApplication}}\"\n    }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -474,7 +1231,7 @@
 					"response": []
 				},
 				{
-					"name": "POST/applications",
+					"name": "POST /applications",
 					"event": [
 						{
 							"listen": "test",
@@ -482,14 +1239,14 @@
 								"exec": [
 									"pm.test(\"Verify the response contains the resource ID\", function () {",
 									"    const responseBody = pm.response.json();",
-									"    pm.expect(responseBody[0]).to.have.property(\"_id\");",
-									"    pm.environment.set(\"newResourceId\", responseBody.id);",
+									"    pm.expect(responseBody).to.have.property(\"_id\");",
+									"    pm.environment.set(\"newResourceId\", responseBody._id);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
 									"});",
 									"const responseJson = pm.response.json();",
-									"const applicationId = responseJson[0]._id;",
+									"const applicationId = responseJson._id;",
 									"pm.environment.set(\"applicationId\", applicationId);"
 								],
 								"type": "text/javascript"
@@ -498,10 +1255,16 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Bob\",\n    \"lastName\": \"Williams\",\n    \"email\": \"bob.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/bobwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis and eager to apply my skills to drive data-driven decisions within your organization.\"\n}",
+							"raw": "{\n    \"firstName\": \"Bob\",\n    \"lastName\": \"Williams\",\n    \"email\": \"bob.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/bobwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis and eager to apply my skills to drive data-driven decisions within your organization.\",\n    \"jobId\": \"{{jobForApplication}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -546,7 +1309,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/applications",
 							"host": [
@@ -562,7 +1331,7 @@
 					"response": []
 				},
 				{
-					"name": "GET /application/:id",
+					"name": "GET /applications/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -585,7 +1354,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
@@ -626,10 +1401,16 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Jack\",\n    \"lastName\": \"Williams\",\n    \"email\": \"jack.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/jackwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis.\"\n}",
+							"raw": "{\n    \"firstName\": \"Jack\",\n    \"lastName\": \"Williams\",\n    \"email\": \"jack.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/jackwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis.\",\n    \"jobId\": \"{{jobForApplication}}\",\n    \"status\": \"Rejected\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -672,7 +1453,13 @@
 					],
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{ \"linkedIn\": \"linkChanged\" }",
@@ -726,7 +1513,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/applications?sort=dateOfApplication&order=desc",
 							"host": [
@@ -772,7 +1565,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/applications?status=Rejected",
 							"host": [
@@ -787,6 +1586,11 @@
 								{
 									"key": "status",
 									"value": "Rejected"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
 								}
 							]
 						}
@@ -813,7 +1617,13 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/applications/{{applicationId}}",
 							"host": [
@@ -846,7 +1656,13 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -868,382 +1684,65 @@
 			]
 		},
 		{
-			"name": "companies",
-			"item": [
-				{
-					"name": "GET /companies",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
-									"});",
-									"pm.test(\"Response is in JSON format\", function () {",
-									"    pm.response.to.be.json;",
-									"});",
-									"pm.test(\"Check Content-Type header\", function () {",
-									"    pm.response.to.have.header(\"Content-Type\");",
-									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1/companies",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST /companies",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Verify the response contains the resource ID\", function () {",
-									"    const responseBody = pm.response.json();",
-									"    pm.expect(responseBody).to.have.property(\"_id\");",
-									"    pm.environment.set(\"newResourceId\", responseBody.id);",
-									"});",
-									"pm.test(\"Response is in JSON format\", function () {",
-									"    pm.response.to.be.json;",
-									"});",
-									"const responseJson = pm.response.json();",
-									"const companyId = responseJson._id;",
-									"pm.environment.set(\"companyId\", companyId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"jobs\":[\"6504913b930071ede5087a01\"]}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/companies",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT /companies/:id",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response is in JSON format\", function () {",
-									"    pm.response.to.be.json;",
-									"});",
-									"pm.test(\"Check data assertion\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.name).to.eql(\"Cute Bees\");",
-									"});",
-									"pm.test(\"Check data assertion\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.email).to.eql(\"bumble.bees@gmail.com\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \"name\": \"Cute Bees\", \"email\": \"bumble.bees@gmail.com\", \"logo\":\"dddNOTNULL\", \"locations\": [] }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PATCH /companies/:id",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Check data assertion\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.jobs).to.eql([\"6502d74d2350b93179c0c34a\"]);",
-									"});",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"jobs\": [\"6502d74d2350b93179c0c34a\"]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET /companies/:id",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
-									"});",
-									"pm.test(\"Response is in JSON format\", function () {",
-									"    pm.response.to.be.json;",
-									"});",
-									"pm.test(\"Check Content-Type header\", function () {",
-									"    pm.response.to.have.header(\"Content-Type\");",
-									"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE /companies/:id",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
-									"});",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "override DELETE /companies/:id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_method\": \"DELETE\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "override PUT /companies/:id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"_method\": \"PUT\",\r\n    \"name\": \"Cute Bees\",\r\n    \"email\": \"bumble.bees@gmail.com\",\r\n    \"logo\": \"overriden_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": [\r\n        \"6504913b930071ede5087a01\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "companyJobs",
-			"item": [
-				{
-					"name": "GET /companies/:id/jobs",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}",
-								"jobs",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET /companies/:id/jobs/:id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/{{newJobId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"companies",
-								"{{companyId}}",
-								"jobs",
-								"{{newJobId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "jobs",
 			"item": [
 				{
-					"name": "POST/jobs",
+					"name": "POST/collection of jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Set the new job id as an environment variable\", function(){",
+									"    const responseBody = pm.response.json();",
+									"    const jobID = responseBody[0]._id;",
+									"    pm.environment.set(\"newJobId\", jobID);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n    \"title\": \"Trainee UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Junior NodeJS Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Middle Java Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, \n{\n    \"title\": \"Senior System Architect\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -1267,7 +1766,13 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
@@ -1315,7 +1820,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs",
 							"host": [
@@ -1353,7 +1864,13 @@
 					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
@@ -1378,7 +1895,7 @@
 								"exec": [
 									"pm.test(\"Check data assertion\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.companyId).to.eql(\"650185f8ba7f7681f86eeee8\");",
+									"    pm.expect(jsonData.companyId).to.eql(pm.variables.get(\"companyId\"));",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1390,10 +1907,16 @@
 					],
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"companyId\": \"650185f8ba7f7681f86eeee8\"\n}",
+							"raw": "{\n    \"job_status\": \"Closed\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1441,7 +1964,13 @@
 					],
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"description\": \"Professor of Software Architecture\",\n    \"validation\": true,\n    \"deadline\": \"2023-10-10\"\n}",
@@ -1486,7 +2015,13 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
 							"host": [
@@ -1511,9 +2046,6 @@
 								"exec": [
 									"pm.test(\"Response time is less than 500ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(500);",
-									"});",
-									"pm.test(\"Status code is 404 (since there are no jobs left to delete)\", function () {",
-									"    pm.response.to.have.status(404);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1522,7 +2054,13 @@
 					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs",
 							"host": [
@@ -1540,6 +2078,208 @@
 			]
 		},
 		{
+			"name": "companyJobs",
+			"item": [
+				{
+					"name": "POST /jobs (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Set the new job id as an environment variable\", function(){",
+									"    const responseBody = pm.response.json();",
+									"    const jobID = responseBody._id;",
+									"    pm.environment.set(\"newJobId\", jobID);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /companies/:id (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check data assertion\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.jobs).to.eql([pm.variables.get(\"newJobId\")]);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"jobs\": [\"{{newJobId}}\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies/:id/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /companies/:id/jobs/:jobId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/{{newJobId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}",
+								"jobs",
+								"{{newJobId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "jobApplications",
 			"item": [
 				{
@@ -1549,6 +2289,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
 									"const jobApplicationId = pm.response.json()._id;",
 									"pm.environment.set(\"jobApplicationId\", jobApplicationId);"
 								],
@@ -1558,10 +2301,16 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \n    \"skills\": [\"JavaScript\", \"Node.js\"],\n    \"questions\": [{\n        \"questionText\": \"What is the level of your code?\",\n        \"answer\": \"It's DRY and SOLID\"\n        }]\n}",
+							"raw": "{\n    \"firstName\": \"Bob\",\n    \"lastName\": \"Williams\",\n    \"email\": \"bob.williams@gmail.com\",\n    \"linkedIn\": \"https://www.linkedin.com/in/bobwilliams\",\n    \"motivation\": \"I am enthusiastic about data analysis and eager to apply my skills to drive data-driven decisions within your organization.\",\n    \"jobId\": \"{{newJobId}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1585,10 +2334,83 @@
 					"response": []
 				},
 				{
+					"name": "PUT/jobs/:id (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applications\":[\"{{jobApplicationId}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs",
+								"{{newJobId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET all job applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications",
 							"host": [
@@ -1607,9 +2429,34 @@
 				},
 				{
 					"name": "GET one job application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+									"});",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Response is in JSON format\", function () {",
+									"    pm.response.to.be.json;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
 							"host": [
@@ -1629,9 +2476,28 @@
 				},
 				{
 					"name": "DELETE job application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
 							"host": [
@@ -1644,6 +2510,90 @@
 								"{{newJobId}}",
 								"applications",
 								"{{jobApplicationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE/jobs/:id (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs",
+								"{{newJobId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE/companies/:id (for others)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/{{companyId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"{{companyId}}"
 							]
 						}
 					},
