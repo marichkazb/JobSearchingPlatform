@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const companySchema = new mongoose.Schema({
+  userId: { type: String, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   logo: { type: String, required: false, default: "" },

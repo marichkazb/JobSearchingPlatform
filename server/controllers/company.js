@@ -1,4 +1,6 @@
 const Company = require("../models/company");
+const Candidate = require("../models/candidate");
+const Job = require("../models/job");
 
 const getAllCompanies = async (req, res) => {
   try {
@@ -33,24 +35,23 @@ const getAllCompanies = async (req, res) => {
 
 const createCompany = async (req, res) => {
   try {
-    const newCompany = new Company(req.body);
-    await newCompany.save();
-
-    // set Firebase user claim to Role and MongoDB's ID
-    try {
-      const uid = req.user.uid;
-      await admin.auth().setCustomUserClaims(uid, {
-        role: "company",
-        id: newCompany._id.toString(),
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        message: error.message,
-        stack: error.stack,
+    // Check if the UID is already associated with an existing Company or User
+    const existingCompany = await Company.findOne({ userId: req.user.uid });
+    const existingCandidate = await Candidate.findOne({ userId: req.user.uid });
+    if (existingCompany || existingCandidate) {
+      return res.status(400).json({
+        error:
+          "UID is already associated with an existing Company or Candidate",
       });
     }
-    
+
+    const newCompany = new Company({
+      ...req.body,
+      userId: req.user.uid,
+    });
+
+    await newCompany.save();
+
     res.status(201).json(newCompany);
   } catch (error) {
     console.error(error);
@@ -63,14 +64,17 @@ const createCompany = async (req, res) => {
 
 const deleteOneCompany = async (req, res) => {
   try {
-    const id = req.params.id;
-    const company = await Company.findOneAndRemove({ _id: id });
-
-    if (!company) {
+    const companyData = req.company;
+    if (!companyData || !companyData._id) {
       return res.status(404).json({ message: "Company not found" });
     }
-
-    res.status(200).json(`Deleted ${company}`);
+    const result = await Company.deleteOne({ _id: companyData._id });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted company with ID: ${companyData._id}` });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -82,20 +86,26 @@ const deleteOneCompany = async (req, res) => {
 
 const updateCompany = async (req, res) => {
   try {
-    const id = req.params.id;
-    const company = await Company.findById(id);
+    const companyId = req.company._id;
 
-    if (!company) {
+    if (!companyId) {
       return res.status(404).json({ message: "Company not found" });
     }
 
-    company.name = req.body.name;
-    company.email = req.body.email;
-    company.logo = req.body.logo;
-    company.locations = req.body.locations;
+    const updateFields = req.body;
 
-    company.save();
-    res.json(company);
+    // Using findByIdAndUpdate for direct update
+    const updatedCompany = await Company.findByIdAndUpdate(
+      companyId,
+      updateFields,
+      { new: true }
+    );
+
+    if (!updatedCompany) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    res.json(updatedCompany);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -107,15 +117,20 @@ const updateCompany = async (req, res) => {
 
 const updatePartOfCompany = async (req, res) => {
   try {
-    const id = req.params.id;
-    const updateFields = req.body;
-    const company = await Company.findByIdAndUpdate(id, updateFields, {
-      new: true,
-    });
-    if (!company) {
+    const companyId = req.company._id;
+    if (!companyId) {
       return res.status(404).json({ message: "Company not found" });
     }
-    res.json(company);
+    const updateFields = req.body;
+    const updatedCompany = await Company.findByIdAndUpdate(
+      companyId,
+      updateFields,
+      { new: true }
+    );
+    if (!updatedCompany) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+    res.json(updatedCompany);
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -127,13 +142,8 @@ const updatePartOfCompany = async (req, res) => {
 
 const getCompany = async (req, res) => {
   try {
-    const id = req.params.id;
-    const company = await Company.findById(id);
-
-    if (!company) {
-      return res.status(404).json({ message: "Company not found." });
-    }
-
+    const company = req.company;
+    const id = company._id;
     //HATEOAS
     company._doc.links = [
       {
@@ -156,6 +166,30 @@ const getCompany = async (req, res) => {
   }
 };
 
+const getAllCompanyJobs = async (req, res) => {
+  try {
+    console.log("Here");
+    const companyId = req.params.id;
+    const company = await Company.findById(companyId).populate("jobs");
+    if (!company) return res.status(404).send("Company not found");
+    res.send(company.jobs);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const getCompanyJob = async (req, res) => {
+  try {
+    const { id, jobId } = req.params;
+    const job = await Job.findOne({ _id: jobId, companyId: id });
+    if (!job)
+      return res.status(404).send("Job not found for the specified company");
+    res.send(job);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllCompanies,
   createCompany,
@@ -163,4 +197,6 @@ module.exports = {
   updateCompany,
   updatePartOfCompany,
   getCompany,
+  getAllCompanyJobs,
+  getCompanyJob,
 };

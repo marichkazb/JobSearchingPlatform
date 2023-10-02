@@ -9,9 +9,8 @@ const {
   updateAdmin,
   updatePartOfAdmin,
 } = require("../controllers/admin");
-const { authenticate, checkIfAdmin } = require("../authMiddleware");
+const { checkIfAdmin } = require("../authMiddleware");
 
-router.use(authenticate);
 router.use(checkIfAdmin);
 
 router.get("/", getAllAdmins);
