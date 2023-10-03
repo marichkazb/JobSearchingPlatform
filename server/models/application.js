@@ -9,27 +9,32 @@ const applicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'Pending',
+    default: "Pending",
   },
   firstName: {
-    type: String
+    type: String,
   },
   lastName: {
-    type: String
+    type: String,
   },
   email: {
-    type: String
+    type: String,
   },
   linkedIn: {
-    type: String
+    type: String,
   },
   motivation: {
-    type: String
+    type: String,
   },
   jobId: {
     type: Schema.Types.ObjectId,
     ref: "Jobs",
-    required: false
+    required: true,
+  },
+  candidateId: {
+    type: Schema.Types.ObjectId,
+    ref: "Candidates",
+    required: true,
   },
 });
 
