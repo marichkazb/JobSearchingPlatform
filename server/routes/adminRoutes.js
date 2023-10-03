@@ -11,10 +11,10 @@ const {
 } = require("../controllers/admin");
 const { checkIfAdmin } = require("../authMiddleware");
 
-router.use(checkIfAdmin);
-
-router.get("/", getAllAdmins);
 router.post("/", createAdmin);
+
+router.use(checkIfAdmin);
+router.get("/", getAllAdmins);
 router.get("/:id", getAdmin);
 router.delete("/:id", deleteOneAdmin);
 router.put("/:id", updateAdmin);
