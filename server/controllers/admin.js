@@ -10,10 +10,6 @@ const getAllAdmins = async (req, res) => {
 };
 
 const createAdmin = async (req, res) => {
-  // Unlike for createCompany and createCandidate, a new admin can only be created by an existing admin.
-  // Because of this, there is no automatic self-attribution of Firebase UID.
-  // Instead, the existing admin must specify in the request body the Firebase UID of the new account.
-
   try {
     const newAdmin = new Admin({
       ...req.body,
