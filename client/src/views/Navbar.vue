@@ -35,35 +35,10 @@
                 <a class="nav-link navText" href="/profile">Profile</a>
               </li>
               <!-- Only show if user is logged out -->
-              <li class="nav-item" v-if="!user">
+              <!--li class="nav-item" v-if="!user">
                 <a class="nav-link navText" href="/login">Login</a>
-              </li>
-              <!-- Only show if user is logged in -->
-              <li class="nav-item" v-if="user">
-                <a class="nav-link navText" href="/logout">Logout</a>
-              </li>
-              <!-- Only show if user is logged out -->
-              <li class="nav-item" v-if="!user">
-                <a class="nav-link navText" href="/signup">Sign Up</a>
-              </li>
+              </li-->
             </ul>
-            <!--ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link navText" href="/jobListing">Job Listings</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navText" href="/profile">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navText" href="/login">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navText" href="/logout">Logout</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link navText" href="/signup">Sign Up</a>
-              </li>
-            </ul-->
             <form class="d-flex" role="search">
               <input
                 class="form-control me-2"
@@ -72,9 +47,9 @@
                 aria-label="Search"
               />
             </form>
-            <p class="avatar" v-if="user">
-              {{ user.displayName ? user.displayName : "Abc" }}
-            </p>
+          <button class="avatar-btn" v-if="user" @click="logout">
+  <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+</button>
           </div>
         </div>
       </nav>
@@ -85,6 +60,7 @@
 <script>
 import { Api } from '@/Api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { logout } from '../../authService';
 
 export default {
   name: 'Navbar',
@@ -92,6 +68,7 @@ export default {
     return {
       user: null,
       jobsData: 'none',
+      logout,
     };
   },
   created() {
@@ -146,5 +123,27 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 15px;
+}
+.avatar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Makes it circular */
+  background-color: #007BFF; /* A shade of blue; change as desired */
+  color: white; /* Text color */
+  border: none; /* Removes border */
+  cursor: pointer; /* Hand cursor on hover */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.avatar-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.avatar-text {
+  user-select: none; /* Prevents the text from being selectable */
 }
 </style>

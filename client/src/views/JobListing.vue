@@ -29,22 +29,34 @@
 <script>
 
 import { Api } from '@/Api'
+import { getIdToken } from '../../authService';
+import { auth } from '../../firebaseInit';
+
 const image = require('../assets/jobIcon.png')
 
 export default {
   name: 'jobListing',
   data() {
     return {
-      jobsData: this.getJobs,
+      jobsData: [],
       image
     }
   },
-  created() {
-    this.getJobs()
+  async created() {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        this.jobsData = await this.getJobs();
+      }
+    });
   },
   methods: {
-    getJobs() {
-      Api.get('/v1/jobs')
+    async getJobs() {
+      const token = await getIdToken();
+      Api.get('/v1/jobs', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
         .then(response => {
           this.jobsData = response.data
           console.log(this.jobsData)

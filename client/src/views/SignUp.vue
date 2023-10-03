@@ -9,6 +9,7 @@
 import { auth } from '../../firebaseInit';
 import * as firebaseui from 'firebaseui';
 import { EmailAuthProvider } from 'firebase/auth'; // GoogleAuthProvider
+import 'firebaseui/dist/firebaseui.css';
 
 let ui = {};
 
@@ -16,7 +17,7 @@ export default {
   name: 'SignUp',
   mounted() {
     const uiConfig = {
-      signInSuccessUrl: '/dashboard', // Redirect to dashboard or some other page after sign-up
+      // signInSuccessUrl: '/setRole', // Redirect to dashboard or some other page after sign-up
       signInOptions: [
         EmailAuthProvider.PROVIDER_ID
       ],
