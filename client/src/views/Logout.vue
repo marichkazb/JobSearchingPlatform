@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import { logout } from '../../authService'; // Adjust the path as necessary
+ // Adjust the path as necessary
 
 export default {
   name: 'Logout',
   created() {
     logout().then(() => {
-      // this.$router.push('/login');
+      this.$router.push('/login');
     });
   }
 }

@@ -1,14 +1,15 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from './views/Home.vue'
-import JobListing from './views/JobListing.vue'
-import Application from './views/Application.vue'
-import Login from './views/Login.vue'
-import Logout from './views/Logout.vue';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from './views/Home.vue';
+import JobListing from './views/JobListing.vue';
+import Application from './views/Application.vue';
+import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
+import SetRole from './views/SetRole.vue';
+
 // import { auth } from '../firebaseInit';
 
-Vue.use(VueRouter) // CHECK THIS
+Vue.use(VueRouter); // CHECK THIS
 
 const router = new VueRouter({
   mode: 'history',
@@ -23,6 +24,9 @@ const router = new VueRouter({
       path: '/jobListing',
       name: 'jobListing',
       component: JobListing,
+      meta: {
+        guest: true, // Indicate that this route is only for guests (non-authenticated users)
+      },
     },
     {
       path: '/application/:id',
@@ -38,14 +42,6 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/logout',
-      name: 'logout',
-      component: Logout,
-      meta: {
-        requiresAuth: true, // This route requires the user to be authenticated
-      },
-    },
-    {
       path: '/signup',
       name: 'signup',
       component: SignUp,
@@ -53,9 +49,16 @@ const router = new VueRouter({
         guest: true, // Indicate that this route is only for guests (non-authenticated users)
       },
     },
+    {
+      path: '/setRole',
+      name: 'setRole',
+      component: SetRole,
+      meta: {
+        requiresAuth: true, // This route requires the user to be authenticated
+      },
+    },
   ],
 });
-
 /*
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
@@ -71,5 +74,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 */
-
 export default router;
