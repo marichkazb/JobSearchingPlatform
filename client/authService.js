@@ -16,6 +16,10 @@ export const login = async (email, password) => {
 };
 
 export const logout = () => {
+  localStorage.setItem('isUserLoggedIn', false);
+  localStorage.clear();
+  sessionStorage.clear();
+  location.reload(true);
   return signOut(auth);
 };
 

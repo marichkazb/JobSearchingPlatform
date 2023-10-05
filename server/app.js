@@ -76,6 +76,8 @@ app.get(`/api/v1/getUserType`, async (req, res) => {
   console.log("got here")
   if(req.none){
     return res.json({ userType: "none" });
+  } else {
+    return res.json("Role assigned");
   }
 });
 

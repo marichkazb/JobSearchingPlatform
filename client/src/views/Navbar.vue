@@ -13,7 +13,8 @@
     <body class="wrapper">
       <nav class="navbar navbar-expand-lg container">
         <div class="container-fluid">
-          <a class="navbar-brand navText" href="/">Logo</a>
+          <a class="navbar-brand navText" href="/" v-if="!isUserLoggedIn">Logo</a>
+          <a class="navbar-brand navText" href="/jobListing" v-else>Logo2</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -81,6 +82,16 @@ export default {
       }
     });
   },
+  computed: {
+    isUserLoggedIn() {
+      return localStorage.getItem('isUserLoggedIn'); // Replace with your actual logic
+    },
+  },
+  watch: {
+    isUserLoggedIn() {
+      console.log('Updated');
+    },
+  },
   methods: {
     getJobs() {
       Api.get('/v1/jobs')
@@ -91,6 +102,9 @@ export default {
         .catch((error) => {
           this.message = error;
         });
+    },
+    onDropdownShown() {
+      this.isDropdownVisible = !this.isDropdownVisible;
     },
   },
 };

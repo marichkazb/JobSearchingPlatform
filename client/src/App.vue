@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar />
+    <Navbar v-if="isUserLoggedIn" />
     <div id="nav">
     </div>
     <!-- Render the content of the current page view -->
@@ -13,7 +13,17 @@ import Navbar from './views/Navbar.vue'
 export default {
   components: {
     Navbar
-  }
+  },
+  computed: {
+    isUserLoggedIn() {
+      return localStorage.getItem('isUserLoggedIn'); // Replace with your actual logic
+    },
+  },
+  watch: {
+    isUserLoggedIn() {
+      console.log('Updated');
+    },
+  },
 }
 </script>
 
@@ -29,6 +39,9 @@ export default {
 }
 #nav {
   margin: 0px;
+}
+#app {
+  overflow: auto;
 }
 .title {
     font-size: 32px;

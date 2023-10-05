@@ -46,13 +46,18 @@ auth.onAuthStateChanged(async (user) => {
         },
       });
       // refreshToken();
+      localStorage.setItem('isUserLoggedIn', true);
 
       const data = response.data;
       const userType = data.userType;
+      const currentRoutePath = router.currentRoute.path;
 
       console.log('User type:', userType);
       if (userType === 'none' && router.currentRoute.path !== '/setRole') {
         router.push('/setRole');
+      } else if (currentRoutePath !== '/jobListing') {
+        router.push('/jobListing');
+        location.reload(true);
       }
       // We could maybe add more logic here depending on the user type, for example:
       // if (userType === 'admin') {
@@ -62,10 +67,11 @@ auth.onAuthStateChanged(async (user) => {
       console.error('Error fetching user type:', error);
     }
   } else if (
+    router.currentRoute.path !== '/' &&
     router.currentRoute.path !== '/login' &&
     router.currentRoute.path !== '/signup'
   ) {
-    router.push('/login');
+    router.push('/');
     console.log('authstate user: at login');
   } else {
     console.log('authstate user: at else');
