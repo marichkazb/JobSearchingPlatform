@@ -8,7 +8,6 @@
           <div
               v-for="job in sortedJobs"
               :key="job._id"
-              @click="handleClick(job)"
               class="hover">
               <div class="jobWrapper">
                 <div class="media-left">
@@ -20,7 +19,10 @@
                     <p class="text desc">{{job.description}}</p>
                     <p class="text">{{job.location}}</p>
                     <p class="text">{{job.job_enrollment_status}}</p>
-                    <b-button @click="deleteJob(job); $event.stopPropagation()" class="applyBtn redBtn" variant="danger">Delete</b-button>
+                    <div class="buttonsContainer">
+                        <b-button @click="handleClick(job)" class="applyBtn" variant="primary">Apply</b-button>
+                        <b-button @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
+                    </div>
                 </div>
               </div>
           </div>
@@ -193,5 +195,16 @@ export default {
   width: 200px;
   border: none;
   margin-left: 20px;
+}
+.applyBtn {
+  width: 200px;
+  border: none;
+  background-color:rgba(7, 25, 82, 1);
+}
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 24px;
 }
 </style>
