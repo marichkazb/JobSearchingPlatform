@@ -35,7 +35,7 @@
 
 <script>
 import { Api } from '@/Api'
-import Alert from './Alert.vue'
+import Alert from '../components/Alert.vue'
 
 export default {
   name: 'application',

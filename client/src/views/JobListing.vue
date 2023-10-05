@@ -31,10 +31,10 @@
 <script>
 
 import { Api } from '@/Api'
-import Alert from './Alert.vue'
+import Alert from '../components/Alert'
 import { getIdToken } from '../../authService';
 import { auth } from '../../firebaseInit';
-import JobSearch from './JobSearch.vue'
+import JobSearch from '../components/JobSearch'
 
 const image = require('../assets/jobIcon.png')
 
