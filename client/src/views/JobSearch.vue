@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="inputWrapper">
-            <input type="text" class="search-box" @keyup="search" placeholder="Search for a job.."/>
+            <input type="text" class="search-box" v-model="searchTerm" @input="emitSearch" @keyup="emitSearch" placeholder="Search for a job.."/>
             <b-button @click="search" class="applyBtn" variant="primary">Search</b-button>
         </div>
         <div>
@@ -21,37 +21,22 @@
 </template>
 
 <script>
-// import { Api } from '@/Api'
-// import { reactive } from 'vue'
 
 export default {
   name: 'JobSearch',
   data() {
     return {
       searchResults: [],
-      noSearch: null
+      noSearch: null,
+      searchTerm: ''
     }
   },
   methods: {
-    search() {
-      console.log(!this.noSearch)
-      console.log('search')
-      //   const search = e.target.value.trim()
-      //   Api.post('/api/search', {
-      //     search
-      //   }).then(res => {
-      //     if (search === '') {
-      //       state.noSearch = true
-      //       return
-      //     }
-      //     state.noSearch = false
-      //     state.searchResults = res.data.map(fruit => fruit.name)
-      //   }).catch(err => { throw new Error(err) })
-      // }
-
-    // return { search, state }
-    }
-  }
+    emitSearch() {
+      // Emit the search event with the current value of searchTerm
+      this.$emit('search', this.searchTerm);
+    },
+  },
 }
 </script>
 

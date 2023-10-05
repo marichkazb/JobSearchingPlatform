@@ -1,11 +1,12 @@
 <template>
     <div class="pageWrapper">
         <Alert :alertMessage="alertMessage" :alertId="alertId"/>
+        <JobSearch @search="handleSearch"/>
         <p class="title">Trending now🔥</p>
         <b-button @click="deleteAllJobs()" variant="danger" class="applyBtn redBtn">Delete all!!</b-button>
         <div class="content">
           <div
-              v-for="job in jobsData"
+              v-for="job in sortedJobs"
               :key="job._id"
               @click="handleClick(job)"
               class="hover">
@@ -33,12 +34,35 @@ import { Api } from '@/Api'
 import Alert from './Alert.vue'
 import { getIdToken } from '../../authService';
 import { auth } from '../../firebaseInit';
+import JobSearch from './JobSearch.vue'
 
 const image = require('../assets/jobIcon.png')
 
 export default {
   components: {
-    Alert
+    Alert,
+    JobSearch
+  },
+  computed: {
+    sortedJobs() {
+      if (this.searchTerm) {
+        return this.jobsData.filter(job => {
+          for (const key in job) {
+            if (
+              job[key].toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+            ) {
+              return true;
+            }
+          }
+          return false;
+        });
+      } else return this.jobsData;
+    },
+  },
+  watch: {
+    searchTerm() {
+      console.log('Updated');
+    },
   },
   name: 'JobListing',
   data() {
@@ -47,7 +71,8 @@ export default {
       image,
       alertMessage: 'Test1',
       showAlert: false,
-      alertId: undefined
+      alertId: undefined,
+      searchTerm: ''
     }
   },
   async created() {
@@ -75,6 +100,9 @@ export default {
     },
     handleClick(job) {
       this.$router.push(`/application/${job._id}`)
+    },
+    handleSearch(searchTerm) {
+      this.searchTerm = searchTerm;
     },
     deleteJob(job) {
       this.alertMessage = `Successfully deleted a job ${job.title}`
