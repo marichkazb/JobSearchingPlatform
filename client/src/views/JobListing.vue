@@ -3,7 +3,7 @@
         <Alert :alertMessage="alertMessage" :alertId="alertId"/>
         <JobSearch @search="handleSearch"/>
         <p class="title">Trending now🔥</p>
-        <b-button @click="deleteAllJobs()" variant="danger" class="applyBtn redBtn">Delete all!!</b-button>
+        <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn">Delete all!!</b-button>
         <div class="content">
           <div
               v-for="job in sortedJobs"
@@ -21,7 +21,7 @@
                     <p class="text">{{job.job_enrollment_status}}</p>
                     <div class="buttonsContainer">
                         <b-button @click="handleClick(job)" class="applyBtn" variant="primary">Apply</b-button>
-                        <b-button @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
+                        <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
                     </div>
                 </div>
               </div>
@@ -60,6 +60,12 @@ export default {
         });
       } else return this.jobsData;
     },
+    canDelete() {
+      console.log(this.userType)
+      if (this.userType === 'admin' || this.userType === 'company') {
+        return true
+      } else return false
+    }
   },
   watch: {
     searchTerm() {
@@ -74,7 +80,8 @@ export default {
       alertMessage: 'Test1',
       showAlert: false,
       alertId: undefined,
-      searchTerm: ''
+      searchTerm: '',
+      userType: 'user'
     }
   },
   async created() {
@@ -83,6 +90,9 @@ export default {
         this.jobsData = await this.getJobs();
       }
     });
+  },
+  updated() {
+    this.getUserType()
   },
   methods: {
     async getJobs() {
@@ -106,10 +116,15 @@ export default {
     handleSearch(searchTerm) {
       this.searchTerm = searchTerm;
     },
-    deleteJob(job) {
+    async deleteJob(job) {
       this.alertMessage = `Successfully deleted a job ${job.title}`
       this.alertId = job._id
-      Api.delete(`/v1/jobs/${job._id}`)
+      const token = await getIdToken();
+      Api.delete(`/v1/jobs/${job._id}`, {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
         .then(response => {
           this.jobsData = this.jobsData.filter(item => item._id !== job._id)
         })
@@ -117,13 +132,32 @@ export default {
           this.message = error
         })
     },
-    deleteAllJobs() {
+    async deleteAllJobs() {
       this.alertMessage = 'Successfully deleted all jobs'
       this.alertId = Math.random()
-      console.log(this.alertId)
-      Api.delete('v1/jobs')
+      const token = await getIdToken();
+      Api.delete('v1/jobs', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
         .then(response => {
           this.jobsData = []
+        })
+        .catch(error => {
+          this.message = error
+        })
+    },
+    async getUserType() {
+      const token = await getIdToken();
+      Api.get('/v1/getUserType', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
+        .then(response => {
+          this.userType = response.data.userType
+          localStorage.setItem('userType', this.userType);
         })
         .catch(error => {
           this.message = error
@@ -195,6 +229,8 @@ export default {
   width: 200px;
   border: none;
   margin-left: 20px;
+  width: 200px;
+  border: none;
 }
 .applyBtn {
   width: 200px;

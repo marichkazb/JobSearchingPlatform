@@ -40,9 +40,10 @@
                 <a class="nav-link navText" href="/login">Login</a>
               </li-->
             </ul>
+          <a class="nav-link navText userRole">{{ capitalizedUserType }}</a>
           <button class="avatar-btn" v-if="user" @click="logout">
-  <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
-</button>
+            <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+          </button>
           </div>
         </div>
       </nav>
@@ -53,7 +54,7 @@
 <script>
 import { Api } from '@/Api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { logout } from '../../authService';
+import { logout, getIdToken } from '../../authService';
 
 export default {
   name: 'Navbar',
@@ -62,6 +63,7 @@ export default {
       user: null,
       jobsData: 'none',
       logout,
+      userType: ''
     };
   },
   created() {
@@ -76,13 +78,19 @@ export default {
   },
   computed: {
     isUserLoggedIn() {
-      return localStorage.getItem('isUserLoggedIn'); // Replace with your actual logic
+      return localStorage.getItem('isUserLoggedIn');
+    },
+    capitalizedUserType() {
+      return this.userType.charAt(0).toUpperCase() + this.userType.slice(1);
     },
   },
   watch: {
     isUserLoggedIn() {
       console.log('Updated');
     },
+  },
+  updated() {
+    this.getUserType()
   },
   methods: {
     getJobs() {
@@ -98,6 +106,21 @@ export default {
     onDropdownShown() {
       this.isDropdownVisible = !this.isDropdownVisible;
     },
+    async getUserType() {
+      const token = await getIdToken();
+      Api.get('/v1/getUserType', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
+        .then(response => {
+          this.userType = response.data.userType
+          localStorage.setItem('userType', this.userType);
+        })
+        .catch(error => {
+          this.message = error
+        })
+    }
   },
 };
 </script>
@@ -153,5 +176,8 @@ export default {
 
 .avatar-text {
   user-select: none; /* Prevents the text from being selectable */
+}
+.userRole {
+  margin-right: 15px
 }
 </style>
