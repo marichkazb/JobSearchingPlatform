@@ -13,7 +13,8 @@
     <body class="wrapper">
       <nav class="navbar navbar-expand-lg container">
         <div class="container-fluid">
-          <a class="navbar-brand navText" href="/">Logo</a>
+          <a class="navbar-brand navText" href="/" v-if="!isUserLoggedIn">Logo</a>
+          <a class="navbar-brand navText" href="/jobListing" v-else>Logo2</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -39,17 +40,10 @@
                 <a class="nav-link navText" href="/login">Login</a>
               </li-->
             </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form>
+          <a class="nav-link navText userRole">{{ capitalizedUserType }}</a>
           <button class="avatar-btn" v-if="user" @click="logout">
-  <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
-</button>
+            <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+          </button>
           </div>
         </div>
       </nav>
@@ -60,7 +54,7 @@
 <script>
 import { Api } from '@/Api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { logout } from '../../authService';
+import { logout, getIdToken } from '../../authService';
 
 export default {
   name: 'Navbar',
@@ -69,6 +63,7 @@ export default {
       user: null,
       jobsData: 'none',
       logout,
+      userType: ''
     };
   },
   created() {
@@ -81,6 +76,22 @@ export default {
       }
     });
   },
+  computed: {
+    isUserLoggedIn() {
+      return localStorage.getItem('isUserLoggedIn');
+    },
+    capitalizedUserType() {
+      return this.userType.charAt(0).toUpperCase() + this.userType.slice(1);
+    },
+  },
+  watch: {
+    isUserLoggedIn() {
+      console.log('Updated');
+    },
+  },
+  updated() {
+    this.getUserType()
+  },
   methods: {
     getJobs() {
       Api.get('/v1/jobs')
@@ -92,6 +103,24 @@ export default {
           this.message = error;
         });
     },
+    onDropdownShown() {
+      this.isDropdownVisible = !this.isDropdownVisible;
+    },
+    async getUserType() {
+      const token = await getIdToken();
+      Api.get('/v1/getUserType', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
+        .then(response => {
+          this.userType = response.data.userType
+          localStorage.setItem('userType', this.userType);
+        })
+        .catch(error => {
+          this.message = error
+        })
+    }
   },
 };
 </script>
@@ -147,5 +176,8 @@ export default {
 
 .avatar-text {
   user-select: none; /* Prevents the text from being selectable */
+}
+.userRole {
+  margin-right: 15px
 }
 </style>
