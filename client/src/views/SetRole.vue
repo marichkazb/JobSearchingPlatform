@@ -1,16 +1,14 @@
 <template>
-  <div v-if="!role">
+  <div v-if="!role" class="pageWrapper alignCenter">
     <h2>Are you a Company or a Candidate?</h2>
-    <button @click="chooseRole('candidate')">Candidate</button>
-    <button @click="chooseRole('company')">Company</button>
-
-    <div v-if="showCandidateForm">
+    <p>Please select the role you want to register with by choosing the appropriate button.</p>
+    <div class="setRoleButtons">
+      <button @click="chooseRole('candidate')">Candidate</button>
+      <button @click="chooseRole('company')">Company</button>
+    </div>
+    <div v-if="showCandidateForm" class="formStyle">
       <h3>Enter Candidate Details</h3>
       <form @submit.prevent="submitCandidateForm">
-        <div>
-          <label for="uid">Unique ID:</label>
-          <input v-model="userId" id="uid" readonly />
-        </div>
         <div>
           <label for="candidateName">Name:</label>
           <input v-model="userName" id="name" />
@@ -43,13 +41,9 @@
       </form>
     </div>
 
-    <div v-if="showCompanyForm">
+    <div v-if="showCompanyForm" class="formStyle">
       <h3>Enter Company Details</h3>
       <form @submit.prevent="submitCompanyForm">
-        <div>
-          <label for="uid">Unique ID::</label>
-          <input v-model="userId" id="uid" readonly />
-        </div>
         <div>
           <label for="name">Company Name:</label>
           <input v-model="userName" id="name" />
@@ -71,9 +65,11 @@
       </form>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="pageWrapper successfulRegistration formStyle">
+    <h3>{{ userName }} you are successfully registered!</h3>
     <p>Your role is set to: {{ role }}</p>
-    <p>Your MongoDB id is set to: {{ id }}</p>
+    <p>Click a button to redirect to the app.</p>
+    <b-button @click="redirectToTheApp">Go to the app</b-button>
   </div>
 </template>
 
@@ -175,6 +171,10 @@ export default {
       refreshToken();
       return response.data;
     },
+    redirectToTheApp() {
+      location.reload(true);
+      this.$router.push('/jobListings');
+    }
   },
 };
 </script>
@@ -246,5 +246,24 @@ input {
 input[type="submit"] {
   width: auto;
   margin-top: 20px;
+}
+.alignCenter {
+  max-height: 100rem;
+}
+.setRoleButtons {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  width: 17rem;
+  justify-content: space-between;
+}
+.formStyle {
+  width: 40rem;
+  margin-top: 30px;
+}
+.successfulRegistration {
+    margin-left: 30%;
+    margin-top: 15%;
 }
 </style>
