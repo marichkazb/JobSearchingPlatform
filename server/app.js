@@ -80,7 +80,7 @@ app.get(`/api/v1/getUserType`, async (req, res) => {
   } else if(req.admin){
     return res.json({ userType: "admin" });
   } else if(req.company){
-    return res.json({ userType: "company" });
+    return res.json({ userType: "company", companyId: req.company._id });
   } else if(req.user){
     return res.json({ userType: "applicant" });
   } {

@@ -2,9 +2,13 @@
     <div class="pageWrapper">
         <Alert :alertMessage="alertMessage" :alertId="alertId"/>
         <JobSearch @search="handleSearch"/>
-        <p class="title">Trending now🔥</p>
+        <p class="title">{{ title }}</p>
         <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn">Delete all!!</b-button>
         <div class="content">
+          <div v-if="jobsData.length === 0" id="emptyState">
+            <h4>{{ emptyStateDesc }}</h4>
+            <b-button v-if="userType === 'company'" variant="primary">Post a job opening</b-button>
+          </div>
           <div
               v-for="job in sortedJobs"
               :key="job._id"
@@ -61,11 +65,30 @@ export default {
       } else return this.jobsData;
     },
     canDelete() {
-      console.log(this.userType)
       if (this.userType === 'admin' || this.userType === 'company') {
-        return true
+        return this.jobsData.length !== 0
       } else return false
-    }
+    },
+    title() {
+      switch (this.userType) {
+        case 'company':
+          return 'My job openings💻';
+        case 'admin':
+          return 'All job openings👨‍💻';
+        default:
+          return 'Trending now🔥';
+      }
+    },
+    emptyStateDesc() {
+      switch (this.userType) {
+        case 'company':
+          return 'You have not posted any job openings yet. Create a fresh job advertisement to enroll more talented workers!';
+        case 'admin':
+          return 'No job openings were posted yet.';
+        default:
+          return 'There are no job openings at the moment. Stay tuned to get to know about the job of your dream first. 💪';
+      }
+    },
   },
   watch: {
     searchTerm() {
@@ -81,34 +104,50 @@ export default {
       showAlert: false,
       alertId: undefined,
       searchTerm: '',
-      userType: 'user'
+      userType: 'user',
+      companyId: ''
     }
   },
   async created() {
-    auth.onAuthStateChanged(async (user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
-        this.jobsData = await this.getJobs();
+        this.getUserType()
       }
+      console.log(this.jobsData)
     });
   },
-  updated() {
-    this.getUserType()
-  },
   methods: {
-    async getJobs() {
+    async getJobs(userType) {
       const token = await getIdToken();
-      Api.get('/v1/jobs', {
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-        .then(response => {
-          this.jobsData = response.data
-          console.log(this.jobsData)
+      console.log(this.userType)
+      if (userType === 'company') {
+        Api.get(`/v1/companies/${this.companyId}/jobs`, {
+          headers: {
+            Authorization: `${token}`
+          }
         })
-        .catch(error => {
-          this.message = error
+          .then(response => {
+            console.log(response);
+            this.jobsData = response.data
+            console.log(this.jobsData)
+          })
+          .catch(error => {
+            this.message = error
+          })
+      } else {
+        Api.get('/v1/jobs', {
+          headers: {
+            Authorization: `${token}`
+          }
         })
+          .then(response => {
+            this.jobsData = response.data
+            console.log(this.jobsData)
+          })
+          .catch(error => {
+            this.message = error
+          })
+      }
     },
     handleClick(job) {
       this.$router.push(`/application/${job._id}`)
@@ -157,6 +196,8 @@ export default {
       })
         .then(response => {
           this.userType = response.data.userType
+          this.companyId = response.data.companyId
+          this.getJobs(this.userType)
           localStorage.setItem('userType', this.userType);
         })
         .catch(error => {
@@ -242,5 +283,14 @@ export default {
   flex-direction: row;
   align-items: flex-start;
   margin-top: 24px;
+}
+#emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 40rem;
+  margin-top: 30px;
+  text-align: left;
 }
 </style>
