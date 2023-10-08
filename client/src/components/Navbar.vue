@@ -13,8 +13,7 @@
     <body class="wrapper">
       <nav class="navbar navbar-expand-lg container">
         <div class="container-fluid">
-          <a class="navbar-brand navText" href="/" v-if="!isUserLoggedIn">Logo</a>
-          <a class="navbar-brand navText" href="/jobListing" v-else>Logo2</a>
+          <img :src="image">
           <button
             class="navbar-toggler"
             type="button"
@@ -55,6 +54,7 @@
 import { Api } from '@/Api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { logout, getIdToken } from '../../authService';
+const image = require('../assets/appLogo.svg')
 
 export default {
   name: 'Navbar',
@@ -63,7 +63,8 @@ export default {
       user: null,
       jobsData: 'none',
       logout,
-      userType: ''
+      userType: '',
+      image
     };
   },
   created() {
