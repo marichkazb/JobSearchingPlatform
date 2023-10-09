@@ -55,10 +55,14 @@ auth.onAuthStateChanged(async (user) => {
       console.log('User type:', userType);
       if (userType === 'none' && router.currentRoute.path !== '/setRole') {
         router.push('/setRole');
-      } else if (currentRoutePath !== '/jobListing') {
+      } else if (currentRoutePath === '/login') {
         router.push('/jobListing');
         location.reload(true);
       }
+      /* else if (currentRoutePath !== '/jobListing') {
+        router.push('/jobListing');
+        location.reload(true);
+      } */
       // We could maybe add more logic here depending on the user type, for example:
       // if (userType === 'admin') {
       //   router.push('/adminDashboard');

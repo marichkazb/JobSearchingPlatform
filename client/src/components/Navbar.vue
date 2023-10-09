@@ -1,53 +1,26 @@
 <template>
-  <div>
-    <head>
-      <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-      />
-      <link
-        href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
-        rel="stylesheet"
-      />
-    </head>
-    <body class="wrapper">
-      <nav class="navbar navbar-expand-lg container">
-        <div class="container-fluid">
-          <a class="navbar-brand navText" href="/" v-if="!isUserLoggedIn">Logo</a>
-          <a class="navbar-brand navText" href="/jobListing" v-else>Logo2</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link navText" href="/jobListing">Job Listings</a>
-              </li>
-              <!-- Only show if user is logged in -->
-              <li class="nav-item" v-if="user">
-                <a class="nav-link navText" href="/profile">Profile</a>
-              </li>
-              <!-- Only show if user is logged out -->
-              <!--li class="nav-item" v-if="!user">
-                <a class="nav-link navText" href="/login">Login</a>
-              </li-->
-            </ul>
-          <a class="nav-link navText userRole">{{ capitalizedUserType }}</a>
-          <button class="avatar-btn" v-if="user" @click="logout">
-            <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
-          </button>
-          </div>
-        </div>
-      </nav>
-    </body>
+  <div class="wrapper">
+    <b-navbar toggleable="lg" type="dark" class="custom-navbar">
+      <b-container fluid>
+        <b-navbar-brand v-if="!isUserLoggedIn" href="/">Logo</b-navbar-brand>
+        <b-navbar-brand v-else href="/jobListing">Logo2</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item href="/jobListing">Job Listings</b-nav-item>
+            <b-nav-item v-if="user" href="/profile">Profile</b-nav-item>
+          </b-navbar-nav>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-text class="userRole">{{ capitalizedUserType }}</b-nav-text>
+            <b-button v-if="user" @click="logout" class="avatar-btn">
+              <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+            </b-button>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-container>
+    </b-navbar>
   </div>
 </template>
 
@@ -127,13 +100,9 @@ export default {
 
 <style>
 
-.wrapper {
+.custom-navbar {
   background-color: rgba(7, 25, 82, 1);
-  padding-left: 80px;
   position: sticky;
-  top: 0;
-  right: 0;
-  z-index: 1000;
   font-family: 'Raleway', 'Avenir', Helvetica, Arial, sans-serif;
 }
 .container {
