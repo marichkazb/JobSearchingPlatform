@@ -1,38 +1,49 @@
 <template>
-    <div class="pageWrapper">
-        <Alert :alertMessage="alertMessage" :alertId="alertId"/>
-        <JobSearch @search="handleSearch"/>
-        <p class="title">{{ title }}</p>
-        <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn">Delete all!!</b-button>
-        <div class="content">
-          <div v-if="jobsData.length === 0" id="emptyState">
-            <h4>{{ emptyStateDesc }}</h4>
-            <b-button v-if="userType === 'company'" variant="primary">Post a job opening</b-button>
-          </div>
-          <div
-              v-for="job in sortedJobs"
-              :key="job._id"
-              class="hover">
-              <div class="jobWrapper">
-                <div class="media-left">
-                   <img v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" />
-                   <img v-else :src="defaultImage" alt="logo" id="companyImage" />
-                </div>
-                <div style="padding-left: 30px;">
-                    <p class="text"> {{job.company_name}}</p>
-                    <p class="text jobTitle"> {{job.title}}</p>
-                    <p class="text desc">{{job.description}}</p>
-                    <p class="text">{{job.location}}</p>
-                    <p class="text">{{job.job_enrollment_status}}</p>
-                    <div class="buttonsContainer">
-                        <b-button @click="handleClick(job)" class="applyBtn" variant="primary">Apply</b-button>
-                        <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
-                    </div>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
+  <b-container fluid>
+    <Alert :alertMessage="alertMessage" :alertId="alertId"/>
+    <JobSearch @search="handleSearch"  class="mt-3"/>
+
+    <b-row class="mt-3">
+      <b-col>
+        <h4 class="title">{{ title }}</h4>
+      </b-col>
+    </b-row>
+
+    <b-row class="mt-3">
+      <b-col>
+        <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn mb-2">Delete all!!</b-button>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <div v-if="jobsData.length === 0" id="emptyState">
+        <h4>{{ emptyStateDesc }}</h4>
+        <b-button v-if="userType === 'company'" variant="primary">Post a job opening</b-button>
+      </div>
+      <b-col v-for="job in sortedJobs" :key="job._id" md="4" sm="6" xs="12">
+        <b-card no-body class="jobWrapper mb-3">
+          <b-row class="m-0">
+            <b-col xs="4" md="2" class="media-left p-2">
+              <img v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" />
+              <img v-else :src="defaultImage" alt="logo" id="companyImage" />
+            </b-col>
+            <b-col xs="8" md="10" class="p-2">
+              <b-card-text class="text">{{job.company_name}}</b-card-text>
+              <b-card-title class="text jobTitle">{{job.title}}</b-card-title>
+              <b-card-text class="text desc">{{job.description}}</b-card-text>
+              <b-card-text class="text">{{job.location}}</b-card-text>
+              <b-card-text class="text">{{job.job_enrollment_status}}</b-card-text>
+
+              <b-button-group class="buttonsContainer mt-3">
+                <b-button @click="handleClick(job)" class="applyBtn mr-2" variant="primary">Apply</b-button>
+                <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
+              </b-button-group>
+            </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -211,71 +222,36 @@ export default {
 
 <style scoped>
 .jobWrapper {
-  margin: 20px;
-  background-color: white;
-  border: 2px solid #ccc;
   border-radius: 10px;
-  justify-content: flex-start;
-  display: flex;
-  flex-direction: row;
-  padding: 20px;
+  transition: all 0.3s;
 }
 
-.hover :hover {
+.jobWrapper:hover {
   border-color: rgb(202, 213, 247);
   box-shadow: 0 0 5px rgb(202, 213, 247);
 }
 
-.hover :hover:not(.hover) {
-  border-color: rgb(18, 33, 78);
-  box-shadow: none;
-}
-
-.media-left {
-  display: flex;
-  align-items: center;
-}
-
-.content {
-  width: 30%;
-  flex-direction: column;
-}
-
-.content {
-  color: black;
-  text-decoration: none;
-  display: flex;
-  align-items: flex-start;
-}
-
 .text {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  min-width: 70vh;
   margin: 0;
   text-align: left;
 }
+
 .jobTitle {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem; /* Adjusts with screen size */
 }
+
 .desc {
   color: rgb(0, 0, 0);
   font-weight: 300;
-  align-content: flex-end;
 }
 
 .redBtn {
   background-color: rgb(229, 182, 182);
-  width: 200px;
-  border: none;
-  margin-left: 20px;
-  width: 200px;
   border: none;
 }
+
 .applyBtn {
-  width: 200px;
   border: none;
   background-color:rgba(7, 25, 82, 1);
 }

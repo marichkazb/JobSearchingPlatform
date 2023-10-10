@@ -1,76 +1,113 @@
 <template>
-  <div v-if="!role" class="pageWrapper alignCenter">
-    <h2>Are you a Company or a Candidate?</h2>
-    <p>Please select the role you want to register with by choosing the appropriate button.</p>
-    <div class="setRoleButtons">
-      <button @click="chooseRole('candidate')">Candidate</button>
-      <button @click="chooseRole('company')">Company</button>
-    </div>
-    <div v-if="showCandidateForm" class="formStyle">
+  <b-container fluid class="container-fluid" v-if="!role">
+    <h2 class="mt-4">Are you a Company or a Candidate?</h2>
+    <b-button @click="chooseRole('candidate')" variant="primary" class="mt-2 mb-2 mr-2"
+      >Candidate</b-button
+    >
+    <b-button @click="chooseRole('company')" variant="primary" class="mt-2 mb-2"
+      >Company</b-button
+    >
+
+    <div v-if="showCandidateForm">
       <h3>Enter Candidate Details</h3>
-      <form @submit.prevent="submitCandidateForm">
-        <div>
-          <label for="candidateName">Name:</label>
-          <input v-model="userName" id="name" />
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input v-model="userEmail" id="email" type="email" readonly />
-        </div>
-        <div>
-          <label for="number">Number:</label>
-          <input v-model="candidateForm.number" id="number" />
-        </div>
-        <div>
-          <label for="education">Education:</label>
-          <input v-model="candidateForm.education" id="education" />
-        </div>
-        <div>
-          <label for="currentCompany">Current Company:</label>
-          <input v-model="candidateForm.currentCompany" id="currentCompany" />
-        </div>
-        <div>
-          <label for="linkedin">LinkedIn:</label>
-          <input v-model="candidateForm.linkedin" id="linkedin" />
-        </div>
-        <div>
-          <label for="about">About:</label>
-          <input v-model="candidateForm.about" id="about" />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      <b-form @submit.prevent="submitCandidateForm">
+        <b-form-group label="Unique ID:" label-for="uid">
+          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Name:" label-for="candidateName">
+          <b-form-input v-model="userName" id="name"></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Email:" label-for="email">
+          <b-form-input
+            v-model="userEmail"
+            id="email"
+            type="email"
+            readonly
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Number:" label-for="number">
+          <b-form-input
+            v-model="candidateForm.number"
+            id="number"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Education:" label-for="education">
+          <b-form-input
+            v-model="candidateForm.education"
+            id="education"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Current Company:" label-for="currentCompany">
+          <b-form-input
+            v-model="candidateForm.currentCompany"
+            id="currentCompany"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="LinkedIn:" label-for="linkedin">
+          <b-form-input
+            v-model="candidateForm.linkedin"
+            id="linkedin"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="About:" label-for="about">
+          <b-form-input v-model="candidateForm.about" id="about"></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
     </div>
 
     <div v-if="showCompanyForm" class="formStyle">
       <h3>Enter Company Details</h3>
-      <form @submit.prevent="submitCompanyForm">
-        <div>
-          <label for="name">Company Name:</label>
-          <input v-model="userName" id="name" />
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input v-model="userEmail" id="email" type="email" readonly />
-        </div>
-        <div>
-          <label for="logo">Logo URL:</label>
-          <input v-model="companyForm.logo" id="logo" />
-        </div>
-        <div>
-          <label for="locations">Locations (comma separated):</label>
-          <input v-model="companyForm.locations" id="locations" />
-        </div>
+      <b-form @submit.prevent="submitCompanyForm">
+        <b-form-group label="Unique ID:" label-for="uid">
+          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
+        </b-form-group>
 
-        <button type="submit">Submit</button>
-      </form>
+        <b-form-group label="Company Name:" label-for="name">
+          <b-form-input v-model="userName" id="name"></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Email:" label-for="email">
+          <b-form-input
+            v-model="userEmail"
+            id="email"
+            type="email"
+            readonly
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Logo URL:" label-for="logo">
+          <b-form-input v-model="companyForm.logo" id="logo"></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Locations (comma separated):"
+          label-for="locations"
+        >
+          <b-form-input
+            v-model="companyForm.locations"
+            id="locations"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
     </div>
-  </div>
   <div v-else class="pageWrapper successfulRegistration formStyle">
     <h3>{{ userName }} you are successfully registered!</h3>
     <p>Your role is set to: {{ role }}</p>
     <p>Click a button to redirect to the app.</p>
     <b-button @click="redirectToTheApp">Go to the app</b-button>
   </div>
+  </b-container>
 </template>
 
 <script>
@@ -180,59 +217,35 @@ export default {
 </script>
 
 <style scoped>
-h2,
-h3 {
+h2, h3 {
   color: #333;
-  margin-bottom: 20px;
+  text-align: center;  /* Center the text of the headers */
 }
 
-div {
+.main-container{
   display: flex;
-  max-height: 90vh;
+  flex-direction: column;
+  align-items: center; /* This ensures that all immediate children are centered */
+}
+
+.form-container {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto
+  overflow-y: auto;
+  width: 100%;
+  max-width: 600px;  /* You can adjust this value */
 }
 
 button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Role selection styling */
-button + button {
-  margin-left: 10px;
-}
-
-/* Form styling */
-form {
-  background-color: #f8f9fa;
+b-form {
+  width: 100%;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
-  border-radius: 8px;
   margin-top: 20px;
-}
-
-form div {
-  margin-bottom: 15px; /* Space between each form field */
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
 }
 
 input {
