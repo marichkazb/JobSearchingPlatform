@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <Alert :alertMessage="alertMessage" :alertId="alertId"/>
-    <JobSearch @search="handleSearch"  class="mt-3"/>
+    <JobSearch @search="handleSearch"  class="mt-5"/>
 
     <b-row class="mt-3">
       <b-col>
@@ -16,16 +16,16 @@
     </b-row>
 
     <b-row>
-      <div v-if="jobsData.length === 0" id="emptyState">
+      <b-col v-if="jobsData.length === 0" id="emptyState" class="m-5">
         <h4>{{ emptyStateDesc }}</h4>
         <b-button v-if="userType === 'company'" variant="primary">Post a job opening</b-button>
-      </div>
+      </b-col>
       <b-col v-for="job in sortedJobs" :key="job._id" md="4" sm="6" xs="12">
-        <b-card no-body class="jobWrapper mb-3">
-          <b-row class="m-0">
-            <b-col xs="4" md="2" class="media-left p-2">
-              <img v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" />
-              <img v-else :src="defaultImage" alt="logo" id="companyImage" />
+        <b-card no-body class="jobWrapper m-2 mb-3">
+          <b-row class="m-0 pl-2">
+            <b-col xs="4" md="2" class="media-left p-2 mt-5">
+              <b-img v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" fluid/>
+              <b-img v-else :src="defaultImage" alt="logo" id="companyImage" fluid/>
             </b-col>
             <b-col xs="8" md="10" class="p-2">
               <b-card-text class="text">{{job.company_name}}</b-card-text>
@@ -271,7 +271,7 @@ export default {
   text-align: left;
 }
 #companyImage {
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
 }
 </style>

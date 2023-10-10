@@ -11,9 +11,6 @@
     <div v-if="showCandidateForm">
       <h3>Enter Candidate Details</h3>
       <b-form @submit.prevent="submitCandidateForm">
-        <b-form-group label="Unique ID:" label-for="uid">
-          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
-        </b-form-group>
 
         <b-form-group label="Name:" label-for="candidateName">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -67,9 +64,6 @@
     <div v-if="showCompanyForm" class="formStyle">
       <h3>Enter Company Details</h3>
       <b-form @submit.prevent="submitCompanyForm">
-        <b-form-group label="Unique ID:" label-for="uid">
-          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
-        </b-form-group>
 
         <b-form-group label="Company Name:" label-for="name">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -101,13 +95,13 @@
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </div>
+  </b-container>
   <div v-else class="pageWrapper successfulRegistration formStyle">
     <h3>{{ userName }} you are successfully registered!</h3>
     <p>Your role is set to: {{ role }}</p>
     <p>Click a button to redirect to the app.</p>
     <b-button @click="redirectToTheApp">Go to the app</b-button>
   </div>
-  </b-container>
 </template>
 
 <script>
