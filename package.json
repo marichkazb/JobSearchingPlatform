@@ -6,8 +6,16 @@
   "scripts": {
     "postinstall": "npm install --prefix server && npm install --prefix client && npm run build --prefix client"
   },
-  "engines" : {
-    "npm" : "9.x",
+  "engines": {
+    "npm": "9.x",
     "node": "18.x"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.2",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/vue-fontawesome": "^2.0.10"
   }
 }
