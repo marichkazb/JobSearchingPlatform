@@ -15,7 +15,7 @@ const jobsSchema = new Schema({
   },
   company_image: {
     type: String,
-    required: true,
+    required: false,
   },
   skills: {
     type: [String],

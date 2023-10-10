@@ -15,7 +15,8 @@
               class="hover">
               <div class="jobWrapper">
                 <div class="media-left">
-                  <img :src="image">
+                   <img v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" />
+                   <img v-else :src="defaultImage" alt="logo" id="companyImage" />
                 </div>
                 <div style="padding-left: 30px;">
                     <p class="text"> {{job.company_name}}</p>
@@ -42,7 +43,7 @@ import { getIdToken } from '../../authService';
 import { auth } from '../../firebaseInit';
 import JobSearch from '../components/JobSearch'
 
-const image = require('../assets/jobIcon.png')
+const defaultImage = require('../assets/defaultCompanyLogo.png')
 
 export default {
   components: {
@@ -99,13 +100,13 @@ export default {
   data() {
     return {
       jobsData: this.getJobs,
-      image,
       alertMessage: 'Test1',
       showAlert: false,
       alertId: undefined,
       searchTerm: '',
       userType: 'user',
-      companyId: ''
+      companyId: '',
+      defaultImage
     }
   },
   async created() {
@@ -292,5 +293,9 @@ export default {
   width: 40rem;
   margin-top: 30px;
   text-align: left;
+}
+#companyImage {
+  width: 90px;
+  height: 90px;
 }
 </style>
