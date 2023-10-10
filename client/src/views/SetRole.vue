@@ -8,9 +8,9 @@
       >Company</b-button
     >
 
-    <div v-if="showCandidateForm">
-      <h3>Enter Candidate Details</h3>
-      <b-form @submit.prevent="submitCandidateForm">
+    <div v-if="showCandidateForm" class="text-center">
+      <h3 class="mt-5">Enter Candidate Details</h3>
+      <b-form @submit.prevent="submitCandidateForm" class="m-5 p-4 bg-light rounded containerStyle">
 
         <b-form-group label="Name:" label-for="candidateName">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -54,16 +54,16 @@
         </b-form-group>
 
         <b-form-group label="About:" label-for="about">
-          <b-form-input v-model="candidateForm.about" id="about"></b-form-input>
+          <b-form-input v-model="candidateForm.about" id="about" style="height: 80px !important;"></b-form-input>
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </div>
 
-    <div v-if="showCompanyForm" class="formStyle">
-      <h3>Enter Company Details</h3>
-      <b-form @submit.prevent="submitCompanyForm">
+    <div v-if="showCompanyForm" class="text-center">
+      <h3 class="mt-5">Enter Company Details</h3>
+      <b-form @submit.prevent="submitCompanyForm" class="m-5 p-4 bg-light rounded containerStyle">
 
         <b-form-group label="Company Name:" label-for="name">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -89,6 +89,7 @@
           <b-form-input
             v-model="companyForm.locations"
             id="locations"
+            style="height: 80px !important;"
           ></b-form-input>
         </b-form-group>
 
@@ -96,12 +97,12 @@
       </b-form>
     </div>
   </b-container>
-  <div v-else class="pageWrapper successfulRegistration formStyle">
-    <h3>{{ userName }} you are successfully registered!</h3>
+  <b-col v-else class="mt-5" fluid>
+    <h3>{{ userName }}, you are successfully registered!</h3>
     <p>Your role is set to: {{ role }}</p>
     <p>Click a button to redirect to the app.</p>
-    <b-button @click="redirectToTheApp">Go to the app</b-button>
-  </div>
+    <b-button @click="redirectToTheApp" class="mt-3" variant="primary">Go to the app</b-button>
+  </b-col>
 </template>
 
 <script>
@@ -272,5 +273,10 @@ input[type="submit"] {
 .successfulRegistration {
     margin-left: 30%;
     margin-top: 15%;
+}
+.containerStyle {
+  max-width: 600px;
+  margin-left: 30% !important;
+  margin-right: 30% !important
 }
 </style>
