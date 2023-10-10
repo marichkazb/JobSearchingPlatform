@@ -8,12 +8,9 @@
       >Company</b-button
     >
 
-    <div v-if="showCandidateForm">
-      <h3>Enter Candidate Details</h3>
-      <b-form @submit.prevent="submitCandidateForm">
-        <b-form-group label="Unique ID:" label-for="uid">
-          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
-        </b-form-group>
+    <div v-if="showCandidateForm" class="text-center">
+      <h3 class="mt-5">Enter Candidate Details</h3>
+      <b-form @submit.prevent="submitCandidateForm" class="m-5 p-4 bg-light rounded containerStyle">
 
         <b-form-group label="Name:" label-for="candidateName">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -57,19 +54,16 @@
         </b-form-group>
 
         <b-form-group label="About:" label-for="about">
-          <b-form-input v-model="candidateForm.about" id="about"></b-form-input>
+          <b-form-input v-model="candidateForm.about" id="about" style="height: 80px !important;"></b-form-input>
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </div>
 
-    <div v-if="showCompanyForm">
-      <h3>Enter Company Details</h3>
-      <b-form @submit.prevent="submitCompanyForm">
-        <b-form-group label="Unique ID:" label-for="uid">
-          <b-form-input v-model="userId" id="uid" readonly></b-form-input>
-        </b-form-group>
+    <div v-if="showCompanyForm" class="text-center">
+      <h3 class="mt-5">Enter Company Details</h3>
+      <b-form @submit.prevent="submitCompanyForm" class="m-5 p-4 bg-light rounded containerStyle">
 
         <b-form-group label="Company Name:" label-for="name">
           <b-form-input v-model="userName" id="name"></b-form-input>
@@ -95,17 +89,20 @@
           <b-form-input
             v-model="companyForm.locations"
             id="locations"
+            style="height: 80px !important;"
           ></b-form-input>
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </div>
-  <div v-else>
-    <p>Your role is set to: {{ role }}</p>
-    <p>Your MongoDB id is set to: {{ id }}</p>
-  </div>
   </b-container>
+  <b-col v-else class="mt-5" fluid>
+    <h3>{{ userName }}, you are successfully registered!</h3>
+    <p>Your role is set to: {{ role }}</p>
+    <p>Click a button to redirect to the app.</p>
+    <b-button @click="redirectToTheApp" class="mt-3" variant="primary">Go to the app</b-button>
+  </b-col>
 </template>
 
 <script>
@@ -206,6 +203,10 @@ export default {
       refreshToken();
       return response.data;
     },
+    redirectToTheApp() {
+      location.reload(true);
+      this.$router.push('/jobListings');
+    }
   },
 };
 </script>
@@ -248,5 +249,34 @@ input {
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: auto;
+  margin-top: 20px;
+}
+.alignCenter {
+  max-height: 100rem;
+}
+.setRoleButtons {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  width: 17rem;
+  justify-content: space-between;
+}
+.formStyle {
+  width: 40rem;
+  margin-top: 30px;
+}
+.successfulRegistration {
+    margin-left: 30%;
+    margin-top: 15%;
+}
+.containerStyle {
+  max-width: 600px;
+  margin-left: 30% !important;
+  margin-right: 30% !important
 }
 </style>

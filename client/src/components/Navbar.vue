@@ -1,22 +1,26 @@
 <template>
   <div class="wrapper">
-    <b-navbar toggleable="lg" type="dark" class="custom-navbar">
+    <b-navbar toggleable="sm" type="dark" class="custom-navbar">
       <b-container fluid>
-        <b-navbar-brand v-if="!isUserLoggedIn" href="/">Logo</b-navbar-brand>
-        <b-navbar-brand v-else href="/jobListing">Logo2</b-navbar-brand>
-
+        <b-img :src="image" class="image" />
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
+          <b-navbar-nav style="color: white;">
             <b-nav-item href="/jobListing">Job Listings</b-nav-item>
             <b-nav-item v-if="user" href="/profile">Profile</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
-            <b-nav-text class="userRole">{{ capitalizedUserType }}</b-nav-text>
-            <b-button v-if="user" @click="logout" class="avatar-btn">
-              <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
-            </b-button>
+            <b-nav-item-dropdown right>
+              <!-- Using 'button-content' slot -->
+              <template #button-content>
+                <b-nav-text class="userRole" style="color: white;">{{ capitalizedUserType }}</b-nav-text>
+                <b-button class="avatar-btn">
+                  <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+                </b-button>
+              </template>
+              <b-dropdown-item v-if="user" href="#" variant="danger" @click="logout">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
       </b-container>
@@ -28,6 +32,7 @@
 import { Api } from '@/Api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { logout, getIdToken } from '../../authService';
+const image = require('../assets/appLogo.png')
 
 export default {
   name: 'Navbar',
@@ -36,7 +41,8 @@ export default {
       user: null,
       jobsData: 'none',
       logout,
-      userType: ''
+      userType: '',
+      image
     };
   },
   created() {
@@ -148,5 +154,9 @@ export default {
 }
 .userRole {
   margin-right: 15px
+}
+.image {
+  height: 50px;
+  margin-right: 20px;
 }
 </style>

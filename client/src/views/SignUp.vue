@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pageWrapper alignCenter">
     <h2>Sign Up</h2>
     <div id="firebaseui-auth-container"></div>
   </div>
@@ -27,3 +27,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.alignCenter {
+  margin-top: 10rem;
+}
+</style>
