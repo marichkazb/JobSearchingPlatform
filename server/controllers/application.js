@@ -1,4 +1,4 @@
-const Application = require('../models/application');
+const Application = require("../models/application");
 
 // Get all applications
 const getAllApplications = async (req, res) => {
@@ -11,7 +11,7 @@ const getAllApplications = async (req, res) => {
       applications = await Application.find({ status });
     }
 
-    //sorting 
+    //sorting
     if (sort && order) {
       applications = await Application.find().sort({ [sort]: order });
     }
@@ -22,24 +22,33 @@ const getAllApplications = async (req, res) => {
   }
 };
 
-const createApplicationCollection = async (req, res) => {
-  try {
-    const applicationsData = req.body;
-    const insertedApplications = await Application.insertMany(applicationsData);
-    res.status(201).json(insertedApplications);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-};
-
-// Create an application
 const createApplication = async (req, res) => {
   try {
-    const newApplication = new Application(req.body);
-    await newApplication.save();
-    res.status(201).json(newApplication);
+    // Check if the body contains an array of applications
+    if (Array.isArray(req.body)) {
+      const applicationsData = req.body;
+
+      const applicationsWithUserId = applicationsData.map((application) => ({
+        ...application,
+        candidateId: req.candidate._id,
+      }));
+
+      const insertedApplications = await Application.insertMany(
+        applicationsWithUserId
+      );
+      return res.status(201).json(insertedApplications);
+    } else {
+      // Handle a single application object
+      const newApplication = new Application({
+        ...req.body,
+        candidateId: req.candidate._id,
+      });
+
+      await newApplication.save();
+      return res.status(201).json(newApplication);
+    }
   } catch (error) {
-    res.status(500).json(error.message);
+    return res.status(500).json(error.message);
   }
 };
 
@@ -48,34 +57,41 @@ const deleteAllApplications = async (req, res) => {
   try {
     const result = await Application.deleteMany();
     if (result.deletedCount > 0) {
-      res.status(200).json('All applications were deleted.');
+      res.status(200).json("All applications were deleted.");
     } else {
-      res.status(404).json('There are no applications found.');
+      res.status(404).json("There are no applications found.");
     }
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-// Get a specific application 
+// Get a specific application
 const getApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const application = await Application.findById(id);
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
     res.json(application);
   } catch (error) {
     res.status(500).json(error.message);
   }
 };
 
-// Update application 
+// Update application
 const updateApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const updateFields = req.body;
-    const application = await Application.findByIdAndUpdate(id, updateFields, { new: true });
+    const application = await Application.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
     if (!application) {
-      return res.status(404).json('Application not found');
+      return res.status(404).json("Application not found");
     }
     res.json(application);
   } catch (error) {
@@ -88,6 +104,11 @@ const deleteOneApplication = async (req, res) => {
   try {
     const id = req.params.id;
     const application = await Application.findOneAndRemove(id);
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
     res.status(200).json(`Deleted ${application}`);
   } catch (error) {
     res.status(500).json(error.message);
@@ -101,5 +122,4 @@ module.exports = {
   getApplication,
   updateApplication,
   deleteOneApplication,
-  createApplicationCollection
 };

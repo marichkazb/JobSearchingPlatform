@@ -11,7 +11,9 @@ module.exports = {
     'space-before-function-paren': [2, { anonymous: 'always', named: 'never' }],
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'comma-dangle': 'off',
+    semi: 'off',
   },
   parserOptions: {
     parser: '@babel/eslint-parser',

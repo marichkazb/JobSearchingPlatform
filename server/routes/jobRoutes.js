@@ -1,17 +1,49 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const jobApplicationRoutes = require('./jobApplicationRoutes');
-const jobController = require('../controllers/job');
+const {
+  createJob,
+  getAllJobs,
+  deleteAllJobs,
+  getJobByID,
+  updateJobByID,
+  deleteJobByID,
+  postApplicationsForJobs,
+  getApplicationsForJobs,
+  getOneApplicationForJob,
+  deleteOneApplicationForJob,
+} = require("../controllers/job");
 
-router.use("/:job_id/applications", jobApplicationRoutes);
+const {
+  checkIfAdmin,
+  checkIfCompany,
+  verifyJobOwnership,
+  checkIfCandidate,
+  verifyApplicationVisibility,
+  verifyApplicationOwnership,
+} = require("../authMiddleware");
 
-router.post("/", jobController.createJob);
-router.get("/", jobController.getAllJobs);
-router.delete("/", jobController.deleteAllJobs);
+router.post("/:id/applications/", checkIfCandidate, postApplicationsForJobs);
 
-router.get('/:id', jobController.getJobByID);
-router.put('/:id', jobController.updateJobByID);
-router.patch('/:id', jobController.updateJobByID);
-router.delete('/:id', jobController.deleteJobByID);
+router.get("/:id/applications/", verifyJobOwnership, getApplicationsForJobs);
+router.get(
+  "/:id/applications/:applicationId",
+  verifyJobOwnership,
+  getOneApplicationForJob
+);
+
+router.delete(
+  "/:id/applications/:applicationId",
+  deleteOneApplicationForJob
+);
+
+router.get("/", getAllJobs);
+router.get("/:id", getJobByID);
+
+router.post("/", checkIfCompany, createJob);
+router.delete("/", checkIfAdmin, deleteAllJobs);
+
+router.put("/:id", verifyJobOwnership, updateJobByID);
+router.patch("/:id", verifyJobOwnership, updateJobByID);
+router.delete("/:id", verifyJobOwnership, deleteJobByID);
 
 module.exports = router;

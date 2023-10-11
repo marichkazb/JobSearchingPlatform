@@ -1,15 +1,31 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
-const applicationController = require("../controllers/application");
+const {
+  getAllApplications,
+  createApplication,
+  deleteAllApplications,
+  getApplication,
+  updateApplication,
+  deleteOneApplication,
+} = require("../controllers/application");
+const {
+  checkIfAdmin,
+  checkIfCandidate,
+  verifyApplicationVisibility,
+  verifyApplicationOwnership,
+} = require("../authMiddleware");
 
-router.get("/", applicationController.getAllApplications);
-router.post("/", applicationController.createApplicationCollection);
-router.post("/", applicationController.createApplication);
-router.delete("/", applicationController.deleteAllApplications);
+router.get("/", checkIfAdmin, getAllApplications);
+router.delete("/", checkIfAdmin, deleteAllApplications);
 
-router.get("/:id", applicationController.getApplication);
-router.put("/:id", applicationController.updateApplication);
-router.patch("/:id", applicationController.updateApplication);
-router.delete("/:id", applicationController.deleteOneApplication);
+router.post("/", checkIfCandidate, createApplication); // handles both single application and application collections
+
+router.use("/:id", verifyApplicationVisibility);
+router.get("/:id", getApplication);
+
+router.use("/:id", verifyApplicationOwnership);
+router.put("/:id", updateApplication);
+router.patch("/:id", updateApplication);
+router.delete("/:id", deleteOneApplication);
 
 module.exports = router;

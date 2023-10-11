@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const applicationSchema = new mongoose.Schema({
-  questions: {
-    type: [],
-    required: true
-  },
   dateOfApplication: {
     type: Date,
     default: Date.now,
@@ -13,15 +9,32 @@ const applicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'Pending',
+    default: "Pending",
   },
-  skills: [{
+  firstName: {
     type: String,
-  }],
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  linkedIn: {
+    type: String,
+  },
+  motivation: {
+    type: String,
+  },
   jobId: {
     type: Schema.Types.ObjectId,
     ref: "Jobs",
-    required: false
+    required: true,
+  },
+  candidateId: {
+    type: Schema.Types.ObjectId,
+    ref: "Candidates",
+    required: true,
   },
 });
 
