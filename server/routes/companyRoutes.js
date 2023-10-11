@@ -9,11 +9,15 @@ const {
   updatePartOfCompany,
   getAllCompanyJobs,
   getCompanyJob,
+  postCompanyJob,
+  deleteOneJobInCompany
 } = require("../controllers/company");
 const { verifyCompanyOwnership } = require("../authMiddleware");
 
 router.get("/:id/jobs", getAllCompanyJobs);
 router.get("/:id/jobs/:jobId", getCompanyJob);
+router.post("/:id/jobs", postCompanyJob);
+router.delete("/:id/jobs/:jobId", deleteOneJobInCompany)
 
 router.get("/", getAllCompanies);
 router.get("/:id", getCompany);

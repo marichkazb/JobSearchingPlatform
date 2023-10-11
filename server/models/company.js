@@ -10,11 +10,12 @@ const companySchema = new mongoose.Schema({
     required: false,
     default: ["Gothenburg"],
   },
-  jobs: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
-    required: false,
-    default: [],
-  },
+  jobs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Company", companySchema);
