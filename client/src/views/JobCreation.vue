@@ -46,6 +46,7 @@
 
 <script>
 import { Api } from '@/Api'
+import { getIdToken } from '../../authService'
 
 export default {
   name: 'jobCreation',
@@ -54,13 +55,12 @@ export default {
       title: '',
       company_name: '',
       description: '',
-      company_image: '',
       skills: '',
       validation: '',
       yearly_salary_min: '',
       yearly_salary_max: '',
       location: '',
-      date_posted: '',
+      date_posted: Date.now(),
       deadline: '',
       job_level: '',
       education_level: '',
@@ -71,6 +71,7 @@ export default {
       alertMessage: undefined,
       alertId: undefined,
       variant: undefined,
+      companyId: null,
       formSubmitted: false,
       inputFields: [
         {
@@ -90,12 +91,6 @@ export default {
           value: '',
           class: 'input',
           placeholder: 'Description'
-        },
-        {
-          id: 'company_image',
-          value: '',
-          class: 'input',
-          placeholder: 'Company Image'
         },
         {
           id: 'skills',
@@ -179,7 +174,7 @@ export default {
       })
       if (Object.keys(this.errors).length === 0) {
         Api
-          .post('/v1/jobs', requestData)
+          .post(`/v1/companies/${this.companyId}/jobs`, requestData)
           .then(response => {
             this.alertMessage = 'Successfully posted a job'
             this.variant = 'success'
@@ -195,6 +190,23 @@ export default {
     },
     goBack() {
       this.$router.go(-1)
+    },
+    async getUserType() {
+      const token = await getIdToken()
+      Api.get('/v1/getUserType', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
+        .then(response => {
+          this.userType = response.data.userType
+          this.companyId = response.data.companyId
+          this.getJobs(this.userType)
+          localStorage.setItem('userType', this.userType)
+        })
+        .catch(error => {
+          this.message = error
+        })
     }
   }
 }

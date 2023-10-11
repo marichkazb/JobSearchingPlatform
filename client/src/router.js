@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import JobDescription from './views/JobDescription'
 import JobCreation from './views/JobCreation'
+import CompanyProfile from './views/CompanyProfile'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/job-creation',
       name: 'job-creation',
       component: JobCreation
+    },
+    {
+      path: '/company-profile',
+      name: 'company-profile',
+      component: CompanyProfile
     }
   ]
 })

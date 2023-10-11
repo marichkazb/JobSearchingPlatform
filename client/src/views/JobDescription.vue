@@ -77,7 +77,7 @@
   </div>
 
   <div class="col-md-12 mt-4">
-        <b-button href="#" size="lg" class="applyBtn mb-4">Apply</b-button>
+        <b-button @click="handleClick()" href="#" size="lg" class="applyBtn mb-4">Apply</b-button>
         </div>
 
         </div>
@@ -111,6 +111,12 @@ export default {
         .catch(error => {
           this.message = error.response.data
         })
+    },
+    handleClick() {
+      this.$router.push(`/application/${this.id}`)
+    },
+    id() {
+      return this.$route.params.id
     },
     formatDate(dateString) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
