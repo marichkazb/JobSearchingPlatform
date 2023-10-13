@@ -3,31 +3,24 @@
     <h1>Create a Job</h1>
     <div v-if="!formSubmitted">
       <div class="row">
-        <!-- Left Column -->
-        <div class="col-md-6 inputContainer">
+        <div class="col-md-6">
           <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
-            <!-- Show the first 8 input fields on the left -->
            <b-form-input
   v-model="field.value"
   :class="field.class"
   :placeholder="field.placeholder"
   :state="errors[field.id] ? false : null"
-  v-if="index < 8"></b-form-input>
-            <div class="text-danger" v-if="errors[field.id]">{{ errors[field.id] }}</div>
+  v-if="index < 7"></b-form-input>
           </div>
         </div>
-
-        <!-- Right Column -->
-        <div class="col-md-6 inputContainer">
+        <div class="col-md-6">
           <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
-            <!-- Show the last 7 input fields on the right -->
             <b-form-input
               v-model="field.value"
               :class="field.class"
               :placeholder="field.placeholder"
               :state="errors[field.id] ? false : null"
-              v-if="index >= 8"></b-form-input>
-            <div class="text-danger" v-if="errors[field.id]">{{ errors[field.id] }}</div>
+              v-if="index >= 7"></b-form-input>
           </div>
         </div>
       </div>
@@ -47,9 +40,10 @@
 <script>
 import { Api } from '@/Api'
 import { getIdToken } from '../../authService'
+import { auth } from '../../firebaseInit';
 
 export default {
-  name: 'jobCreation',
+  name: 'job-creation',
   data() {
     return {
       title: '',
@@ -161,8 +155,15 @@ export default {
       ]
     }
   },
+  async created() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.getUserType()
+      }
+    });
+  },
   methods: {
-    postJob() {
+    async postJob() {
       this.errors = {}
       const requestData = {}
       this.inputFields.forEach((field) => {
@@ -173,8 +174,13 @@ export default {
         };
       })
       if (Object.keys(this.errors).length === 0) {
+        const token = await getIdToken();
         Api
-          .post(`/v1/companies/${this.companyId}/jobs`, requestData)
+          .post(`/v1/companies/${this.companyId}/jobs`, requestData, {
+            headers: {
+              Authorization: `${token}`
+            }
+          })
           .then(response => {
             this.alertMessage = 'Successfully posted a job'
             this.variant = 'success'
@@ -213,13 +219,14 @@ export default {
 </script>
 
 <style scoped>
+.pageWrapper{
+  margin-top: 10px;
+}
 .input {
     margin: 16px;
     height: 50px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.02);
-}
-.inputContainer {
-    width: 30%
 }
 .submitBtn {
     background-color:rgba(7, 25, 82, 1);
