@@ -73,8 +73,6 @@ app.use(authenticate);
 app.use(classifyRequester);
 
 app.get(`/api/v1/getUserType`, async (req, res) => {
-  console.log(req)
-  console.log("got here")
   if(req.none){
     return res.json({ userType: "none" });
   } else if(req.admin){
@@ -82,7 +80,7 @@ app.get(`/api/v1/getUserType`, async (req, res) => {
   } else if(req.company){
     return res.json({ userType: "company", companyId: req.company._id });
   } else if(req.user){
-    return res.json({ userType: "applicant" });
+    return res.json({ userType: "candidate" });
   } {
     return res.json("Role undefined");
   }
