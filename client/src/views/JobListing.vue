@@ -18,7 +18,7 @@
     <b-row>
       <b-col v-if="jobsData.length === 0" id="emptyState" class="m-5">
         <h4>{{ emptyStateDesc }}</h4>
-        <b-button v-if="userType === 'company'" variant="primary">Post a job opening</b-button>
+        <b-button v-if="userType === 'company'" @click="postAJob()" variant="primary">Post a job opening</b-button>
       </b-col>
       <b-col v-for="job in sortedJobs" :key="job._id" md="4" sm="6" xs="12">
         <b-card no-body class="jobWrapper m-2 mb-3">
@@ -35,6 +35,7 @@
               <b-card-text class="text">{{job.job_enrollment_status}}</b-card-text>
 
               <b-button-group class="buttonsContainer mt-3">
+                <b-button @click="viewDetails(job)" class="applyBtn mr-2" variant="primary">Details</b-button>
                 <b-button @click="handleClick(job)" class="applyBtn mr-2" variant="primary">Apply</b-button>
                 <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
               </b-button-group>
@@ -163,6 +164,12 @@ export default {
     },
     handleClick(job) {
       this.$router.push(`/application/${job._id}`)
+    },
+    postAJob() {
+      this.$router.push('/job-creation')
+    },
+    viewDetails(job) {
+      this.$router.push(`/job-description/${job._id}`)
     },
     handleSearch(searchTerm) {
       this.searchTerm = searchTerm;

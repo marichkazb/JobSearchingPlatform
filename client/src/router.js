@@ -6,6 +6,9 @@ import Application from './views/Application.vue';
 import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import SetRole from './views/SetRole.vue';
+import JobDescription from './views/JobDescription'
+import JobCreation from './views/JobCreation'
+import CompanyProfile from './views/CompanyProfile'
 
 // import { auth } from '../firebaseInit';
 
@@ -57,6 +60,30 @@ const router = new VueRouter({
         requiresAuth: true, // This route requires the user to be authenticated
       },
     },
+    {
+      path: '/job-description/:id',
+      name: 'job-description',
+      component: JobDescription,
+      meta: {
+        requiresAuth: true, // This route requires the user to be authenticated
+      },
+    },
+    {
+      path: '/job-creation',
+      name: 'job-creation',
+      component: JobCreation,
+      meta: {
+        requiresAuth: true, // This route requires the user to be authenticated
+      },
+    },
+    {
+      path: '/company-profile',
+      name: 'company-profile',
+      component: CompanyProfile,
+      meta: {
+        requiresAuth: true, // This route requires the user to be authenticated
+      },
+    }
   ],
 });
 /*
