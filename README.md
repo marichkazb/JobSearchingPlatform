@@ -69,13 +69,13 @@ The **stakeholders** of the job searching system are unemployed people, develope
 
 #### (Unlogged-in flow)
 * **Login page**: this page displays fields for entering a username and a password, allowing users to authenticate themselves and access their accounts.
-* **Account creating**: this page displays fields for entering a username, and email, and password, as well as the specific attributes of either an applicant or a company (logo, locations or CV). Enables account creation for new users.
+* **Account creating**: this page displays fields for entering a username, and email, and password, as well as the specific attributes of either an candidate or a company (logo, locations or CV). Enables account creation for new users.
 * **Password retrieval**: this page displays fields for users to enter their registered email. This allows them to retrieve their password, by receiving a link for resetting their forgotten password.
 
 #### (Logged-in flow)
-* **Landing page**: this page displays a landing image and message, shows featured job listings, and a search bar. It allows applicants to start job hunting fairly quickly after logging in.
-* **Account page**: this page displays the applicant's or company's personal information. Depending on which, it will also show the uploaded resume and application history, or the uploaded job offerings, allowing the users to change these.
-* **Job listing page**: this page features job vacancies as according to the searching criteria specified by the applicant. It allows applicants to find the jobs they are looking for and to launch the application process.
+* **Landing page**: this page displays a landing image and message, shows featured job listings, and a search bar. It allows candidates to start job hunting fairly quickly after logging in.
+* **Account page**: this page displays the candidate's or company's personal information. Depending on which, it will also show the uploaded resume and application history, or the uploaded job offerings, allowing the users to change these.
+* **Job listing page**: this page features job vacancies as according to the searching criteria specified by the candidate. It allows candidates to find the jobs they are looking for and to launch the application process.
 * **Job description page**: this page displays all the information regarding a specific job offering, such as the title and description, the requirements and the deadline. It also displays the fields to be filled-in by the candidates, allowing them to apply directly for the job opening from the page.
 
 ### Entity-Relationship (ER) Diagram
