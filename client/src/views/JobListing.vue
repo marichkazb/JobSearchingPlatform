@@ -35,6 +35,7 @@
               <b-card-text class="text">{{job.job_enrollment_status}}</b-card-text>
 
               <b-button-group class="buttonsContainer mt-3">
+                <b-button @click="viewDetails(job)" class="applyBtn mr-2" variant="primary">Details</b-button>
                 <b-button @click="handleClick(job)" class="applyBtn mr-2" variant="primary">Apply</b-button>
                 <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn" variant="danger">Delete</b-button>
               </b-button-group>
@@ -163,6 +164,9 @@ export default {
     },
     handleClick(job) {
       this.$router.push(`/application/${job._id}`)
+    },
+    viewDetails(job) {
+      this.$router.push(`/job-description/${job._id}`)
     },
     handleSearch(searchTerm) {
       this.searchTerm = searchTerm;

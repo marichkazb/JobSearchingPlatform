@@ -2,31 +2,19 @@
      <div>
        <h1>Company Profile</h1>
     <div class="row">
-      <div class="col-md-6">
-        <div class="row">
-  <div class="col-sm-6">
-    <div class="card mb-4">
-      <div class="card-body box text-white rounded">
+      <div class="row card-body box text-white rounded mb-4 col-sm-6">
         <h5 class="card-title">Job Openings</h5>
         <h4 class="text-colour">${{job.yearly_salary_min}} - ${{job.yearly_salary_max}}</h4>
         <h5 class="text-muted">USD</h5>
       </div>
-    </div>
-  </div>
-        </div>
         <div class="row">
-  <div class="col-sm-12 mb-3 mb-4">
-    <div class="card custom-blue-border">
-      <div class="card-body">
+      <div class="card-body custom-blue-border col-sm-12 mb-3 mb-4">
         <h5 class="card-title">Name</h5>
         <h5 class="card-title">Email</h5>
          <h5 class="card-title">Locations</h5>
     </div>
-    </div>
-  </div>
         </div>
       </div>
-    </div>
     </div>
 </template>
 
