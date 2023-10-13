@@ -120,6 +120,7 @@ const postApplicationsForJobs = async (req, res) => {
         candidateId: req.candidate._id,
         jobId: job._id,
       }));
+      job.applications.push(applicationsWithUserId);
       await job.save();
       const insertedApplications = await Application.insertMany(
         applicationsWithUserId
@@ -132,6 +133,7 @@ const postApplicationsForJobs = async (req, res) => {
         candidateId: req.candidate._id,
         jobId: job._id,
       });
+      job.applications.push(newApplication);
       await job.save();
       await newApplication.save();
       return res.status(201).json(newApplication);

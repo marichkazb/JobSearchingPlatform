@@ -1,6 +1,7 @@
 const Company = require("../models/company");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job");
+const Application = require("../models/application");
 
 const getAllCompanies = async (req, res) => {
   try {
@@ -189,6 +190,77 @@ const getCompanyJob = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+const postCompanyJob = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const company = await Company.findById(id);
+    if (!company) {
+      return res.status(404).json("Specific company was not found.");
+    }
+    company.jobs = [];
+
+    if (Array.isArray(req.body)) {
+      const jobData = req.body;
+
+      const jobsWithUserId = jobData.map((job) => ({
+        ...job,
+        company_name: req.company.name,
+        companyId: req.company._id,
+        company_image: req.company.logo
+      }));
+      const insertedJobs = await Job.insertMany(
+          jobsWithUserId
+      );
+      company.jobs.push(jobsWithUserId);
+      await company.save();
+      return res.status(201).json(insertedJobs);
+    } else {
+      const newJob = new Job({
+        ...req.body,
+        company_name: req.company.name,
+        companyId: req.company._id,
+        company_image: req.company.logo
+      });
+      console.log(company);
+      company.jobs.push(newJob);
+      await company.save();
+      await newJob.save();
+      return res.status(201).json(newJob);
+    }
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+const deleteOneJobInCompany = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const jobId = req.params.jobId;
+    const company = await Company.findById(id);
+    if (!company) {
+      return res.status(404).json("Company is not found.");
+    }
+
+    const job = Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json("Job is not found");
+    }
+
+    // Delete the reference to the application within the job
+    company.jobs = company.jobs.filter(
+        (job) => job._id.toString() !== jobId
+    );
+    await company.save();
+
+    // Delete the actual application using the Application model
+    await Job.findByIdAndRemove(jobId);
+
+    res.status(200).json("Job is deleted");
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
 
 module.exports = {
   getAllCompanies,
@@ -199,4 +271,6 @@ module.exports = {
   getCompany,
   getAllCompanyJobs,
   getCompanyJob,
+  postCompanyJob,
+  deleteOneJobInCompany
 };
