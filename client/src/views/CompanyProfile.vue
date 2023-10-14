@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="!isEditing">
     <div class="left-column custom-left-align">
       <h2>About</h2>
       <p>{{company.description}}</p>
@@ -11,6 +12,7 @@
             <h5 v-for="jobId in company.jobs" :key="jobId" class="text-white">{{jobDetails[jobId].title}}</h5>
         <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h4>
         <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
+        <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">Location: {{ jobDetails[jobId].location }}</h4>
           </div>
         </div>
         </div>
@@ -23,6 +25,23 @@
        <p>Name: {{ company.name }}</p>
        <p>Email: {{company.email}}</p>
        <p>Location: {{company.locations}}</p>
+        </div>
+      </div>
+      <div class="col-md-12 mt-4">
+          <b-button @click="toggleEdit()" href="#" size="lg" class="editBtn mb-4">Edit</b-button>
+        </div>
+    </div>
+    </div>
+    <div v-if="isEditing">
+      <div class="left-column custom-left-align">
+        <h2>Name</h2>
+        <textarea v-model="editedCompany.name" @input="setChangesMade()"></textarea>
+        <h2>Location</h2>
+        <textarea v-model="editedCompany.location" @input="setChangesMade()"></textarea>
+        <h2>About</h2>
+        <textarea v-model="editedCompany.description" @input="setChangesMade()"></textarea>
+        <div class="col-md-12 mt-4">
+          <b-button @click="saveChanges()" size="lg" class="applyBtn mb-4">Save</b-button>
         </div>
       </div>
     </div>
@@ -44,6 +63,9 @@ export default {
       companyId: null,
       jobDetails: {},
       token: null,
+      editedCompany: {},
+      isEditing: false,
+      changesMade: false
     };
   },
   async created() {
@@ -52,7 +74,6 @@ export default {
         this.getUserType();
       }
     });
-    // this.fetchCompany()
   },
   methods: {
     async fetchCompany() {
@@ -72,6 +93,38 @@ export default {
         .catch((error) => {
           this.message = error.response.data;
         });
+    },
+    toggleEdit() {
+      this.isEditing = !this.isEditing;
+      // Initialize the edited company data when entering edit mode
+      if (this.isEditing) {
+        this.editedCompany = { ...this.company };
+      }
+    },
+    setChangesMade() {
+      this.changesMade = true;
+    },
+    async saveChanges() {
+      if (this.changesMade) {
+        const token = await getIdToken();
+        // Send a PUT or PATCH request to update the company details
+        const requestMethod = this.changesMade ? 'patch' : 'put'; // Change to 'PATCH' if necessary
+        Api[requestMethod](`/v1/companies/${this.companyId}`, this.editedCompany, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+          .then((response) => {
+            this.isEditing = false; // Disable editing mode
+            this.fetchCompany();
+            this.changesMade = false; // Refresh the displayed data
+          })
+          .catch((error) => {
+            this.message = error.response.data;
+          });
+      } else {
+        this.isEditing = false;
+      }
     },
     async fetchJobDetails() {
       const token = await getIdToken();
@@ -142,7 +195,7 @@ export default {
 .inputContainer {
   width: 50%;
 }
-.applyBtn {
+.editBtn {
   background-color: rgba(7, 25, 82, 1);
   width: 248px;
   height: 56px;
