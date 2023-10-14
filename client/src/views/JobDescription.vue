@@ -41,7 +41,7 @@
     <div class="card mb-4">
       <div class="card-body box text-white rounded">
         <h5 class="card-title">Salary</h5>
-        <h4 class="text-colour">${{job.yearly_salary_min}} - ${{job.yearly_salary_max}}</h4>
+        <h4 class="text-colour">${{job.yearly_salary_min}}-${{job.yearly_salary_max}}</h4>
         <h5 class="text-muted">USD</h5>
       </div>
     </div>

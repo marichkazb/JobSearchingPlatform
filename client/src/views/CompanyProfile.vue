@@ -9,25 +9,28 @@
         <div class="card mb-4">
           <div class="card-body box tex-white rounded" v-for="jobId in company.jobs" :key="jobId">
             <div @click="onClick(jobId)">
-            <h5 v-for="jobId in company.jobs" :key="jobId" class="text-white">{{jobDetails[jobId].title}}</h5>
-        <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h4>
-        <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
-        <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">Location: {{ jobDetails[jobId].location }}</h4>
+              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-white">{{jobDetails[jobId].title}}</h5>
+              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Location: {{ jobDetails[jobId].location }}</h5>
+              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-colour">Salary: ${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h5>
+              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
     <div class="right-column custom-left-align">
-      <p>{{company.logo}}</p>
+      <b-img :src="company.logo" alt="logo" id="companyImage" fluid class="company-logo"/>
       <div class="card custom-blue-border">
         <div class="card-body">
-       <p>Name: {{ company.name }}</p>
-       <p>Email: {{company.email}}</p>
-       <p>Location: {{company.locations}}</p>
+       <p class="card-title text-left text-muted">Name</p>
+       <p style="font-weight: bold;">{{ company.name }}</p>
+       <p class="card-title text-left text-muted">Email</p>
+       <p style="font-weight: bold;">{{company.email}}</p>
+       <p class="card-title text-left text-muted">Location</p>
+       <p style="font-weight: bold;">{{company.locations}}</p>
         </div>
       </div>
-      <div class="col-md-12 mt-4">
+      <div class="col-md-12 mt-4 edit-btn-container">
           <b-button @click="toggleEdit()" href="#" size="lg" class="editBtn mb-4">Edit</b-button>
         </div>
     </div>
@@ -96,7 +99,6 @@ export default {
     },
     toggleEdit() {
       this.isEditing = !this.isEditing;
-      // Initialize the edited company data when entering edit mode
       if (this.isEditing) {
         this.editedCompany = { ...this.company };
       }
@@ -108,16 +110,16 @@ export default {
       if (this.changesMade) {
         const token = await getIdToken();
         // Send a PUT or PATCH request to update the company details
-        const requestMethod = this.changesMade ? 'patch' : 'put'; // Change to 'PATCH' if necessary
+        const requestMethod = this.changesMade ? 'patch' : 'put';
         Api[requestMethod](`/v1/companies/${this.companyId}`, this.editedCompany, {
           headers: {
             Authorization: `${token}`,
           },
         })
           .then((response) => {
-            this.isEditing = false; // Disable editing mode
+            this.isEditing = false;
             this.fetchCompany();
-            this.changesMade = false; // Refresh the displayed data
+            this.changesMade = false;
           })
           .catch((error) => {
             this.message = error.response.data;
@@ -179,7 +181,17 @@ export default {
 }
 .right-column{
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 50px;
+}
+.edit-btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 .input {
   margin: 16px;
@@ -188,9 +200,6 @@ export default {
 }
 .custom-left-align {
   text-align: left;
-}
-.motivation {
-  height: 100px;
 }
 .inputContainer {
   width: 50%;
@@ -202,13 +211,16 @@ export default {
 }
 .custom-blue-border {
   border: 2px solid rgb(11, 63, 234);
+  width: 450px;
+  height: 250px;
 }
 .text-colour {
   color: aquamarine;
 }
 .box {
   background-color: rgba(7, 25, 82, 1);
-  height: 150px;
+  height: 160px;
+  padding: 20px;
 }
 .custom-alert {
   width: 110px;
@@ -217,23 +229,8 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.custom-badge {
-  background-color: #ccc;
-  color: #333;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 20px;
-  display: inline-block;
-}
-.job-enrollment-badge {
-  background-color: green;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  width: 110px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.company-logo{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>
