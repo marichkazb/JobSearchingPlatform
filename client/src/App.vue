@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <Navbar v-if="isUserLoggedIn" />
-    <div id="nav">
-    </div>
     <!-- Render the content of the current page view -->
-    <router-view/>
+    <b-container fluid class="p-0">
+      <router-view />
+    </b-container>
   </div>
 </template>
 
@@ -28,32 +28,22 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;0,600;1,100&family=Raleway:wght@100;400;700&display=swap');#app {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;0,600;1,100&family=Raleway:wght@100;400;700&display=swap');
+#app {
   font-family: 'Raleway', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  overflow: hidden;
   height: 100vh;
-}
-#nav {
-  margin: 0px;
-}
-#app {
   overflow: auto;
 }
 .title {
-    font-size: 32px;
-    font-weight: 800;
-    align-self: flex-start;
-    margin-left: 18px;
+  font-size: 32px;
+  font-weight: 800;
+  margin-left: 18px;
 }
-.pageWrapper {
-    margin: 56px;
-    margin-left: 78px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+:root {
+    --navbar-height: 0px; /* This is a default/fallback value */
 }
 </style>

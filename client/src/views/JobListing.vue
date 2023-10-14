@@ -11,7 +11,7 @@
 
     <b-row class="mt-3">
       <b-col>
-        <b-button v-if="canCreate" @click="deleteAllJobs()" variant="primary" class="borderlessBtn mr-2 mb-2">Create New</b-button>
+        <b-button v-if="canCreate" @click="postAJob()" variant="primary" class="borderlessBtn mr-2 mb-2">Create New</b-button>
         <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn mb-2">Delete All</b-button>
       </b-col>
     </b-row>
@@ -37,7 +37,7 @@
 
               <b-button-group class="buttonsContainer mt-3">
                 <b-button @click="viewDetails(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">Details</b-button>
-                <b-button v-if= "canApply" @click="handleClick(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">Apply</b-button>
+                <b-button v-if="canApply" @click="handleClick(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">Apply</b-button>
                 <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn resizeBtn mb-2" variant="danger">Delete</b-button>
               </b-button-group>
             </b-col>
