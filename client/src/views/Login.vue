@@ -158,4 +158,7 @@ export default {
   color: #357abf;
   font-weight: bold;
 }
+input[type="email"] {
+  border: 1px solid #ccc;
+}
 </style>

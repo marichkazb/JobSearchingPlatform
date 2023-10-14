@@ -242,6 +242,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .jobWrapper {
   border-radius: 10px;
   transition: all 0.3s;

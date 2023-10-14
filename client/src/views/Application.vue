@@ -1,9 +1,9 @@
 <template>
   <div class="pageWrapper center">
     <Alert :alertMessage="alertMessage" :alertId="alertId" :getVariant="variant" />
-    <p class="title" id="jobApplicationTitle">Job Application</p>
+    <p class="title mt-5" id="jobApplicationTitle">Job Application</p>
     <div class="applicationContent">
-      <div style="display: flex">
+      <div style="display: flex;">
         <div v-if="!formSubmitted" class="inputContainer">
           <b-form-input
             v-for="(field, index) in inputFields"
@@ -36,7 +36,7 @@
           <b-button @click="goBack()" class="backBtn" variant="primary">Go Back</b-button>
         </div>
       </div>
-      <div id="pdf-preview" v-if="file1Preview" class="pdf-preview" style="display: flex">
+      <div id="pdf-preview" v-if="file1Preview" class="pdf-preview ml-5" style="display: flex">
         <div class="pdf-preview-content" ref="pdfContent">
           <vue-pdf-embed :source="file1Preview" />
         </div>
@@ -176,6 +176,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .input {
   margin: 16px;
   height: 50px;
@@ -185,7 +188,6 @@ export default {
   height: 100px;
 }
 .inputContainer {
-  width: 50%;
   min-width: 600px !important;
 }
 .applyBtn {
@@ -221,6 +223,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 400px !important;
 }
 
 .pdf-preview-content {
@@ -231,5 +234,8 @@ export default {
   display: flex;
   flex-direction: row;
   max-width: 85%;
+  margin-right: 30% !important;
+  margin-left: 30% !important;
+  justify-content: center;
 }
 </style>
