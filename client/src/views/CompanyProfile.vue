@@ -6,29 +6,25 @@
       <h2>Recent Job Openings</h2>
       <div class="col-sm-6">
         <div class="card mb-4">
-          <div class="card-body box tex-white rounded">
-            <h5 v-for="jobId in company.jobs" :key="jobId" class="card-title">{{jobDetails[jobId].title}}</h5>
-        <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">{{jobDetails[jobId].description}}</h4>
+          <div class="card-body box tex-white rounded" v-for="jobId in company.jobs" :key="jobId">
+            <div @click="onClick(jobId)">
+            <h5 v-for="jobId in company.jobs" :key="jobId" class="text-white">{{jobDetails[jobId].title}}</h5>
+        <h4 v-for="jobId in company.jobs" :key="jobId" class="text-colour">${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h4>
         <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
           </div>
+        </div>
         </div>
       </div>
     </div>
     <div class="right-column custom-left-align">
       <p>{{company.logo}}</p>
-      <div class="col-sm-12 mb-3 mb-4">
       <div class="card custom-blue-border">
         <div class="card-body">
        <p>Name: {{ company.name }}</p>
        <p>Email: {{company.email}}</p>
        <p>Location: {{company.locations}}</p>
         </div>
-        </div>
       </div>
-      <div class="col-md-12 mt-4">
-        <b-button v-if="!editMode" @click="startEdit">Edit</b-button>
-        <b-button v-else @click="saveEdit">Save</b-button>
-        </div>
     </div>
   </div>
 </template>
@@ -48,8 +44,6 @@ export default {
       companyId: null,
       jobDetails: {},
       token: null,
-      editMode: false,
-      editedDescription: '',
     };
   },
   async created() {
@@ -80,18 +74,18 @@ export default {
         });
     },
     async fetchJobDetails() {
-      // Fetch job details for each job ID
       const token = await getIdToken();
       for (const jobId of this.company.jobs) {
         Api.get(`/v1/jobs/${jobId}`, {
           headers: {
-            Authorization: `${token}`, // Use this.token to access the token
+            Authorization: `${token}`,
           },
         })
           .then((response) => {
             const job = response.data;
             job.deadline = new Date(job.deadline).toDateString()
             this.$set(this.jobDetails, jobId, job);
+            console.log(this.job);
           })
           .catch((error) => {
             this.message = error.response.data;
@@ -101,31 +95,8 @@ export default {
     getJobTitle(jobId) {
       return this.jobDetails[jobId] || 'Loading...';
     },
-    startEdit() {
-      this.editMode = true;
-      this.editedDescription = this.company.description;
-    },
-    async saveEdit() {
-      this.editMode = false;
-      const updatedCompanyData = {
-        description: this.editedDescription,
-        name: this.editedName,
-        email: this.editedEmail,
-        location: this.editedLocation,
-      }
-      const token = await getIdToken();
-      Api.put(`/v1/companies/${this.companyId}`, updatedCompanyData,)
-      Api.patch(`/v1/companies/${this.companyId}`, updatedCompanyData, {
-        headers: {
-          Authorization: `${token}`,
-        }
-      })
-        .then((response) => {
-          console.log('Company details updated:', response);
-        })
-        .catch((error) => {
-          console.error('Error updating company details:', error);
-        })
+    onClick(jobId) { // job-description/:id
+      this.$router.push(`/job-description/${jobId}`);
     },
     async getUserType() {
       const token = await getIdToken();
