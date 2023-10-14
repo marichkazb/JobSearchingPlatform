@@ -1,17 +1,28 @@
 <template>
-  <div class="homeWrapper">
-      <p class="introText dreamJob">Your Dream Job</p>
-      <img :src="image" class="img">
-      <p class="introText startsHere">Starts here.</p>
-      <div class="buttonsWrapper">
-        <b-button @click="login()" class="btnLogin" variant="outlined">Login</b-button>
-        <b-button @click="signUp()" class="btnLogin" variant="primary">Sign Up</b-button>
-      </div>
-  </div>
+  <b-container fluid class="homeContainer">
+    <b-row class="homeWrapper justify-content-between h-100 mr-3 ml-3">
+      <b-col md="4" class="text-left d-flex flex-column justify-content-start mt-5">
+        <p class="introText dreamJob">Your Dream Job</p>
+      </b-col>
+
+      <b-col md="4" class="text-center d-flex flex-column justify-content-center">
+        <img :src="image" class="img-fluid">
+      </b-col>
+
+      <b-col md="4" class="text-right d-flex flex-column justify-content-end mb-5">
+        <p class="introText startsHere">Starts here.</p>
+        <div>
+          <b-button @click="login()" class="btnLogin mr-3" variant="outline-primary">Login</b-button>
+          <b-button @click="signUp()" class="btnLogin" variant="primary">Sign Up</b-button>
+        </div>
+      </b-col>
+
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-const image = require('../assets/homeIcon.svg')
+const image = require('../assets/homeIcon.svg');
 
 export default {
   name: 'home',
@@ -32,43 +43,40 @@ export default {
 }
 </script>
 
-<style>
-.btn_message {
-  margin-bottom: 1em;
+<style scoped>
+@media (max-width: 767px) {
+  .introText {
+    font-size: 2rem;
+  }
+  .btnLogin {
+    font-size: 1.2rem !important;
+  }
+  .img-fluid {
+    max-height: 33.33vh;
+  }
 }
-.img {
-  position: absolute;
-  top: 100px;
-  right: 30em
-}
-.homeWrapper {
+.homeContainer {
   background-color: rgba(7, 25, 82, 1);
-  height: 100rem;
+  height: 100vh;
+  overflow: auto;
 }
+
 .introText {
-  position: absolute;
-  font-size: 64px;
+  font-size: 3rem;
   font-weight: bold;
   color: white;
 }
-.dreamJob {
-  top: 10rem;
-  left: 5rem;
-  width: 400px
-}
-.startsHere {
-  top: 28rem;
-  right: 5rem
-}
-.buttonsWrapper {
-  position: absolute;
-  bottom: 7rem;
-  right: 5rem;
-}
+
 .btnLogin {
   color: white !important;
-  font-size: 24px !important;
+  font-size: 1.5rem !important;
   border-radius: 50px !important;
   font-weight: 500 !important;
+  padding: 10px 20px !important;
 }
+
+.img-fluid {
+    height: 70vh;
+}
+
 </style>

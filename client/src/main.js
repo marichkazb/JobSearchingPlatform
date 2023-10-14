@@ -53,9 +53,16 @@ auth.onAuthStateChanged(async (user) => {
       const currentRoutePath = router.currentRoute.path;
 
       console.log('User type:', userType);
-      if (userType === 'none' && router.currentRoute.path !== '/setRole') {
-        router.push('/setRole');
-      } else if (currentRoutePath === '/login') {
+      if (userType === 'none') {
+        if (router.currentRoute.path !== '/setRole') {
+          router.push('/setRole');
+        }
+      } else if (
+        currentRoutePath === '/login' ||
+        currentRoutePath === '/signup' ||
+        currentRoutePath === '/' ||
+        currentRoutePath === '/setRole'
+      ) {
         router.push('/jobListing');
         location.reload(true);
       }

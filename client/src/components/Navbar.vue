@@ -1,6 +1,5 @@
 <template>
-  <div class="wrapper">
-    <b-navbar toggleable="sm" type="dark" class="custom-navbar">
+    <b-navbar toggleable="sm" type="dark" class="custom-navbar" ref="navbar">
       <b-container fluid>
         <b-img :src="image" class="image" />
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -27,7 +26,6 @@
         </b-collapse>
       </b-container>
     </b-navbar>
-  </div>
 </template>
 
 <script>
@@ -44,7 +42,8 @@ export default {
       jobsData: 'none',
       logout,
       userType: '',
-      image
+      image,
+      navbarHeight: 0,
     };
   },
   created() {
@@ -55,6 +54,12 @@ export default {
       } else {
         this.user = null;
       }
+    });
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.navbarHeight = this.$refs.navbar.$el.offsetHeight;
+      document.documentElement.style.setProperty('--navbar-height', `${this.navbarHeight}px`);
     });
   },
   computed: {
