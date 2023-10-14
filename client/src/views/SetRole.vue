@@ -82,6 +82,10 @@
           <b-form-input v-model="companyForm.logo" id="logo"></b-form-input>
         </b-form-group>
 
+        <b-form-group label="Company description" label-for="desc">
+          <b-form-input v-model="companyForm.desc" id="desc"></b-form-input>
+        </b-form-group>
+
         <b-form-group
           label="Locations (comma separated):"
           label-for="locations"
@@ -160,6 +164,7 @@ export default {
         name: this.userName,
         email: this.userEmail,
         logo: this.companyForm.logo,
+        description: this.companyForm.desc,
         locations: this.companyForm.locations
           .split(',')
           .map((loc) => loc.trim()), // Splitting by comma and trimming

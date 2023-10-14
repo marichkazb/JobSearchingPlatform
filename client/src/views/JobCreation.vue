@@ -1,40 +1,38 @@
 <template>
-  <div class="pageWrapper center">
-    <h1>Create a Job</h1>
-    <div v-if="!formSubmitted">
-      <div class="row">
-        <div class="col-md-6">
-          <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
-           <b-form-input
-  v-model="field.value"
-  :class="field.class"
-  :placeholder="field.placeholder"
-  :state="errors[field.id] ? false : null"
-  v-if="index < 7"></b-form-input>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
-            <b-form-input
-              v-model="field.value"
-              :class="field.class"
-              :placeholder="field.placeholder"
-              :state="errors[field.id] ? false : null"
-              v-if="index >= 7"></b-form-input>
-          </div>
-        </div>
+   <div class="center">
+      <h1>Create a Job</h1>
+      <div v-if="!formSubmitted">
+         <div class="row">
+            <div class="col-md-6">
+               <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
+                  <b-form-input
+                     v-model="field.value"
+                     :class="field.class"
+                     :placeholder="field.placeholder"
+                     :state="errors[field.id] ? false : null"
+                     v-if="index < 7"></b-form-input>
+               </div>
+            </div>
+            <div class="col-md-6">
+               <div v-for="(field, index) in inputFields" :key="index" class="mb-3">
+                  <b-form-input
+                     v-model="field.value"
+                     :class="field.class"
+                     :placeholder="field.placeholder"
+                     :state="errors[field.id] ? false : null"
+                     v-if="index >= 7"></b-form-input>
+               </div>
+            </div>
+         </div>
+         <b-button @click="postJob()" class="submitBtn" variant="primary">Submit</b-button>
       </div>
-
-      <b-button @click="postJob()" class="submitBtn" variant="primary">Submit</b-button>
-    </div>
-
-    <div v-else>
-      <div class="textOnSubmission">
-        Job is successfully created
+      <div v-else>
+         <div class="textOnSubmission">
+            Job is successfully created
+         </div>
+         <b-button @click="goBack()" class="backBtn" variant="primary">Go Back</b-button>
       </div>
-      <b-button @click="goBack()" class="backBtn" variant="primary">Go Back</b-button>
-    </div>
-  </div>
+   </div>
 </template>
 
 <script>
@@ -219,9 +217,7 @@ export default {
 </script>
 
 <style scoped>
-.pageWrapper{
-  margin-top: 10px;
-}
+
 .input {
     margin: 16px;
     height: 50px;

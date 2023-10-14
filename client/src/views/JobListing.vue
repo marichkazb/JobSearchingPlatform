@@ -126,7 +126,6 @@ export default {
       if (user) {
         this.getUserType()
       }
-      console.log(this.jobsData)
     });
   },
   methods: {
