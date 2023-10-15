@@ -36,6 +36,10 @@ const applicationSchema = new mongoose.Schema({
     ref: "Candidates",
     required: true,
   },
+  resume: {
+    type: Buffer,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('Application', applicationSchema);
