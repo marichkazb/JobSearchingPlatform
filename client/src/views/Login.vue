@@ -53,7 +53,7 @@
 
 <script>
 import { login } from '../../authService';
-import Alert from '../components/Alert.vue'; // Please update the path accordingly
+import Alert from '../components/Alert.vue';
 import { BContainer, BRow, BCol, BCard, BCardTitle, BForm, BFormGroup, BFormInput, BInputGroup, BInputGroupAppend, BButton, BSpinner, BLink } from 'bootstrap-vue';
 
 export default {
