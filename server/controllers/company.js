@@ -7,6 +7,12 @@ const getAllCompanies = async (req, res) => {
   try {
     const companies = await Company.find();
 
+    //HATEOAS
+    let baseUrl = req.baseUrl || "";
+    if (baseUrl.startsWith("/api")) {
+      baseUrl = baseUrl.substring(4);
+    }
+
     const companiesWithLinks = companies.map((company) => {
       const id = company._id;
       return {
@@ -14,11 +20,11 @@ const getAllCompanies = async (req, res) => {
         links: [
           {
             rel: "self",
-            href: `${req.baseUrl}/${id}`,
+            href: `${baseUrl}/${id}`,
           },
           {
             rel: "company-jobs",
-            href: `${req.baseUrl}/${id}/jobs`,
+            href: `${baseUrl}/${id}/jobs`,
           },
         ],
       };
@@ -146,14 +152,19 @@ const getCompany = async (req, res) => {
     const company = req.company;
     const id = company._id;
     //HATEOAS
+    let baseUrl = req.baseUrl || "";
+    if (baseUrl.startsWith("/api")) {
+      baseUrl = baseUrl.substring(4);
+    }
+
     company._doc.links = [
       {
         rel: "self",
-        href: `${req.baseUrl}/${id}`,
+        href: `${baseUrl}/${id}`,
       },
       {
         rel: "company-jobs",
-        href: `${req.baseUrl}/${id}/jobs`,
+        href: `${baseUrl}/${id}/jobs`,
       },
     ];
 
@@ -206,12 +217,11 @@ const postCompanyJob = async (req, res) => {
         ...job,
         company_name: req.company.name,
         companyId: req.company._id,
-        company_image: req.company.logo
+        company_image: req.company.logo,
       }));
-      const insertedJobs = await Job.insertMany(
-          jobsWithUserId
-      );
-      company.jobs.push(jobsWithUserId);
+      const insertedJobs = await Job.insertMany(jobsWithUserId);
+      const jobIds = insertedJobs.map((job) => job._id);
+      company.jobs.push(...jobIds);
       await company.save();
       return res.status(201).json(insertedJobs);
     } else {
@@ -219,7 +229,7 @@ const postCompanyJob = async (req, res) => {
         ...req.body,
         company_name: req.company.name,
         companyId: req.company._id,
-        company_image: req.company.logo
+        company_image: req.company.logo,
       });
       console.log(company);
       company.jobs.push(newJob);
@@ -228,6 +238,7 @@ const postCompanyJob = async (req, res) => {
       return res.status(201).json(newJob);
     }
   } catch (error) {
+    console.error(error)
     return res.status(500).json(error.message);
   }
 };
@@ -248,9 +259,7 @@ const deleteOneJobInCompany = async (req, res) => {
     }
 
     // Delete the reference to the application within the job
-    company.jobs = company.jobs.filter(
-        (job) => job._id.toString() !== jobId
-    );
+    company.jobs = company.jobs.filter((job) => job._id.toString() !== jobId);
     await company.save();
 
     // Delete the actual application using the Application model
@@ -272,5 +281,5 @@ module.exports = {
   getAllCompanyJobs,
   getCompanyJob,
   postCompanyJob,
-  deleteOneJobInCompany
+  deleteOneJobInCompany,
 };
