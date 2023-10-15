@@ -4,6 +4,11 @@ const Candidate = require("../models/candidate");
 const getAllCandidates = async (req, res) => {
   try {
     const candidates = await Candidate.find();
+    // HATEOAS
+    let baseUrl = req.baseUrl || "";
+    if (baseUrl.startsWith("/api")) {
+      baseUrl = baseUrl.substring(4);
+    }
 
     const candidatesWithLinks = candidates.map((candidate) => {
       const id = candidate._id;
@@ -12,11 +17,11 @@ const getAllCandidates = async (req, res) => {
         links: [
           {
             rel: "self",
-            href: `${req.baseUrl}/${id}`,
+            href: `${baseUrl}/${id}`,
           },
           {
             rel: "candidate-applications",
-            href: `${req.baseUrl}/${id}/applications`,
+            href: `${baseUrl}/${id}/applications`,
           },
         ],
       };
@@ -127,16 +132,19 @@ const updatePartOfCandidate = async (req, res) => {
 const getCandidate = async (req, res) => {
   try {
     const candidate = req.candidate;
-
+    let baseUrl = req.baseUrl || "";
+    if (baseUrl.startsWith("/api")) {
+      baseUrl = baseUrl.substring(4);
+    }
     //HATEOAS
     candidate._doc.links = [
       {
         rel: "self",
-        href: `${req.baseUrl}/${id}`,
+        href: `${baseUrl}/${id}`,
       },
       {
         rel: "candidate-applications",
-        href: `${req.baseUrl}/${id}/applications`,
+        href: `${baseUrl}/${id}/applications`,
       },
     ];
 

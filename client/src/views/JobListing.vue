@@ -147,19 +147,35 @@ export default {
       const token = await getIdToken();
       console.log(this.userType)
       if (userType === 'company') {
-        Api.get(`/v1/companies/${this.companyId}/jobs`, {
+        Api.get(`/v1/companies/${this.companyId}`, {
           headers: {
             Authorization: `${token}`
           }
         })
           .then(response => {
             console.log(response);
-            this.jobsData = response.data
-            console.log(this.jobsData)
+            const links = response.data.links;
+            const jobsLink = links.find(link => link.rel === 'company-jobs');
+            if (jobsLink) {
+              // Making a follow-up request using the HREF from the HATEOAS control
+              return Api.get(jobsLink.href, {
+                headers: {
+                  Authorization: `${token}`
+                }
+              });
+            } else {
+              throw new Error('Jobs link not found in the response');
+            }
+          })
+          .then(response => {
+            console.log(response);
+            this.jobsData = response.data;
+            console.log(this.jobsData);
           })
           .catch(error => {
-            this.message = error
-          })
+            console.error(error);
+            this.message = error.message || 'An error occurred';
+          });
       } else {
         Api.get('/v1/jobs', {
           headers: {
