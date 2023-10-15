@@ -127,13 +127,15 @@ const postApplicationsForJobs = async (req, res) => {
       );
       return res.status(201).json(insertedApplications);
     } else {
-      const file = req.file.buffer; // File is here (in memory)
-      const newApplication = new Application({
-        resume: file,
+      let newApplicationData = {
         ...req.body,
         candidateId: req.candidate._id,
         jobId: job._id,
-      });
+      };
+      if (req.file && req.file.buffer) {
+        newApplicationData.resume = req.file.buffer;
+      }
+      const newApplication = new Application(newApplicationData);
       job.applications.push(newApplication);
       await job.save();
       await newApplication.save();
