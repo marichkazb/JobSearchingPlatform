@@ -38,6 +38,7 @@
               <b-button-group class="buttonsContainer mt-3">
                 <b-button @click="viewDetails(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">Details</b-button>
                 <b-button v-if="canApply" @click="handleClick(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">Apply</b-button>
+                <b-button v-if="canViewApplications" @click="viewAllApplications(job)" class="applyBtn resizeBtn mr-2 mb-2" variant="primary">View All Applications</b-button>
                 <b-button v-if="canDelete" @click="deleteJob(job); $event.stopPropagation()" class="redBtn resizeBtn mb-2" variant="danger">Delete</b-button>
               </b-button-group>
             </b-col>
@@ -89,9 +90,10 @@ export default {
       } else return false
     },
     canApply() {
-      if (this.userType === 'admin' || this.userType === 'candidate') {
-        return true;
-      } else return false
+      return this.userType === 'candidate'
+    },
+    canViewApplications() {
+      return this.userType !== 'candidate'
     },
     title() {
       switch (this.userType) {
@@ -176,6 +178,9 @@ export default {
     handleClick(job) {
       this.$router.push(`/application/${job._id}`)
     },
+    viewAllApplications(job) {
+      this.$router.push(`jobApplications/${job._id}`)
+    },
     postAJob() {
       this.$router.push('/job-creation')
     },
@@ -217,9 +222,6 @@ export default {
           this.message = error
         })
     },
-    async createJob() {
-      this.$router.push({ path: '/job-creation' });
-    },
     async getUserType() {
       const token = await getIdToken();
       Api.get('/v1/getUserType', {
@@ -242,6 +244,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .jobWrapper {
   border-radius: 10px;
   transition: all 0.3s;

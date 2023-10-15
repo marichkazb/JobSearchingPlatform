@@ -87,10 +87,10 @@
     </div>
   </div>
 
-  <div class="col-md-12 mt-4">
-        <b-button @click="handleClick()" href="#" size="lg" class="applyBtn mb-4">Apply</b-button>
+        <div class="col-md-12 mt-4">
+          <b-button v-if="isCandidate" @click="apply()" href="#" size="lg" class="applyBtn mb-4" variant="primary">Apply</b-button>
+          <b-button v-else @click="viewApplications()" href="#" size="lg" class="applyBtn mb-4" variant="primary">View Applications</b-button>
         </div>
-
         </div>
       </div>
     </div>
@@ -98,44 +98,72 @@
 </template>
 
 <script>
+
 import { Api } from '@/Api'
 import { getIdToken } from '../../authService';
+import { auth } from '../../firebaseInit';
 
 export default {
   name: 'JobDescription',
   data() {
     return {
-      job: {}
+      job: {},
+      userType: ''
     }
   },
-  created() {
-    this.fetchJob()
+  async created() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.getUserType()
+      }
+    });
+  },
+  computed: {
+    isCandidate() {
+      return this.userType === 'candidate'
+    }
   },
   methods: {
     async fetchJob() {
-      const token = await getIdToken();
       const jobId = this.$route.params.id
+      const token = await getIdToken();
       Api.get(`/v1/jobs/${jobId}`, {
         headers: {
           Authorization: `${token}`
         }
       })
         .then(response => {
-          console.log(response)
           this.job = response.data
-          console.log(this.job)
         })
         .catch(error => {
           this.message = error.response.data
         })
     },
-    handleClick() {
+    apply() {
       this.$router.push(`/application/${this.$route.params.id}`)
+    },
+    viewApplications() {
+      this.$router.push(`/jobApplications/${this.$route.params.id}`)
     },
     formatDate(dateString) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
       const date = new Date(dateString)
       return date.toLocaleDateString(undefined, options)
+    },
+    async getUserType() {
+      const token = await getIdToken();
+      Api.get('/v1/getUserType', {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
+        .then(response => {
+          this.userType = response.data.userType
+          this.fetchJob()
+        })
+        .catch(error => {
+          this.message = error
+        })
     }
   }
 }

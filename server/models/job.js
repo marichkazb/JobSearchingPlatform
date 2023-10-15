@@ -64,7 +64,7 @@ const jobsSchema = new Schema({
   companyId: { type: Schema.Types.ObjectId, ref: "Company", required: false },
   applications: [
     {
-      type: Schema.Types.ObjectId,
+      type: {},
       ref: "Application",
     },
   ],
