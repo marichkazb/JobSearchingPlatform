@@ -1,43 +1,77 @@
-<!-- Login.vue -->
 <template>
-  <div class="login-container">
+  <b-container fluid class="login-container">
+    <b-row class="justify-content-center align-items-center min-vh-100">
+      <b-col cols="8" md="6" lg="5" xl="4" xxl="3">
         <Alert :alertMessage="alertMessage" :alertId="alertId" :getVariant="alertVariant" />
-    <div class="login-box">
-      <h2>Login</h2>
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input id="email" v-model="email" type="email" placeholder="Email" />
-      </div>
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input
-          :type="passwordVisible ? 'text' : 'password'"
-          v-model="password"
-          placeholder="Password"
-        />
-        <button class="toggle-password" @click="togglePasswordVisibility">
-          {{ passwordVisible ? "Hide" : "Show" }}
-        </button>
-      </div>
-      <button class="login-button" @click="login" :disabled="isLoading">
-        <span v-if="isLoading">Logging in...</span>
-        <span v-else>Login</span>
-      </button>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-      <p class="signup-link">
-        Don't have an account? <router-link to="/signup">Sign Up</router-link>
-      </p>
-    </div>
-  </div>
+        <b-card>
+          <b-card-title class="text-center">Login</b-card-title>
+
+          <b-form @submit.prevent="login">
+            <b-form-group id="emailGroup" label="Email" label-for="email">
+              <b-form-input
+                id="email"
+                v-model="email"
+                type="email"
+                required
+                placeholder="Enter email"
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="passwordGroup" label="Password" label-for="password">
+              <b-input-group>
+                <b-form-input
+                  :type="passwordVisible ? 'text' : 'password'"
+                  v-model="password"
+                  required
+                  placeholder="Enter password"
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="outline-secondary" @click="togglePasswordVisibility">
+                    {{ passwordVisible ? 'Hide' : 'Show' }}
+                  </b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+
+            <b-button variant="primary" type="submit" block :disabled="isLoading">
+              <b-spinner small v-if="isLoading" class="mr-2"></b-spinner>
+              <span v-if="isLoading">Logging in...</span>
+              <span v-else>Login</span>
+            </b-button>
+
+            <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+
+            <p class="text-center mt-3">
+              Don't have an account? <b-link :to="{ path: '/signup' }">Sign Up</b-link>
+            </p>
+          </b-form>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import { login } from '../../authService';
 import Alert from '../components/Alert.vue'; // Please update the path accordingly
+import { BContainer, BRow, BCol, BCard, BCardTitle, BForm, BFormGroup, BFormInput, BInputGroup, BInputGroupAppend, BButton, BSpinner, BLink } from 'bootstrap-vue';
 
 export default {
   components: {
     Alert,
+    BContainer,
+    BRow,
+    BCol,
+    BCard,
+    BCardTitle,
+    BForm,
+    BFormGroup,
+    BFormInput,
+    BInputGroup,
+    BInputGroupAppend,
+    BButton,
+    BSpinner,
+    BLink
   },
   data() {
     return {
@@ -94,95 +128,4 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f7f8fc;
-}
-
-.login-box {
-  width: 450px;
-  height: 400px;
-  padding: 50px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  text-align: center;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4285f4;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.login-button:hover {
-  background-color: #357abf;
-}
-
-.error-message {
-  margin-top: 10px;
-  color: red;
-}
-
-.signup-link {
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.signup-link a {
-  color: #4285f4;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.signup-link a:hover {
-  color: #357abf;
-}
-
-.toggle-password {
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  top: 68%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  color: #4285f4;
-  transition: color 0.3s;
-}
-
-.toggle-password:hover {
-  color: #357abf;
-  font-weight: bold;
-}
-input[type="email"] {
-  border: 1px solid #ccc;
-}
 </style>
