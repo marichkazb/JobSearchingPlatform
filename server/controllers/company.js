@@ -220,7 +220,8 @@ const postCompanyJob = async (req, res) => {
         company_image: req.company.logo,
       }));
       const insertedJobs = await Job.insertMany(jobsWithUserId);
-      company.jobs.push(jobsWithUserId);
+      const jobIds = insertedJobs.map((job) => job._id);
+      company.jobs.push(...jobIds);
       await company.save();
       return res.status(201).json(insertedJobs);
     } else {
@@ -237,6 +238,7 @@ const postCompanyJob = async (req, res) => {
       return res.status(201).json(newJob);
     }
   } catch (error) {
+    console.error(error)
     return res.status(500).json(error.message);
   }
 };

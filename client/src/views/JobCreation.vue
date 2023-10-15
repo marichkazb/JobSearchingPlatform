@@ -173,10 +173,12 @@ export default {
           requestData[field.id] = field.value
         };
       })
+      const requestArray = []
+      requestArray.push(requestData)
       if (Object.keys(this.errors).length === 0) {
         const token = await getIdToken();
         Api
-          .post(`/v1/companies/${this.companyId}/jobs`, requestData, {
+          .post(`/v1/companies/${this.companyId}/jobs`, requestArray, {
             headers: {
               Authorization: `${token}`
             }
