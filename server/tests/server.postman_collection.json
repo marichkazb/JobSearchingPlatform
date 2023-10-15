@@ -219,7 +219,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /candidate (auxiliary)",
+					"name": "(auxiliary) POST /candidate",
 					"event": [
 						{
 							"listen": "test",
@@ -514,7 +514,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /admins again",
+					"name": "(auxiliary) POST /admins",
 					"event": [
 						{
 							"listen": "test",
@@ -564,7 +564,7 @@
 					"response": []
 				},
 				{
-					"name": "override PUT /admins/:id",
+					"name": "(override) PUT /admins/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -612,7 +612,7 @@
 					"response": []
 				},
 				{
-					"name": "override DELETE /admins/:id",
+					"name": "(override) DELETE /admins/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -660,7 +660,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /admins again",
+					"name": "(auxiliary) POST /admins",
 					"event": [
 						{
 							"listen": "test",
@@ -748,7 +748,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
+							"raw": "{\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"https://logo.uplead.com/google.com\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1014,7 +1014,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /companies (for others)",
+					"name": "(auxiliary) POST /companies",
 					"event": [
 						{
 							"listen": "test",
@@ -1069,7 +1069,7 @@
 					"response": []
 				},
 				{
-					"name": "override PUT /companies/:id",
+					"name": "(override) PUT /companies/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1117,7 +1117,7 @@
 					"response": []
 				},
 				{
-					"name": "override DELETE /companies/:id",
+					"name": "(override) DELETE /companies/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1170,7 +1170,7 @@
 			"name": "applications",
 			"item": [
 				{
-					"name": "POST /companies (for others)",
+					"name": "(auxiliary) POST /companies",
 					"event": [
 						{
 							"listen": "test",
@@ -1225,7 +1225,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /jobs (for others)",
+					"name": "(auxiliary) POST /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -1280,7 +1280,7 @@
 					"response": []
 				},
 				{
-					"name": "POST /applications collection",
+					"name": "(collection) POST /applications",
 					"event": [
 						{
 							"listen": "test",
@@ -1585,7 +1585,7 @@
 					"response": []
 				},
 				{
-					"name": "sort applications",
+					"name": "(sort, order) GET /applications",
 					"event": [
 						{
 							"listen": "test",
@@ -1645,7 +1645,7 @@
 					"response": []
 				},
 				{
-					"name": "filter applications",
+					"name": "(filter) GET /applications",
 					"event": [
 						{
 							"listen": "test",
@@ -1787,7 +1787,7 @@
 			"name": "jobs",
 			"item": [
 				{
-					"name": "POST/collection of jobs",
+					"name": "(collection) POST /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -1820,7 +1820,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n    \"title\": \"Trainee UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Junior NodeJS Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, {\n    \"title\": \"Middle Java Developer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}, \n{\n    \"title\": \"Senior System Architect\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}]",
+							"raw": "[\n    {\n        \"title\": \"Trainee UX Designer\",\n        \"company_name\": \"Google\",\n        \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n        \"company_image\": \"https://logo.uplead.com/google.com\",\n        \"skills\": [\n            \"JavaScript\",\n            \"Node\",\n            \"AWS\"\n        ],\n        \"validation\": true,\n        \"yearly_salary_min\": 100000,\n        \"yearly_salary_max\": 120000,\n        \"location\": \"Dhaka, Bangladesh\",\n        \"date_posted\": \"2023-10-10\",\n        \"deadline\": \"2023-11-10\",\n        \"job_level\": \"Entry Level\",\n        \"education_level\": \"Bachelors\",\n        \"job_status\": \"In demand\",\n        \"job_enrollment_status\": \"Full-Time\"\n    },\n    {\n        \"title\": \"Data Analyst\",\n        \"company_name\": \"Microsoft\",\n        \"description\": \"Join Microsoft's data analysis team and leverage your skills to extract valuable insights from large datasets. Contribute to data-driven decision-making and innovation.\",\n        \"company_image\": \"https://logo.uplead.com/microsoft.com\",\n        \"skills\": [\n            \"Data Analysis\",\n            \"SQL\",\n            \"Data Visualization\"\n        ],\n        \"validation\": true,\n        \"yearly_salary_min\": 80000,\n        \"yearly_salary_max\": 100000,\n        \"location\": \"Redmond, USA\",\n        \"date_posted\": \"2023-10-15\",\n        \"deadline\": \"2023-11-15\",\n        \"job_level\": \"Mid-Level\",\n        \"education_level\": \"Masters\",\n        \"job_status\": \"In demand\",\n        \"job_enrollment_status\": \"Full-Time\"\n    },\n    {\n        \"title\": \"Senior Java Developer\",\n        \"company_name\": \"Netflix\",\n        \"description\": \"Join Netflix's development team and contribute to producing original and engaging content for our global audience.\",\n        \"company_image\": \"https://logo.uplead.com/netflix.com\",\n        \"skills\": [\n            \"Content Production\",\n            \"Video Editing\",\n            \"Creative Writing\"\n        ],\n        \"validation\": true,\n        \"yearly_salary_min\": 75000,\n        \"yearly_salary_max\": 95000,\n        \"location\": \"Los Angeles, USA\",\n        \"date_posted\": \"2023-10-13\",\n        \"deadline\": \"2023-11-13\",\n        \"job_level\": \"Senior Level\",\n        \"education_level\": \"Bachelors\",\n        \"job_status\": \"In demand\",\n        \"job_enrollment_status\": \"Full-Time\"\n    },\n    {\n        \"title\": \"Frontend Developer\",\n        \"company_name\": \"Spotify\",\n        \"description\": \"Be a part of Spotify's frontend development team, working on user-friendly interfaces and innovative features for the world's leading music streaming platform.\",\n        \"company_image\": \"https://logo.uplead.com/spotify.com\",\n        \"skills\": [\n            \"Frontend Development\",\n            \"React\",\n            \"UI/UX Design\"\n        ],\n        \"validation\": true,\n        \"yearly_salary_min\": 85000,\n        \"yearly_salary_max\": 110000,\n        \"location\": \"Stockholm, Sweden\",\n        \"date_posted\": \"2023-10-16\",\n        \"deadline\": \"2023-11-16\",\n        \"job_level\": \"Mid-Level\",\n        \"education_level\": \"Bachelors\",\n        \"job_status\": \"In demand\",\n        \"job_enrollment_status\": \"Full-Time\"\n    },\n    {\n        \"title\": \"AI Research Scientist\",\n        \"company_name\": \"Microsoft\",\n        \"description\": \"Join Microsoft's AI research team and work on cutting-edge artificial intelligence projects, contributing to the development of AI technologies for the future.\",\n        \"company_image\": \"https://logo.uplead.com/microsoft.com\",\n        \"skills\": [\n            \"Machine Learning\",\n            \"Deep Learning\",\n            \"Python\"\n        ],\n        \"validation\": true,\n        \"yearly_salary_min\": 110000,\n        \"yearly_salary_max\": 150000,\n        \"location\": \"Redmond, USA\",\n        \"date_posted\": \"2023-10-17\",\n        \"deadline\": \"2023-11-17\",\n        \"job_level\": \"Senior\",\n        \"education_level\": \"Ph.D.\",\n        \"job_status\": \"In demand\",\n        \"job_enrollment_status\": \"Full-Time\"\n    }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1875,7 +1875,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"IMAGE\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
+							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"company_image\": \"https://logo.uplead.com/google.com\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1897,7 +1897,7 @@
 					"response": []
 				},
 				{
-					"name": "GET/jobs",
+					"name": "GET /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -1942,7 +1942,7 @@
 					"response": []
 				},
 				{
-					"name": "GET/jobs/:id",
+					"name": "GET /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -1987,7 +1987,7 @@
 					"response": []
 				},
 				{
-					"name": "PATCH/jobs/:id",
+					"name": "PATCH /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2039,7 +2039,7 @@
 					"response": []
 				},
 				{
-					"name": "PUT/jobs/:id",
+					"name": "PUT /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2096,7 +2096,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE/jobs/:id",
+					"name": "DELETE /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2138,7 +2138,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE/jobs",
+					"name": "DELETE /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -2181,7 +2181,7 @@
 			"name": "companyJobs",
 			"item": [
 				{
-					"name": "POST /jobs (for others)",
+					"name": "(auxiliary) POST /jobs",
 					"event": [
 						{
 							"listen": "test",
@@ -2236,7 +2236,7 @@
 					"response": []
 				},
 				{
-					"name": "PATCH /companies/:id (for others)",
+					"name": "(auxiliary) PATCH /companies/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2376,6 +2376,70 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "POST /companies/:id/jobs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/companies/65230c9fe3acb91bb717b558/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"65230c9fe3acb91bb717b558",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /companies/:id/jobs",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{companyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/companies/65230c9fe3acb91bb717b558/jobs/652670bb4ef9b31a65152266",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies",
+								"65230c9fe3acb91bb717b558",
+								"jobs",
+								"652670bb4ef9b31a65152266"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2383,7 +2447,7 @@
 			"name": "jobApplications",
 			"item": [
 				{
-					"name": "POST job application",
+					"name": "POST jobs/:id/applications",
 					"event": [
 						{
 							"listen": "test",
@@ -2434,7 +2498,7 @@
 					"response": []
 				},
 				{
-					"name": "PUT/jobs/:id (for others)",
+					"name": "(auxiliary) PUT /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2485,7 +2549,7 @@
 					"response": []
 				},
 				{
-					"name": "GET all job applications",
+					"name": "GET /jobs/:id/applications",
 					"event": [
 						{
 							"listen": "test",
@@ -2528,7 +2592,7 @@
 					"response": []
 				},
 				{
-					"name": "GET one job application",
+					"name": "GET /jobs/:id/applications/:applicationId",
 					"event": [
 						{
 							"listen": "test",
@@ -2575,7 +2639,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE job application",
+					"name": "DELETE /jobs/:id/applications/:applicationId",
 					"event": [
 						{
 							"listen": "test",
@@ -2616,7 +2680,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE/jobs/:id (for others)",
+					"name": "(auxiliary) DELETE /jobs/:id",
 					"event": [
 						{
 							"listen": "test",
@@ -2658,7 +2722,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE/companies/:id (for others)",
+					"name": "(auxiliary) DELETE /companies/:id",
 					"event": [
 						{
 							"listen": "test",
