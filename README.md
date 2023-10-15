@@ -69,14 +69,17 @@ The **stakeholders** of the job searching system are unemployed people, develope
 
 #### (Unlogged-in flow)
 * **Login page**: this page displays fields for entering a username and a password, allowing users to authenticate themselves and access their accounts.
-* **Account creating**: this page displays fields for entering a username, and email, and password, as well as the specific attributes of either an candidate or a company (logo, locations or CV). Enables account creation for new users.
-* **Password retrieval**: this page displays fields for users to enter their registered email. This allows them to retrieve their password, by receiving a link for resetting their forgotten password.
+* **Account creating page**: this page displays fields for entering a username, and email, and password. Enables account creation for new users.
+* **Set Role page**: this page allows user to set the role of candidate or company upon registering, as well as specific attributes of candidate or company.
 
 #### (Logged-in flow)
-* **Landing page**: this page displays a landing image and message, shows featured job listings, and a search bar. It allows candidates to start job hunting fairly quickly after logging in.
-* **Account page**: this page displays the candidate's or company's personal information. Depending on which, it will also show the uploaded resume and application history, or the uploaded job offerings, allowing the users to change these.
+* **Landing page**: this page displays a landing image and message. It allows candidates to start job hunting fairly quickly after logging in.
 * **Job listing page**: this page features job vacancies as according to the searching criteria specified by the candidate. It allows candidates to find the jobs they are looking for and to launch the application process.
-* **Job description page**: this page displays all the information regarding a specific job offering, such as the title and description, the requirements and the deadline. It also displays the fields to be filled-in by the candidates, allowing them to apply directly for the job opening from the page.
+* **Job description page**: this page displays all the information regarding a specific job offering, such as the title and description, the requirements and the deadline.
+* **Application page**: this page allows candidates to post an application for job, this includes entering contact info, answering some questions and uploading a CV. This page is only visible to candidates.
+* **Company Profile page**: this page allows companies to view and edit their personal information that they have provided when registering.
+* **Create Job page**: this page allows companies and admins to create a new job opening and fill in the form to provide all the relevant information about it.
+* **Applications Listing page**: this page allows companies and admins to view all the applications submitted by candidates for one job.
 
 ### Entity-Relationship (ER) Diagram
 
