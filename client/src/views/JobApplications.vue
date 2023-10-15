@@ -19,8 +19,8 @@
               <b-card-text class="text oneLine">{{application.linkedIn}}</b-card-text>
               <b-card-text class="text mt-2 motivation">Motivation: {{application.motivation}}</b-card-text>
               <b-card-text class="text oneLine status mt-3">{{application.status}}</b-card-text>
-              <b-button v-if="!application.cv" variant="primary" style="display: flex;" class="mt-4">
-                <a :href="application.cv" target="_blank" style="color: white;">Open CV</a>
+              <b-button v-if="application.resumeUrl" variant="primary" class="mt-4">
+                <a :href="application.resumeUrl" target="_blank" style="color: white;">Open CV</a>
               </b-button>
             </b-col>
           </b-row>
@@ -58,19 +58,37 @@ export default {
   },
   methods: {
     async getApplications() {
-      const token = await getIdToken();
-      Api.get(`/v1/jobs/${this.jobId}/applications`, {
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-        .then(response => {
-          console.log(response);
-          this.applicationsData = response.data
-        })
-        .catch(error => {
-          this.message = error
-        })
+      try {
+        const token = await getIdToken();
+        const response = await Api.get(`/v1/jobs/${this.jobId}/applications`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+
+        // Array of Promises
+        const applicationPromises = response.data.map(async (application) => {
+          if (application.resume) {
+            const dataUrl = `data:application/pdf;base64,${application.resume}`;
+            const res = await fetch(dataUrl);
+            const blob = await res.blob();
+
+            const objectURL = URL.createObjectURL(blob);
+            // Set the new property on the application.
+            return {
+              ...application,
+              resumeUrl: objectURL
+            };
+          }
+          return application; // if no resume, return the unchanged object
+        });
+
+        // Waiting for all the promises to resolve before setting the data.
+        this.applicationsData = await Promise.all(applicationPromises);
+      } catch (error) {
+        console.error('An error occurred:', error);
+        this.message = error.message || 'Error while fetching applications';
+      }
     },
     async getUserType() {
       const token = await getIdToken();
@@ -87,6 +105,17 @@ export default {
         .catch(error => {
           this.message = error
         })
+    }
+  },
+  beforeDestroy() {
+  // Release the object URLs to free up memory.
+    if (this.applicationsData) {
+      this.applicationsData.forEach(application => {
+      // Checking if the application has a resumeUrl before revoking.
+        if (application.resumeUrl) {
+          URL.revokeObjectURL(application.resumeUrl);
+        }
+      });
     }
   }
 }
