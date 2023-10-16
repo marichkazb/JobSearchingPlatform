@@ -73,7 +73,8 @@ export default {
       token: null,
       editedCompany: {},
       isEditing: false,
-      changesMade: false
+      changesMade: false,
+      job: null // added
     };
   },
   async created() {
@@ -82,7 +83,6 @@ export default {
         this.getUserType();
       }
     });
-    // this.fetchCompany()
   },
   methods: {
     async fetchCompany() {
@@ -142,14 +142,14 @@ export default {
       for (const jobId of this.company.jobs) {
         Api.get(`/v1/jobs/${jobId}`, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: token, // `${token}`
           },
         })
           .then((response) => {
             const job = response.data;
             job.deadline = new Date(job.deadline).toDateString()
             this.$set(this.jobDetails, jobId, job);
-            console.log(this.job);
+            console.log('job:' + this.job);
           })
           .catch((error) => {
             this.message = error.response.data;
@@ -166,11 +166,12 @@ export default {
       const token = await getIdToken();
       Api.get('/v1/getUserType', {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token, // `${token}`
         },
       })
         .then((response) => {
           this.companyId = response.data.companyId;
+          console.log('CompanyID: ' + this.companyId) // added
           this.fetchCompany();
         })
         .catch((error) => {
