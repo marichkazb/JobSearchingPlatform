@@ -4,8 +4,8 @@
     <div class="left-column custom-left-align">
       <h2>About</h2>
       <p>{{company.description}}</p>
-      <h2>Recent Job Openings</h2>
-      <div class="col-sm-6">
+      <h2 class="mt-6">Recent Job Openings</h2>
+      <div class="col-sm-6 mt-4">
         <div class="card mb-4">
           <div class="card-body box tex-white rounded" v-for="jobId in company.jobs" :key="jobId">
             <div @click="onClick(jobId)">
@@ -27,7 +27,7 @@
        <p class="card-title text-left text-muted">Email</p>
        <p style="font-weight: bold;">{{company.email}}</p>
        <p class="card-title text-left text-muted">Location</p>
-       <p style="font-weight: bold;">{{company.locations}}</p>
+       <p style="font-weight: bold;">{{company.locations.join(',')}}</p>
         </div>
       </div>
       <div class="col-md-12 mt-4 edit-btn-container">
@@ -36,17 +36,22 @@
     </div>
     </div>
     <div v-if="isEditing">
-      <div class="left-column custom-left-align">
-        <h2>Name</h2>
+      <div class="centered-form">
+        <h2 class="mt-6">Edit Profile</h2>
+        <div class="edit-box">
+        <h4 class="text-muted">Name</h4>
         <textarea v-model="editedCompany.name" @input="setChangesMade()"></textarea>
-        <h2>Location</h2>
-        <textarea v-model="editedCompany.location" @input="setChangesMade()"></textarea>
-        <h2>About</h2>
+        <h4 class="text-muted">Location</h4>
+        <textarea v-model="editedCompany.locations" @input="setChangesMade()"></textarea>
+        <h4 class="text-muted">Logo</h4>
+        <textarea v-model="editedCompany.logo" @input="setChangesMade()"></textarea>
+        <h4 class="text-muted">About</h4>
         <textarea v-model="editedCompany.description" @input="setChangesMade()"></textarea>
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 mt-4 edit-btn-container">
           <b-button @click="saveChanges()" size="lg" class="applyBtn mb-4">Save</b-button>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -179,6 +184,10 @@ export default {
   margin-left: 100px;
   margin-top: 50px;
 }
+.edit-box{
+  max-width: 2000px;
+  width: 100%;
+}
 .right-column{
   flex: 1;
   display: flex;
@@ -207,6 +216,11 @@ export default {
 .editBtn {
   background-color: rgba(7, 25, 82, 1);
   width: 248px;
+  height: 56px;
+}
+.applyBtn {
+  background-color: rgba(7, 25, 82, 1);
+  width: 200px;
   height: 56px;
 }
 .custom-blue-border {
