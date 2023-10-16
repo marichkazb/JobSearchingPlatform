@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true }); // Accessing params from parent router
+const multer = require("multer");
+
 const {
   createJob,
   getAllJobs,
@@ -22,7 +24,12 @@ const {
   verifyApplicationOwnership,
 } = require("../authMiddleware");
 
-router.post("/:id/applications/", checkIfCandidate, postApplicationsForJobs);
+
+// Set up multer for file storage
+const storage = multer.memoryStorage(); // This stores the file in memory. You might want to save it in a directory or handle it based on your requirement.
+const upload = multer({ storage: storage });
+
+router.post("/:id/applications/", checkIfCandidate, upload.single('resume'), postApplicationsForJobs);
 
 router.get("/:id/applications/", verifyJobOwnership, getApplicationsForJobs);
 router.get(

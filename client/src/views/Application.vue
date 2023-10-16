@@ -112,27 +112,28 @@ export default {
   methods: {
     async postApplication() {
       this.errors = {}
-      const requestData = {}
       // Perform validation for each field
       this.inputFields.forEach((field) => {
         if (field.id !== 'motivation' && !field.value) {
           this.errors[field.id] = `${field.placeholder} is required`
-        } else {
-          requestData[field.id] = field.value
         };
       })
-      if (Object.keys(this.errors).length === 0) {
-        const fd = new FormData();
-        fd.append('file', this.file1);
-        fd.append('requestData', requestData);
-        requestData.pdfFile = fd;
+      if (Object.keys(this.errors).length === 0 && this.file1) {
+        const formData = new FormData();
+        formData.append('resume', this.file1);
+        // Append the other fields to formData
+        this.inputFields.forEach((field) => {
+          formData.append(field.id, field.value);
+        });
+
         const token = await getIdToken();
-        Api
-          .post(`/v1/jobs/${this.id()}/applications`, requestData, {
-            headers: {
-              Authorization: `${token}`,
-            },
-          })
+
+        Api.post(`/v1/jobs/${this.id()}/applications`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // For sending files
+            Authorization: `${token}`,
+          },
+        })
           .then(response => {
             this.alertMessage = 'Successfully posted an application'
             this.variant = 'success'
@@ -141,9 +142,12 @@ export default {
           })
           .catch(error => {
             this.message = error.response.data
+            this.alertMessage = (error.response && error.response.data) || 'Error occurred';
+            this.variant = 'danger';
+            this.alertId = Math.random();
           })
       } else {
-        this.alertMessage = 'Something went wrong.. Please, fill all the required fields to proceed'
+        this.alertMessage = 'All fields are required, including the PDF file.'
         this.variant = 'danger'
         this.alertId = Math.random()
       }

@@ -127,12 +127,15 @@ const postApplicationsForJobs = async (req, res) => {
       );
       return res.status(201).json(insertedApplications);
     } else {
-      // Handle a single application object
-      const newApplication = new Application({
+      let newApplicationData = {
         ...req.body,
         candidateId: req.candidate._id,
         jobId: job._id,
-      });
+      };
+      if (req.file && req.file.buffer) {
+        newApplicationData.resume = req.file.buffer;
+      }
+      const newApplication = new Application(newApplicationData);
       job.applications.push(newApplication);
       await job.save();
       await newApplication.save();
@@ -147,12 +150,23 @@ const getApplicationsForJobs = async (req, res) => {
   try {
     const id = req.params.id;
     const job = await Job.findById(id).populate("applications");
+
     if (!job) {
       return res.status(404).json("Job is not found.");
     }
-    res.status(200).json(job.applications);
+
+    // Convert the Buffer to Base64 for each application
+    const modifiedApplications = job.applications.map((app) => {
+      if (app.resume) {
+        app.resume = app.resume.toString("base64");
+      }
+      return app;
+    });
+    
+    res.status(200).json(modifiedApplications);
   } catch (error) {
-    res.status(500).json(error.message);
+    console.error(error)
+    res.status(500).json(error);
   }
 };
 
