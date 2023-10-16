@@ -83,7 +83,7 @@ The **stakeholders** of the job searching system are unemployed people, develope
 
 ### Entity-Relationship (ER) Diagram
 
-<img src="./images/er_diagram.png" alt="ER Diagram" width=700>
+<img src="./images/WebDevER.png" alt="ER Diagram" width=700>
 
 ### System wireframe
 This is the mockup of the UI of the job searching website containing the necessary pages required. In further development the UI will be improved and functionality implemented. 
