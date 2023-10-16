@@ -12,7 +12,7 @@
     <b-row class="mt-3">
       <b-col>
         <b-button v-if="canCreate" @click="postAJob()" variant="primary" class="borderlessBtn mr-2 mb-2">Create New</b-button>
-        <b-button v-if="canDelete" @click="deleteAllJobs()" variant="danger" class="redBtn mb-2">Delete All</b-button>
+        <b-button v-if="canDeleteAll" @click="deleteAllJobs()" variant="danger" class="redBtn mb-2">Delete All</b-button>
       </b-col>
     </b-row>
 
@@ -78,6 +78,11 @@ export default {
           return false;
         });
       } else return this.jobsData;
+    },
+    canDeleteAll() {
+      if (this.userType === 'admin') {
+        return this.jobsData.length !== 0
+      } else return false
     },
     canDelete() {
       if (this.userType === 'admin' || this.userType === 'company') {
