@@ -82,14 +82,18 @@ export default {
         this.getUserType();
       }
     });
+    // this.fetchCompany()
   },
   methods: {
     async fetchCompany() {
+      if (!this.companyId) {
+        return;
+      }
       const token = await getIdToken();
       console.log('Token:', token)
       Api.get(`/v1/companies/${this.companyId}`, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token, // `${token}`
         },
       })
         .then((response) => {
