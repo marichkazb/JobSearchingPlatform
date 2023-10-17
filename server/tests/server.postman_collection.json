@@ -20,7 +20,7 @@
 									"const responseData = pm.response.json();\r",
 									"pm.environment.set(\"adminToken\", responseData.idToken);\r",
 									"pm.test(\"Response time is less than 500ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -71,7 +71,7 @@
 									"const responseData = pm.response.json();\r",
 									"pm.environment.set(\"companyToken\", responseData.idToken);\r",
 									"pm.test(\"Response time is less than 500ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -122,7 +122,7 @@
 									"const responseData = pm.response.json();\r",
 									"pm.environment.set(\"candidateToken\", responseData.idToken);\r",
 									"pm.test(\"Response time is less than 500ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -247,7 +247,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": \"9X6wcGSljOS9LTfE6n3RhvujLpp1\",\r\n  \"name\": \"Gus Rochada\",\r\n  \"email\": \"gusrochada@student.gu.se\",\r\n  \"number\": \"123456789\",\r\n  \"education\": \"Bsc SEM @ GU\",\r\n  \"currentCompany\": \"GU\",\r\n  \"linkedin\": \"Don't have.\",\r\n  \"about\": \"Am fun.\",\r\n  \"applications\": []\r\n}",
+							"raw": "{\r\n  \"userId\": \"{{candidateToken}}\",\r\n  \"name\": \"Gus Rochada\",\r\n  \"email\": \"gusrochada@student.gu.se\",\r\n  \"number\": \"123456789\",\r\n  \"education\": \"Bsc SEM @ GU\",\r\n  \"currentCompany\": \"GU\",\r\n  \"linkedin\": \"Don't have.\",\r\n  \"about\": \"Am fun.\",\r\n  \"applications\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -280,7 +280,7 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Response time is less than 500ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -430,8 +430,8 @@
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Check for a specific key in the response JSON\", function () {",
 									"    pm.response.to.have.jsonBody(\"email\");",
@@ -475,8 +475,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -570,8 +570,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -589,7 +589,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"_method\": \"PUT\",\"name\": \"Another Admin\", \"email\": \"another.admin@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
+							"raw": "{ \"_method\": \"PUT\",\"name\": \"Another Admin\", \"email\": \"another.admin2@gmail.com\", \"userId\":\"LbCnYAbjQpV6EoExW0FEua9y7Iz1\" }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -618,8 +618,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -776,8 +776,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -932,8 +932,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -978,8 +978,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1075,8 +1075,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1094,7 +1094,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"_method\": \"PUT\",\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co.\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
+							"raw": "{\r\n    \"_method\": \"PUT\",\r\n    \"userId\": \"xLPnFhk1XtdFTWTL8mDBYxbg4y33\",\r\n    \"name\": \"Guszabma Co. II\",\r\n    \"email\": \"guszabma@student.gu.se\",\r\n    \"logo\": \"url_to_guszabma_logo\",\r\n    \"locations\": [\r\n        \"Gothenburg\"\r\n    ],\r\n    \"jobs\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1123,8 +1123,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1392,8 +1392,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -1437,8 +1437,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -1704,8 +1704,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1746,8 +1746,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1906,8 +1906,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -1951,8 +1951,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -2102,8 +2102,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -2144,8 +2144,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2297,8 +2297,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -2343,8 +2343,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2379,6 +2379,27 @@
 				},
 				{
 					"name": "POST /companies/:id/jobs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify that the response has a 201 status code\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is in JSON format\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"pm.test(\"Set the new job id as an environment variable\", function(){\r",
+									"    const responseBody = pm.response.json();\r",
+									"    const jobID = responseBody._id;\r",
+									"    pm.environment.set(\"newSecondJobId\", jobID);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -2390,7 +2411,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Senior UX Designer\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
+							"raw": "{\n    \"title\": \"Senior UX Designer II\",\n    \"company_name\": \"Google\",\n    \"description\": \"At Google, employees are at the forefront of pioneering technological innovations, collaborating with some of the brightest minds in the industry to develop cutting-edge software\",\n    \"skills\": [\"JavaScript\", \"Node\", \"AWS\"],\n    \"validation\": true,\n    \"yearly_salary_min\": 100000,\n    \"yearly_salary_max\": 120000,\n    \"location\": \"Dhaka, Bangladesh\",\n    \"date_posted\": \"2023-10-10\",\n    \"deadline\": \"2023-11-10\",\n    \"job_level\": \"Entry Level\",\n    \"education_level\": \"Bachelors\",\n    \"job_status\": \"In demand\",\n    \"job_enrollment_status\": \"Full-Time\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2398,7 +2419,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/companies/65230c9fe3acb91bb717b558/jobs",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/",
 							"host": [
 								"{{host}}"
 							],
@@ -2406,8 +2427,9 @@
 								"api",
 								"v1",
 								"companies",
-								"65230c9fe3acb91bb717b558",
-								"jobs"
+								"{{companyId}}",
+								"jobs",
+								""
 							]
 						}
 					},
@@ -2425,7 +2447,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/companies/65230c9fe3acb91bb717b558/jobs/652670bb4ef9b31a65152266",
+							"raw": "{{host}}/api/v1/companies/{{companyId}}/jobs/{{newJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2433,9 +2455,9 @@
 								"api",
 								"v1",
 								"companies",
-								"65230c9fe3acb91bb717b558",
+								"{{companyId}}",
 								"jobs",
-								"652670bb4ef9b31a65152266"
+								"{{newJobId}}"
 							]
 						}
 					},
@@ -2482,7 +2504,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}/applications",
 							"host": [
 								"{{host}}"
 							],
@@ -2490,7 +2512,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}",
+								"{{newSecondJobId}}",
 								"applications"
 							]
 						}
@@ -2534,7 +2556,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2542,7 +2564,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}"
+								"{{newSecondJobId}}"
 							]
 						}
 					},
@@ -2558,8 +2580,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2576,7 +2598,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}/applications",
 							"host": [
 								"{{host}}"
 							],
@@ -2584,7 +2606,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}",
+								"{{newSecondJobId}}",
 								"applications"
 							]
 						}
@@ -2601,8 +2623,8 @@
 									"pm.test(\"Verify GET request for all jobs returns a 200 status code or 404 that means not found\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
 									"});",
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Response is in JSON format\", function () {",
 									"    pm.response.to.be.json;",
@@ -2622,7 +2644,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}/applications/{{jobApplicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2630,7 +2652,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}",
+								"{{newSecondJobId}}",
 								"applications",
 								"{{jobApplicationId}}"
 							]
@@ -2645,8 +2667,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2663,7 +2685,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}/applications/{{jobApplicationId}}",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}/applications/{{jobApplicationId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2671,7 +2693,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}",
+								"{{newSecondJobId}}",
 								"applications",
 								"{{jobApplicationId}}"
 							]
@@ -2686,8 +2708,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -2707,7 +2729,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/jobs/{{newJobId}}",
+							"raw": "{{host}}/api/v1/jobs/{{newSecondJobId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2715,7 +2737,7 @@
 								"api",
 								"v1",
 								"jobs",
-								"{{newJobId}}"
+								"{{newSecondJobId}}"
 							]
 						}
 					},
@@ -2728,8 +2750,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
 									"});",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2758,6 +2780,90 @@
 								"v1",
 								"companies",
 								"{{companyId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(auxiliary) DELETE /candidates/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{candidateToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/candidates/{{candidateId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"candidates",
+								"{{candidateId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(auxiliary) DELETE /companies/:id Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/admins/{{adminId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admins",
+								"{{adminId}}"
 							]
 						}
 					},

@@ -27,7 +27,7 @@ router.get("/:id", getCandidate);
 
 router.post("/", createCandidate);
 
-router.use(verifyCandidateOwnership);
+router.use("/:id", verifyCandidateOwnership);
 
 router.delete("/:id", deleteOneCandidate);
 router.put("/:id", updateCandidate);

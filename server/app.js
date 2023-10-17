@@ -19,7 +19,8 @@ const { authenticate, classifyRequester } = require("./authMiddleware");
 
 const productionMongoURI =
   "mongodb+srv://admin:admin1234@cluster0.0yuyemj.mongodb.net/?retryWrites=true&w=majority";
-const mongoURI = process.env.MONGODB_URI || productionMongoURI; // before it was "mongodb://127.0.0.1:27017/serverTestDB", will delete later
+const testMongoURI = "mongodb://127.0.0.1:27017/serverTestDB"; // used for manual postman testing without interference on the online database.
+const mongoURI = process.env.MONGODB_URI || productionMongoURI;
 
 const productionPort = 3000;
 const port = process.env.PORT || productionPort;
@@ -36,7 +37,6 @@ async function main() {
   console.log("Connected to MongoDB!");
 }
 
-// Create Express app
 var app = express();
 // Parse requests of content-type 'application/json'
 app.use(express.urlencoded({ extended: true }));

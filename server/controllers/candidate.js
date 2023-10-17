@@ -72,12 +72,14 @@ const createCandidate = async (req, res) => {
 
 const deleteOneCandidate = async (req, res) => {
   try {
-    const candidate = req.candidate;
-    if (!candidate) {
+    const id = req.params.id;
+    const result = await Candidate.deleteOne({ _id: id });
+    if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Candidate not found" });
     }
-    await candidate.remove();
-    res.status(200).json({ message: `Deleted ${candidate}` });
+    res
+      .status(200)
+      .json({ message: `Deleted candidate with ID: ${id}` });
   } catch (error) {
     console.error(error);
     res.status(500).json({
