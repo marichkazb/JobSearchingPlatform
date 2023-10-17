@@ -200,7 +200,7 @@ const deleteOneApplicationForJob = async (req, res) => {
       return res.status(404).json("Job is not found.");
     }
 
-    const application = Application.findById(applicationId);
+    const application = await Application.findById(applicationId);
 
     if (!application) {
       return res.status(404).json("Application not found");
@@ -208,7 +208,7 @@ const deleteOneApplicationForJob = async (req, res) => {
 
     // Delete the reference to the application within the job
     job.applications = job.applications.filter(
-      (application) => application._id.toString() !== applicationId
+      (application) => application !== applicationId
     );
     await job.save();
 

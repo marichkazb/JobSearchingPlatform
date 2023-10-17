@@ -207,35 +207,36 @@ const postCompanyJob = async (req, res) => {
       return res.status(404).json("Specific company was not found.");
     }
 
-    if (Array.isArray(req.body)) {
-      const jobData = req.body;
+    const prepareJob = (jobData) => ({
+      ...jobData,
+      company_name: company.name,
+      companyId: company._id,
+      company_image: company.logo,
+    });
 
-      const jobsWithUserId = jobData.map((job) => ({
-        ...job,
-        company_name: req.company.name,
-        companyId: req.company._id,
-        company_image: req.company.logo,
-      }));
-      const insertedJobs = await Job.insertMany(jobsWithUserId);
-      const jobIds = insertedJobs.map((job) => job._id);
-      company.jobs.push(...jobIds);
-      await company.save();
-      return res.status(201).json(insertedJobs);
+    let newJobs = [];
+
+    if (Array.isArray(req.body)) {
+      const jobsData = req.body.map((job) => prepareJob(job));
+      newJobs = await Job.insertMany(jobsData);
     } else {
-      const newJob = new Job({
-        ...req.body,
-        company_name: req.company.name,
-        companyId: req.company._id,
-        company_image: req.company.logo,
-      });
-      console.log(company);
-      company.jobs.push(newJob);
-      await company.save();
+      const newJob = new Job(prepareJob(req.body));
       await newJob.save();
-      return res.status(201).json(newJob);
+      newJobs.push(newJob);
+    }
+
+    const jobIds = newJobs.map((job) => job._id);
+    company.jobs.push(...jobIds);
+
+    await company.save();
+
+    if (newJobs.length === 1) {
+      return res.status(201).json(newJobs[0]);
+    } else {
+      return res.status(201).json(newJobs);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.status(500).json(error.message);
   }
 };
