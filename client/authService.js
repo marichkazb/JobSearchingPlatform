@@ -25,10 +25,8 @@ export const logout = () => {
 
 export const getIdToken = async () => {
   const user = auth.currentUser;
-  console.log('user in getIdToken: ' + user);
   if (user) {
     const token = await fetchIdToken(auth.currentUser);
-    console.log('token in getIdToken: ' + token);
     return token;
   } else {
     return null;
@@ -42,7 +40,6 @@ export const observeAuthState = (callback) => {
 export const refreshToken = () => {
   getIdToken(auth.currentUser, true)
     .then((idToken) => {
-      console.log('new idToken' + idToken);
     })
     .catch((error) => {
       console.error('Error refreshing token:', error);

@@ -1,7 +1,6 @@
 const Company = require("../models/company");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job");
-const Application = require("../models/application");
 
 const getAllCompanies = async (req, res) => {
   try {
@@ -180,7 +179,6 @@ const getCompany = async (req, res) => {
 
 const getAllCompanyJobs = async (req, res) => {
   try {
-    console.log("Here");
     const companyId = req.params.id;
     const company = await Company.findById(companyId).populate("jobs");
     if (!company) return res.status(404).send("Company not found");
@@ -208,7 +206,6 @@ const postCompanyJob = async (req, res) => {
     if (!company) {
       return res.status(404).json("Specific company was not found.");
     }
-    company.jobs = [];
 
     if (Array.isArray(req.body)) {
       const jobData = req.body;

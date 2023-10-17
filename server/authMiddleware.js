@@ -138,13 +138,9 @@ const verifyApplicationVisibility = async (req, res, next) => {
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-        console.log("application:" + application);
 
     const job = await Job.findById(application.jobId);
     const candidate = await Candidate.findById(application.candidateId);
-    console.log("job:" + job);
-        console.log("candidate:" + candidate);
-
     if (job.companyId !== req.user.uid && candidate.userId !== req.user.uid) {
       return res
         .status(403)
@@ -223,7 +219,6 @@ const verifyJobOwnership = async (req, res, next) => {
 
 
 const classifyRequester = async (req, res, next) => {
-  console.log("classifyRequester");
   const { uid } = req.user;
 
   try {
