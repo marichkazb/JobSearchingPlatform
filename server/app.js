@@ -66,11 +66,11 @@ const welcomeMessage = function (req, res) {
 };
 
 app.get("/api", welcomeMessage);
-app.get("/", welcomeMessage);
+//app.get("/", welcomeMessage);
 
-app.use(authenticate);
+app.use("/api", authenticate);
 
-app.use(classifyRequester);
+app.use("/api", classifyRequester);
 
 app.get(`/api/v1/getUserType`, async (req, res) => {
   if(req.none){
