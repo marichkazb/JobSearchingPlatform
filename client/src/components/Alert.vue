@@ -40,7 +40,6 @@ export default {
       this.dismissCountDown = dismissCountDown
     },
     showAlert() {
-      console.log('Show alert', this.alertMessage)
       this.dismissCountDown = this.dismissSecs
     }
   }

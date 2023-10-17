@@ -16,7 +16,7 @@
               <template #button-content>
                 <b-row>
                   <b-nav-text class="userRole" style="color: white;">{{ capitalizedUserType }}</b-nav-text>
-                  <b-button class="avatar-btn">
+                  <b-button class="avatar-btn" v-if="user">
                     <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
                   </b-button>
                 </b-row>
@@ -72,9 +72,7 @@ export default {
     },
   },
   watch: {
-    isUserLoggedIn() {
-      console.log('Updated');
-    },
+    isUserLoggedIn() {},
   },
   updated() {
     this.getUserType()
@@ -84,7 +82,6 @@ export default {
       Api.get('/v1/jobs')
         .then((response) => {
           this.jobsData = response.data;
-          console.log(this.jobsData);
         })
         .catch((error) => {
           this.message = error;

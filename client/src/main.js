@@ -7,7 +7,7 @@ import { auth } from '../firebaseInit';
 import { Api } from '@/Api';
 import {
   getIdToken, refreshToken
-} from './../authService';
+} from '../authService';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -15,13 +15,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
-
-/*
-new Vue({
-  router,
-  render: function (h) { return h(App) }
-}).$mount('#app')
-*/
 
 let app;
 
@@ -33,10 +26,7 @@ if (!app) {
 }
 
 auth.onAuthStateChanged(async (user) => {
-  console.log('triggered onAuthStateChanged');
   if (user) {
-    console.log('triggered onAuthStateChanged if user');
-
     try {
       refreshToken();
       const token = await getIdToken();
@@ -52,7 +42,6 @@ auth.onAuthStateChanged(async (user) => {
       const userType = data.userType;
       const currentRoutePath = router.currentRoute.path;
 
-      console.log('User type:', userType);
       if (userType === 'none') {
         if (router.currentRoute.path !== '/setRole') {
           router.push('/setRole');
@@ -66,14 +55,6 @@ auth.onAuthStateChanged(async (user) => {
         router.push('/jobListing');
         location.reload(true);
       }
-      /* else if (currentRoutePath !== '/jobListing') {
-        router.push('/jobListing');
-        location.reload(true);
-      } */
-      // We could maybe add more logic here depending on the user type, for example:
-      // if (userType === 'admin') {
-      //   router.push('/adminDashboard');
-      // }
     } catch (error) {
       console.error('Error fetching user type:', error);
     }
@@ -83,8 +64,5 @@ auth.onAuthStateChanged(async (user) => {
     router.currentRoute.path !== '/signup'
   ) {
     router.push('/');
-    console.log('authstate user: at login');
-  } else {
-    console.log('authstate user: at else');
   }
 });

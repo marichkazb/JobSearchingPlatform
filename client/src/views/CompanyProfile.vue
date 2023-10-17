@@ -6,13 +6,13 @@
       <p>{{company.description}}</p>
       <h2 class="mt-6">Recent Job Openings</h2>
       <div class="col-sm-6 mt-4">
-        <div class="card mb-4">
-          <div class="card-body box tex-white rounded" v-for="jobId in company.jobs" :key="jobId">
-            <div @click="onClick(jobId)">
-              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-white">{{jobDetails[jobId].title}}</h5>
-              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Location: {{ jobDetails[jobId].location }}</h5>
-              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-colour">Salary: ${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h5>
-              <h5 v-for="jobId in company.jobs" :key="jobId" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
+        <div class="card mb-4 border-0">
+          <div class="card-body box tex-white rounded mt-2" v-for="jobId in company.jobs" :key="jobId">
+            <div @click="onClick(jobId)" v-if="jobDetails[jobId]">
+              <h5 :key="`title-${jobId}`" class="text-white">{{jobDetails[jobId].title}}</h5>
+              <h5 :key="`location-${jobId}`" class="text-muted">Location: {{ jobDetails[jobId].location }}</h5>
+              <h5 :key="`salary-${jobId}`" class="text-colour">Salary: ${{jobDetails[jobId].yearly_salary_min}} - ${{jobDetails[jobId].yearly_salary_max}}</h5>
+              <h5 :key="`deadline-${jobId}`" class="text-muted">Deadline: {{jobDetails[jobId].deadline}}</h5>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
        <p class="card-title text-left text-muted">Email</p>
        <p style="font-weight: bold;">{{company.email}}</p>
        <p class="card-title text-left text-muted">Location</p>
-       <p style="font-weight: bold;">{{company.locations.join(',')}}</p>
+       <p style="font-weight: bold;" v-if="company.locations">{{company.locations.join(',')}}</p>
         </div>
       </div>
       <div class="col-md-12 mt-4 edit-btn-container">
@@ -90,17 +90,14 @@ export default {
         return;
       }
       const token = await getIdToken();
-      console.log('Token:', token)
       Api.get(`/v1/companies/${this.companyId}`, {
         headers: {
           Authorization: token, // `${token}`
         },
       })
         .then((response) => {
-          console.log(response);
           this.company = response.data;
           this.fetchJobDetails();
-          console.log(this.company);
         })
         .catch((error) => {
           this.message = error.response.data;
@@ -149,7 +146,6 @@ export default {
             const job = response.data;
             job.deadline = new Date(job.deadline).toDateString()
             this.$set(this.jobDetails, jobId, job);
-            console.log('job:' + this.job);
           })
           .catch((error) => {
             this.message = error.response.data;
@@ -171,7 +167,6 @@ export default {
       })
         .then((response) => {
           this.companyId = response.data.companyId;
-          console.log('CompanyID: ' + this.companyId) // added
           this.fetchCompany();
         })
         .catch((error) => {

@@ -1,7 +1,6 @@
 const Company = require("../models/company");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job");
-const Application = require("../models/application");
 
 const getAllCompanies = async (req, res) => {
   try {
