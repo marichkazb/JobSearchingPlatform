@@ -7,8 +7,8 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav style="color: white;">
             <b-nav-item href="/jobListing">Job Listings</b-nav-item>
-            <b-nav-item v-if="user && (userType === 'company')" href="/company-profile">Profile</b-nav-item>
-            <b-nav-item v-if="user && (userType === 'company' || userType ==='admin') " href="/job-creation">Create Job</b-nav-item>
+            <b-nav-item v-if="user && (userType === 'company')" href="/profile">My Profile</b-nav-item>
+            <b-nav-item v-if="user && (userType === 'company') " href="/job-creation">Create Job</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right no-caret>

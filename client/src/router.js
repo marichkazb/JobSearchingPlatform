@@ -78,8 +78,8 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/company-profile',
-      name: 'company-profile',
+      path: '/profile',
+      name: 'profile',
       component: CompanyProfile,
       meta: {
         requiresAuth: true, // This route requires the user to be authenticated

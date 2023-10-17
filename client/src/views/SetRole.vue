@@ -92,6 +92,12 @@
 
             <!-- Company Specific Fields -->
             <template v-if="role === 'company'">
+              <b-form-group label="Company description" label-for="desc">
+                <b-form-input
+                  v-model="companyForm.desc"
+                  id="desc">
+                </b-form-input>
+              </b-form-group>
               <b-form-group label="Logo URL:" label-for="logo">
                 <b-form-input
                   v-model="companyForm.logo"
@@ -193,6 +199,7 @@ export default {
         requestData = {
           name: this.userName,
           email: this.userEmail,
+          description: this.companyForm.desc,
           logo: this.companyForm.logo,
           locations: (this.companyForm.locations || '')
             .split(',')
