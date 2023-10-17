@@ -36,7 +36,7 @@
           <b-button @click="goBack()" class="backBtn" variant="primary">Go Back</b-button>
         </div>
       </div>
-      <div id="pdf-preview" v-if="file1Preview" class="pdf-preview ml-5" style="display: flex">
+      <div id="pdf-preview" v-if="file1Preview && !formSubmitted" class="pdf-preview ml-5" style="display: flex">
         <div class="pdf-preview-content" ref="pdfContent">
           <vue-pdf-embed :source="file1Preview" />
         </div>
@@ -57,9 +57,6 @@ export default {
   components: {
     Alert,
     VuePdfEmbed
-  },
-  updated() {
-    console.log(this.file1);
   },
   data() {
     return {

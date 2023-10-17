@@ -2,7 +2,7 @@
     <div>
         <div class="inputWrapper">
             <input type="text" class="search-box" v-model="searchTerm" @input="emitSearch" @keyup="emitSearch" placeholder="Search for a job.."/>
-            <b-button @click="search" class="applyBtn" variant="primary">Search</b-button>
+            <b-button @click="emitSearch" class="applyBtn" variant="primary">Search</b-button>
         </div>
         <div>
             <div v-if="!noSearch && searchResults.length > 0">

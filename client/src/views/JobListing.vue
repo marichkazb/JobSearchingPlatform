@@ -122,15 +122,13 @@ export default {
     },
   },
   watch: {
-    searchTerm() {
-      console.log('Updated');
-    },
+    searchTerm() {}, // empty body to set watcher on searchTerm update
   },
   name: 'JobListing',
   data() {
     return {
       jobsData: this.getJobs,
-      alertMessage: 'Test1',
+      alertMessage: 'Success!',
       showAlert: false,
       alertId: undefined,
       searchTerm: '',
@@ -144,13 +142,11 @@ export default {
       if (user) {
         this.getUserType()
       }
-      console.log(this.jobsData)
     });
   },
   methods: {
     async getJobs(userType) {
       const token = await getIdToken();
-      console.log(this.userType)
       if (userType === 'company') {
         Api.get(`/v1/companies/${this.companyId}`, {
           headers: {
@@ -158,7 +154,6 @@ export default {
           }
         })
           .then(response => {
-            console.log(response);
             const links = response.data.links;
             const jobsLink = links.find(link => link.rel === 'company-jobs');
             if (jobsLink) {
@@ -173,9 +168,7 @@ export default {
             }
           })
           .then(response => {
-            console.log(response);
             this.jobsData = response.data;
-            console.log(this.jobsData);
           })
           .catch(error => {
             console.error(error);
@@ -189,7 +182,6 @@ export default {
         })
           .then(response => {
             this.jobsData = response.data
-            console.log(this.jobsData)
           })
           .catch(error => {
             this.message = error
@@ -213,9 +205,15 @@ export default {
     },
     async deleteJob(job) {
       this.alertMessage = `Successfully deleted a job ${job.title}`
-      this.alertId = job._id
+      this.alertId = Math.random()
       const token = await getIdToken();
-      Api.delete(`/v1/jobs/${job._id}`, {
+      let url;
+      if (this.userType === 'admin') {
+        url = `/v1/jobs/${job._id}`;
+      } else if (this.userType === 'company') {
+        url = `/v1/companies/${this.companyId}/jobs/${job._id}`;
+      }
+      Api.delete(url, {
         headers: {
           Authorization: `${token}`
         }
