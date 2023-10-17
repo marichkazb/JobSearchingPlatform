@@ -180,7 +180,6 @@ const getCompany = async (req, res) => {
 
 const getAllCompanyJobs = async (req, res) => {
   try {
-    console.log("Here");
     const companyId = req.params.id;
     const company = await Company.findById(companyId).populate("jobs");
     if (!company) return res.status(404).send("Company not found");
@@ -208,37 +207,37 @@ const postCompanyJob = async (req, res) => {
     if (!company) {
       return res.status(404).json("Specific company was not found.");
     }
-    company.jobs = [];
+
+    const prepareJob = (jobData) => ({
+      ...jobData,
+      company_name: company.name,
+      companyId: company._id,
+      company_image: company.logo,
+    });
+
+    let newJobs = [];
 
     if (Array.isArray(req.body)) {
-      const jobData = req.body;
-
-      const jobsWithUserId = jobData.map((job) => ({
-        ...job,
-        company_name: req.company.name,
-        companyId: req.company._id,
-        company_image: req.company.logo,
-      }));
-      const insertedJobs = await Job.insertMany(jobsWithUserId);
-      const jobIds = insertedJobs.map((job) => job._id);
-      company.jobs.push(...jobIds);
-      await company.save();
-      return res.status(201).json(insertedJobs);
+      const jobsData = req.body.map((job) => prepareJob(job));
+      newJobs = await Job.insertMany(jobsData);
     } else {
-      const newJob = new Job({
-        ...req.body,
-        company_name: req.company.name,
-        companyId: req.company._id,
-        company_image: req.company.logo,
-      });
-      console.log(company);
-      company.jobs.push(newJob);
-      await company.save();
+      const newJob = new Job(prepareJob(req.body));
       await newJob.save();
-      return res.status(201).json(newJob);
+      newJobs.push(newJob);
+    }
+
+    const jobIds = newJobs.map((job) => job._id);
+    company.jobs.push(...jobIds);
+
+    await company.save();
+
+    if (newJobs.length === 1) {
+      return res.status(201).json(newJobs[0]);
+    } else {
+      return res.status(201).json(newJobs);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.status(500).json(error.message);
   }
 };
