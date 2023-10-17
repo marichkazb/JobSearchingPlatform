@@ -47,6 +47,13 @@ app.use(morgan("dev"));
 app.options("*", cors());
 app.use(cors());
 
+// Configuration for serving frontend in production mode
+// Support Vuejs HTML 5 history mode
+app.use(history());
+// Serve static assets
+var root = path.normalize(__dirname + "/..");
+var client = path.join(root, "client", "dist");
+app.use(express.static(client));
 // Initialize Firebase Admin SDK
 const projectId = serviceAccount.project_id;
 const databaseURL = `https://${projectId}.firebaseio.com`;
@@ -99,14 +106,6 @@ app.use(`/api/${apiVersion}/candidates`, candidateRoutes);
 app.use("/api/*", function (req, res) {
   res.status(404).json({ message: "Not Found" });
 });
-
-// Configuration for serving frontend in production mode
-// Support Vuejs HTML 5 history mode
-app.use(history());
-// Serve static assets
-var root = path.normalize(__dirname + "/..");
-var client = path.join(root, "client", "dist");
-app.use(express.static(client));
 
 // Error handler (i.e., when exception is thrown) must be registered last
 var env = app.get("env");
