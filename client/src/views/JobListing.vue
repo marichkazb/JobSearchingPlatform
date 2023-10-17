@@ -207,7 +207,13 @@ export default {
       this.alertMessage = `Successfully deleted a job ${job.title}`
       this.alertId = Math.random()
       const token = await getIdToken();
-      Api.delete(`/v1/companies/${this.companyId}/jobs/${job._id}`, {
+      let url;
+      if (this.userType === 'admin') {
+        url = `/v1/jobs/${job._id}`;
+      } else if (this.userType === 'company') {
+        url = `/v1/companies/${this.companyId}/jobs/${job._id}`;
+      }
+      Api.delete(url, {
         headers: {
           Authorization: `${token}`
         }
