@@ -5,7 +5,8 @@
         <div class="company-info mb-4">
         <div class="row">
           <div class="col md-2">
-        <b-img :src="job.company_image" alt="logo" id="companyImage" fluid class="company-logo"/>
+           <b-img  v-if="job.company_image" :src="job.company_image" alt="logo" id="companyImage" fluid class="company-logo"/>
+           <b-img v-else :src="defaultImage" alt="logo" id="companyImage" fluid/>
         </div>
         <div class="col-md-10">
          <h2 style="margin-left: 10px">{{job.title}}</h2>
@@ -102,13 +103,15 @@
 import { Api } from '@/Api'
 import { getIdToken } from '../../authService';
 import { auth } from '../../firebaseInit';
+const defaultImage = require('../assets/defaultCompanyLogo.png')
 
 export default {
   name: 'JobDescription',
   data() {
     return {
       job: {},
-      userType: ''
+      userType: '',
+      defaultImage
     }
   },
   async created() {

@@ -11,13 +11,15 @@
             <b-nav-item v-if="user && (userType === 'company' || userType ==='admin') " href="/job-creation">Create Job</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
-            <b-nav-item-dropdown right>
+            <b-nav-item-dropdown right no-caret>
               <!-- Using 'button-content' slot -->
               <template #button-content>
-                <b-nav-text class="userRole" style="color: white;">{{ capitalizedUserType }}</b-nav-text>
-                <b-button class="avatar-btn">
-                  <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
-                </b-button>
+                <b-row>
+                  <b-nav-text class="userRole" style="color: white;">{{ capitalizedUserType }}</b-nav-text>
+                  <b-button class="avatar-btn">
+                    <span class="avatar-text">{{ user.displayName ? user.displayName[0] : 'A' }}</span>
+                  </b-button>
+                </b-row>
               </template>
               <b-dropdown-item v-if="user" href="#" variant="danger" @click="logout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
