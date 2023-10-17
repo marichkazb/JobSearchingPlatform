@@ -1,5 +1,5 @@
 <template>
-  <div class="pageWrapper center">
+  <div class="center">
     <h1>Create a Job</h1>
     <div v-if="!formSubmitted">
       <div class="row">
@@ -221,9 +221,6 @@ export default {
 </script>
 
 <style scoped>
-.pageWrapper{
-  margin-top: 10px;
-}
 .input {
     margin: 16px;
     height: 50px;
