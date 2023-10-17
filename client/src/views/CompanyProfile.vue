@@ -40,13 +40,13 @@
         <h2 class="mt-6">Edit Profile</h2>
         <div class="edit-box">
         <h4 class="text-muted">Name</h4>
-        <textarea v-model="editedCompany.name" @input="setChangesMade()"></textarea>
+        <textarea class="wide-textarea" v-model="editedCompany.name" @input="setChangesMade()"></textarea>
         <h4 class="text-muted">Location</h4>
-        <textarea v-model="editedCompany.locations" @input="setChangesMade()"></textarea>
+        <textarea class="wide-textarea" v-model="editedCompany.locations" @input="setChangesMade()"></textarea>
         <h4 class="text-muted">Logo</h4>
-        <textarea v-model="editedCompany.logo" @input="setChangesMade()"></textarea>
+        <textarea class="wide-textarea" v-model="editedCompany.logo" @input="setChangesMade()"></textarea>
         <h4 class="text-muted">About</h4>
-        <textarea v-model="editedCompany.description" @input="setChangesMade()"></textarea>
+        <textarea class="wide-textarea" v-model="editedCompany.description" @input="setChangesMade()"></textarea>
         <div class="col-md-12 mt-4 edit-btn-container">
           <b-button @click="saveChanges()" size="lg" class="applyBtn mb-4">Save</b-button>
         </div>
@@ -206,6 +206,9 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+}
+.wide-textarea{
+  width: 40%;
 }
 .input {
   margin: 16px;
