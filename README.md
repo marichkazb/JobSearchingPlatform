@@ -92,3 +92,4 @@ This is the mockup of the UI of the job searching website containing the necessa
 <img src="./images/mockup2.png" alt="mockup2" width=700>
 
 ## Teaser (MS3)
+<img src="./images/teaser.jpg" alt="teaser" width=700>
