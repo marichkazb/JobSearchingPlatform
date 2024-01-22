@@ -40,7 +40,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
+							"raw": "process.env.VUE_APP_PRODUCTION_MONGO_URI",
 							"protocol": "https",
 							"host": [
 								"identitytoolkit",
@@ -91,7 +91,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
+							"raw": "process.env.VUE_APP_PRODUCTION_MONGO_URI",
 							"protocol": "https",
 							"host": [
 								"identitytoolkit",
@@ -142,7 +142,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCGop4qaMqHxVikHhTgRKxbi4jqPoLh9lo\n",
+							"raw": "process.env.VUE_APP_PRODUCTION_MONGO_URI",
 							"protocol": "https",
 							"host": [
 								"identitytoolkit",
