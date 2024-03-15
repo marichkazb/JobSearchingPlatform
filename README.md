@@ -1,6 +1,5 @@
-# Backend and Frontend Template
-
-Latest version: https://git.chalmers.se/courses/dit342/group-00-web
+## Teaser
+<img src="./images/teaser.jpg" alt="teaser" width=700>
 
 ## Project Structure
 
@@ -90,6 +89,3 @@ This is the mockup of the UI of the job searching website containing the necessa
 
 <img src="./images/mockup1.png" alt="mockup1" width=700>
 <img src="./images/mockup2.png" alt="mockup2" width=700>
-
-## Teaser (MS3)
-<img src="./images/teaser.jpg" alt="teaser" width=700>
